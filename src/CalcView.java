@@ -30,6 +30,9 @@ public class CalcView extends JFrame
 	private static JTextField history;
 	private static Stack<BigDecimal> numbers;
 	
+	private static int roundingLengthAfterDecimal;
+	private static int roundingLengthBeforeDecimal;
+	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
 	{
@@ -297,7 +300,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("π") {
 			public void pressed(){
-				changeInputButton(Math.PI);	//So basically 3?
+				changeInputButton(Math.PI);
 			}
 		};
 		c.gridx = 2;
@@ -389,8 +392,11 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			
+
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
+			
 			
 			setCalcValue(value.toString());
 			
@@ -411,6 +417,9 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			
+
+			
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
 			
@@ -546,6 +555,7 @@ public class CalcView extends JFrame
 
 	}
 	
+	//Can we remove this method now?
 	public static void changeInputButton(int buttonInput) {
 
 		String value = String.valueOf(buttonInput);
@@ -566,7 +576,13 @@ public class CalcView extends JFrame
 	
 	//Added to handle doubles such as pi
 	public static void changeInputButton(double buttonInput) {
-		String value = String.valueOf(buttonInput);
+		
+		//Arbitrary Choice to round to 5 digits
+		//This doesn't seem to affect other decimal numbers, however I am not
+		//completely confident in my logic for it...
+		//I think the only reason this works is because of the way decimals are handled earlier
+		
+		String value = String.format("%.5f", buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
@@ -586,6 +602,67 @@ public class CalcView extends JFrame
 
 	public static void addToHistory() {
 		String value = history.getText();
+		
+		//AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH!!!!
+		//What is this monster of a line??????????????????
+		//
+		//Its creating a substring of the values after a decimal
+		//So 1.03 becomes .03
+		//We do this to find the length to round to after the decimal place
+		
+		String afterDecimal;
+		
+		//First things first, lets see if the input contains a decimal in the first place
+		if(userValueText.getText().contains("."))
+			//If it does, lets see if there's more digits on the left of the decimal or the right
+		{
+			//This is the case for more digits on the right
+			if(userValueText.getText().substring(userValueText.getText().indexOf("."), userValueText.getText().length()).length() >
+			userValueText.getText().substring(0, userValueText.getText().indexOf(".")).length()){
+				
+			afterDecimal = userValueText.getText().substring(userValueText.getText().indexOf("."), userValueText.getText().length());
+			System.out.println("The digits after the decimal are: " + afterDecimal);
+			int lengthAfterDecimal = afterDecimal.length();
+			if(lengthAfterDecimal > roundingLengthAfterDecimal){
+				roundingLengthAfterDecimal = lengthAfterDecimal +1;
+				
+				}
+			}	
+			//This is the case for more digits on the left
+			else if(userValueText.getText().substring(userValueText.getText().indexOf("."), userValueText.getText().length()).length() <
+			userValueText.getText().substring(0, userValueText.getText().indexOf(".")).length()){
+				
+			afterDecimal = userValueText.getText().substring(0, userValueText.getText().indexOf("."));	
+			System.out.println("The digits before the decimal are: " + afterDecimal);	
+			int lengthBeforeDecimal = afterDecimal.length();
+				
+				if(lengthBeforeDecimal > roundingLengthBeforeDecimal){
+					roundingLengthBeforeDecimal = lengthBeforeDecimal;
+					
+					}
+				}
+		}
+		//But if there isn't a decimal in the input....
+		else if(!userValueText.getText().contains("."))
+		{
+			//Here we check how many digits to hold before (where the decimal place would be)
+			//(This is for numbers without a decimal in them)
+			afterDecimal = userValueText.getText();
+			System.out.println("The digits in the value are: " + afterDecimal);
+			int lengthAfterDecimal = afterDecimal.length();
+			if(lengthAfterDecimal > roundingLengthBeforeDecimal){
+				roundingLengthBeforeDecimal = lengthAfterDecimal;
+			}
+		}
+
+		//Basically what we did there was this, 
+		//Say were adding two numbers, 1.03 + 1.07 
+		//We need the string to retain 5 digits before the decimal and 3 digits after the decimal to retain some sort of accuracy
+		//When you add these numbers purely as doubles we get the following result
+		//1.0300000000000000266453525910037569701671600341796875 + 0.001000000000000000020816681711721685132943093776702880859375
+		// = 2.100000000000000088817... simply because of how doubles are handled
+		//The really important digits that we want to retain are only as large as the inputs we gave
+		//And the above method shaves off the excess
 		
 		double val = Double.parseDouble(userValueText.getText());
 		
@@ -638,7 +715,13 @@ public class CalcView extends JFrame
 	 */
 	public static void setCalcValue(String value)
 	{
+		//Here we see what the largest number of digits before the decimal is
+		//and the largest number of digits after the decimal place is
+		//Combine these two values together to get the total length we want out result to be
+		value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
 		calcText.setText(value);
 	}
+	
+
 
 }
