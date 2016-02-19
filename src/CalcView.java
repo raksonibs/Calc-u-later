@@ -656,11 +656,11 @@ public class CalcView extends JFrame
 		}
 
 		//Basically what we did there was this, 
-		//Say were adding two numbers, 10001.1 and 0.001
+		//Say were adding two numbers, 1.03 + 1.07 
 		//We need the string to retain 5 digits before the decimal and 3 digits after the decimal to retain some sort of accuracy
 		//When you add these numbers purely as doubles we get the following result
-		//10001.100000000000363797880709171295166015625 + 0.001000000000000000020816681711721685132943093776702880859375
-		// = to some number that is ridiculously large simply because of how doubles are handled
+		//1.0300000000000000266453525910037569701671600341796875 + 0.001000000000000000020816681711721685132943093776702880859375
+		// = 2.100000000000000088817... simply because of how doubles are handled
 		//The really important digits that we want to retain are only as large as the inputs we gave
 		//And the above method shaves off the excess
 		
