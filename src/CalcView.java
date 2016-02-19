@@ -30,6 +30,8 @@ public class CalcView extends JFrame
 	private static JTextField history;
 	private static Stack<BigDecimal> numbers;
 	
+	private static int roundingLength;
+	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
 	{
@@ -297,7 +299,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("π") {
 			public void pressed(){
-				changeInputButton(Math.PI);	//So basically 3?
+				changeInputButton(Math.PI);
 			}
 		};
 		c.gridx = 2;
@@ -389,8 +391,11 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			
+
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
+			
 			
 			setCalcValue(value.toString());
 			
@@ -411,6 +416,9 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			
+
+			
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
 			
@@ -546,6 +554,7 @@ public class CalcView extends JFrame
 
 	}
 	
+	//Can we remove this method now?
 	public static void changeInputButton(int buttonInput) {
 
 		String value = String.valueOf(buttonInput);
@@ -566,7 +575,11 @@ public class CalcView extends JFrame
 	
 	//Added to handle doubles such as pi
 	public static void changeInputButton(double buttonInput) {
-		String value = String.valueOf(buttonInput);
+		
+		//Arbitrary Choice to round to 5 digits
+		//This doesn't seem to affect other decimal numbers, however I am not
+		//completely confident in my logic for it...
+		String value = String.format("%.5f", buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
@@ -586,6 +599,13 @@ public class CalcView extends JFrame
 
 	public static void addToHistory() {
 		String value = history.getText();
+		
+		//int length = userValueText.getText().length();
+		//System.out.println("The length of this number is " + length);
+		
+		if(userValueText.getText().length() > roundingLength){
+			roundingLength = userValueText.getText().length();
+		}
 		
 		double val = Double.parseDouble(userValueText.getText());
 		
@@ -638,7 +658,10 @@ public class CalcView extends JFrame
 	 */
 	public static void setCalcValue(String value)
 	{
+		value = value.substring(0, roundingLength);
 		calcText.setText(value);
 	}
+	
+
 
 }
