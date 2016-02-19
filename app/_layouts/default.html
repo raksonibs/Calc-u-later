@@ -1,35 +1,68 @@
 <!DOCTYPE html>
-<html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ page.title }}</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello.Oskar</title>
+  <meta name="author" content="{{ site.data.theme.name }}" />
+  <meta name="description" content="The blog of {{ site.data.theme.name }}" />
+  <link rel="canonical" href="{{ site.url }}{{ page.url | replace:'index.html','' }}" />
 
-    <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="alternate" type="application/atom+xml" title="{{ site.data.theme.name }}" href="{{site.url}}/atom.xml" />
+  <!-- build:css({app,.tmp}) /css/main.css -->
+  <link rel="stylesheet" href="/_bower_components/foundation/css/normalize.css">
+  <link rel="stylesheet" href="/_bower_components/foundation/css/foundation.css">
+  <!--  <link rel="stylesheet" href="/css/syntax.css"> --> 
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/skeleton.css">
+  <link rel="stylesheet" href="/css/screen.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here' rel='stylesheet'>
+  <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+  <link href="http://fonts.googleapis.com/css?family=Text+Me+One" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css?family=Cabin+Sketch:700" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- endbuild -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
 
-    <!-- build:css({app,.tmp}) /css/main.css -->
-    <link rel="stylesheet" href="/_bower_components/normalize-css/normalize.css">
-    <link rel="stylesheet" href="/css/syntax.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <!-- endbuild -->
+   <link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here' rel='stylesheet'>
+  <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+  <link href="http://fonts.googleapis.com/css?family=Text+Me+One" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css?family=Cabin+Sketch:700" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- build:js(app) /js/head-scripts.js -->
-    <!-- Replace with a custom modernizer build for production -->
-    <script src="/_bower_components/modernizr/modernizr.js"></script>
-    <!-- endbuild -->
+  <!-- build:css({app,.tmp}) /css/googlefonts.css -->
+  <!-- endbuild -->
 
-  </head>
-  <body>
-    <!--[if lt IE 8]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+  <!-- build:css({app,.tmp}) /css/fontawesome.css -->
+  <!-- endbuild -->
 
-    {{ content }}
+  <!-- build:js(app) /js/head-scripts.js -->
+</head>
+<body>
+  <!--[if lt IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+  <div class="container">
+    <p class="loading-bar stretchRight"></p>
+    <div class="hide-later">      
+      {% include navigation.html %}
+    </div>
+    <div class="twelve columns hide-later">      
+      {{ content }}
+    </div>
+  </div>
 
-    {% include scripts.html %}
-    {% include googleanalytics.html %}
-
-  </body>
+  {% include footer.html %}
+  
+{% include scripts.html %}
+{% include analytics.html %}
+</body>
 </html>
