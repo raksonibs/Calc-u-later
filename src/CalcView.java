@@ -4,6 +4,8 @@ import javax.swing.JTextField;
 
 import java.math.BigInteger;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.GridBagLayout;
@@ -29,6 +31,9 @@ public class CalcView extends JFrame
 	private static JTextField calcText;
 	private static JTextField history;
 	private static Stack<BigDecimal> numbers;
+	
+	private static int roundingLengthAfterDecimal;
+	private static int roundingLengthBeforeDecimal;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -297,7 +302,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("π") {
 			public void pressed(){
-				changeInputButton(Math.PI);	//So basically 3?
+				changeInputButton(Math.PI);
 			}
 		};
 		c.gridx = 2;
@@ -400,8 +405,12 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			
+
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
+			
+			findCalculatedRoundingValue(num1,num2);
 			
 			setCalcValue(value.toString());
 			
@@ -422,8 +431,11 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
+			
+			findCalculatedRoundingValue(num1,num2);
 			
 			setCalcValue(value.toString());
 			
@@ -448,6 +460,8 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.multiply(num1);
 			numbers.push(value);
 			
+			findCalculatedRoundingValue(num1,num2);	
+			
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
@@ -469,6 +483,8 @@ public class CalcView extends JFrame
 			System.out.println(num2);
 			BigDecimal value = num2.divide(num1);
 			numbers.push(value);
+			
+			findCalculatedRoundingValue(num1,num2);
 
 			if (num1 == BigDecimal.ZERO){
 				setCalcValue("YOU JUST DIVIDED BY ZERO");
@@ -515,7 +531,6 @@ public class CalcView extends JFrame
 			
 		} else if (button.equals("sin")) {
 			
-			//THIS WILL ALWAYS BE 0 UNTIL DECIMALS ARE SORTED OUT!
 			System.out.print("Sin of ");
 			String input = userValueText.getText();
 
@@ -528,15 +543,15 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			
 			BigDecimal b = BigDecimal.valueOf(num1);
-
+			
 			numbers.push(b);
-			setCalcValue(num1.toString());
+			
+			setCalcValue(b.toPlainString());
 			userValueText.setText("");
 		} 
 
 		else if (button.equals("cos")) {
 			
-			//THIS WILL ALWAYS BE 0 UNTIL DECIMALS ARE SORTED OUT!
 			System.out.print("Cos of ");
 			String input = userValueText.getText();
 
@@ -545,13 +560,13 @@ public class CalcView extends JFrame
 			//Fixed convolution
 			Double num1 = numbers.pop().doubleValue();
 			System.out.println(num1);
-			num1 = Math.sin(num1);
+			num1 = Math.cos(num1);
 			System.out.println(num1);
 			
 			BigDecimal b = BigDecimal.valueOf(num1);
 
 			numbers.push(b);
-			setCalcValue(num1.toString());
+			setCalcValue(b.toPlainString());
 			userValueText.setText("");
 			
 		}else if (button.equals("!")){
@@ -579,6 +594,7 @@ public class CalcView extends JFrame
 			return num * factorial(num-1);
 	}
 	
+	//Can we remove this method now?
 	public static void changeInputButton(int buttonInput) {
 
 		String value = String.valueOf(buttonInput);
@@ -599,7 +615,13 @@ public class CalcView extends JFrame
 	
 	//Added to handle doubles such as pi
 	public static void changeInputButton(double buttonInput) {
-		String value = String.valueOf(buttonInput);
+		
+		//Arbitrary Choice to round to 5 digits
+		//This doesn't seem to affect other decimal numbers, however I am not
+		//completely confident in my logic for it...
+		//I think the only reason this works is because of the way decimals are handled earlier
+		
+		String value = String.format("%.5f", buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
@@ -619,6 +641,8 @@ public class CalcView extends JFrame
 
 	public static void addToHistory() {
 		String value = history.getText();
+		
+		findRoundingValue(userValueText.getText());
 		
 		double val = Double.parseDouble(userValueText.getText());
 		
@@ -671,7 +695,60 @@ public class CalcView extends JFrame
 	 */
 	public static void setCalcValue(String value)
 	{
+		//Here we see what the largest number of digits before the decimal is
+		//and the largest number of digits after the decimal place is
+		//Combine these two values together to get the total length we want out result to be
+		value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
 		calcText.setText(value);
 	}
+	
+	public static void findRoundingValue(String num)
+	{
+		
+		String uV = num;
+		
+		//Checking to see how many digits to keep on the left hand side of the result
+		//As well as how many digits on the right side to keep
+		//Some rounding does still occur due to doubles.
+		if(uV.contains("."))
+		{
+			String leftDecimal = uV.substring(0, uV.indexOf("."));
+			
+			if(leftDecimal.length() > roundingLengthBeforeDecimal){
+				roundingLengthBeforeDecimal = leftDecimal.length();
+			}
+			
+			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
+			
+			if(rightDecimal.length() > roundingLengthAfterDecimal){
+				roundingLengthAfterDecimal = rightDecimal.length();
+			}
+			
+		}
+		else
+		{
+			if(uV.length() > roundingLengthBeforeDecimal){
+				roundingLengthBeforeDecimal = uV.length();
+			}
+			
+		}
+
+		//System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
+		
+	}
+	
+	public static void findCalculatedRoundingValue(BigDecimal num1, BigDecimal num2)
+	{
+		
+		//Added another rounding method for determining how many digits to maintain for
+		//the shown value. This is for cases such as 10 * 10.1 which produce an extra
+		//digit upon completing a calculation.
+		MathContext roundVal = new MathContext(5);
+		BigDecimal result = num1.multiply(num2, roundVal);
+		findRoundingValue(result.toString());
+		
+	}
+	
+
 
 }
