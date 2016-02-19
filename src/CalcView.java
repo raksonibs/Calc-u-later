@@ -394,12 +394,9 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-			
 
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
-			
-			findCalculatedRoundingValue(num1,num2);
 			
 			setCalcValue(value.toString());
 			
@@ -424,7 +421,7 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
 			
-			findCalculatedRoundingValue(num1,num2);
+			//findCalculatedRoundingValue(num1,num2);
 			
 			setCalcValue(value.toString());
 			
@@ -449,7 +446,11 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.multiply(num1);
 			numbers.push(value);
 			
-			findCalculatedRoundingValue(num1,num2);	
+			//Because multiplying numbers can increase the number of digits very easily
+			//the steps below help maintain a manageable size to display the numbers
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.multiply(num2, roundVal);
+			findRoundingValue(result.toString());
 			
 			setCalcValue(value.toString());
 			
@@ -473,7 +474,9 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.divide(num1);
 			numbers.push(value);
 			
-			findCalculatedRoundingValue(num1,num2);
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.divide(num2, roundVal);
+			findRoundingValue(result.toString());
 
 			if (num1 == BigDecimal.ZERO){
 				setCalcValue("YOU JUST DIVIDED BY ZERO");
@@ -665,7 +668,9 @@ public class CalcView extends JFrame
 		//Here we see what the largest number of digits before the decimal is
 		//and the largest number of digits after the decimal place is
 		//Combine these two values together to get the total length we want out result to be
+		if(value.length() > 1){
 		value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
+		}
 		calcText.setText(value);
 	}
 	
@@ -683,12 +688,14 @@ public class CalcView extends JFrame
 			
 			if(leftDecimal.length() > roundingLengthBeforeDecimal){
 				roundingLengthBeforeDecimal = leftDecimal.length();
+				//System.out.println("Digits to the left " + leftDecimal.length());
 			}
 			
 			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
 			
 			if(rightDecimal.length() > roundingLengthAfterDecimal){
 				roundingLengthAfterDecimal = rightDecimal.length();
+				//System.out.println("Digits to the right " + rightDecimal.length());
 			}
 			
 		}
@@ -696,6 +703,7 @@ public class CalcView extends JFrame
 		{
 			if(uV.length() > roundingLengthBeforeDecimal){
 				roundingLengthBeforeDecimal = uV.length();
+				System.out.println("Digits " + uV.length());
 			}
 			
 		}
