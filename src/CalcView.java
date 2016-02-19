@@ -314,6 +314,17 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button, c);
+		
+		button =  new ButtonAdapter("!") {
+			public void pressed(){
+				registerButton("!", theController);
+			}
+		};
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		pane.add(button, c);
+
 
 		button =  new ButtonAdapter("cos") {
 			public void pressed(){
@@ -542,8 +553,30 @@ public class CalcView extends JFrame
 			numbers.push(b);
 			setCalcValue(num1.toString());
 			userValueText.setText("");
+			
+		}else if (button.equals("!")){
+			
+			System.out.println("Factorial");
+			String input  = userValueText.getText();
+			double d = Double.valueOf(numbers.pop().toString());
+			
+			history.setText(his+","+input+button+"=");
+			Double result = factorial(d);
+			BigDecimal ans = new BigDecimal(result);
+			
+			numbers.push(ans);
+			setCalcValue(result.toString());
+			userValueText.setText("");
+			
+			
 		}
 
+	}
+	public static double factorial(double num){
+		if(num == 1)
+			return 1;
+		else
+			return num * factorial(num-1);
 	}
 	
 	public static void changeInputButton(int buttonInput) {
