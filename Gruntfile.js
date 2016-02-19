@@ -1,4 +1,4 @@
-// Generated on 2016-02-19 using generator-jekyllrb 1.4.1
+// Generated on 2014-06-10 using generator-jekyllrb 1.2.1
 'use strict';
 
 // Directory reference:
@@ -23,11 +23,11 @@ module.exports = function (grunt) {
     watch: {
       sass: {
         files: ['<%= yeoman.app %>/_scss/**/*.{scss,sass}'],
-        tasks: ['sass:server', 'autoprefixer:dist']
+        tasks: ['sass:server', 'autoprefixer:server']
       },
       autoprefixer: {
         files: ['<%= yeoman.app %>/css/**/*.css'],
-        tasks: ['copy:stageCss', 'autoprefixer:dist']
+        tasks: ['copy:stageCss', 'autoprefixer:server']
       },
       jekyll: {
         files: [
@@ -35,56 +35,52 @@ module.exports = function (grunt) {
           '!<%= yeoman.app %>/_bower_components/**/*'
         ],
         tasks: ['jekyll:server']
+      },
+      livereload: {
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        },
+        files: [
+          '.jekyll/**/*.html',
+          '.tmp/css/**/*.css',
+          '{.tmp,<%= yeoman.app %>}/<%= js %>/**/*.js',
+          '<%= yeoman.app %>/img/**/*.{gif,jpg,jpeg,png,svg,webp}'
+        ]
       }
     },
-    browserSync: {
-      server: {
-        bsFiles: {
-          src: [
-            '.jekyll/**/*.html',
-            '.tmp/css/**/*.css',
-            '{.tmp,<%= yeoman.app %>}/js/**/*.js',
-            '{<%= yeoman.app %>}/_bower_components/**/*.js',
-            '<%= yeoman.app %>/img/**/*.{gif,jpg,jpeg,png,svg,webp}'
-          ]
-        },
+    connect: {
+      options: {
+        port: 9000,
+        livereload: 35729,
+        // change this to '0.0.0.0' to access the server from outside
+        hostname: 'localhost'
+      },
+      livereload: {
         options: {
-          server: {
-            baseDir: [
-              ".jekyll",
-              ".tmp",
-              "<%= yeoman.app %>"
-            ]
-          },
-          watchTask: true
+          open: true,
+          base: [
+            '.tmp',
+            '.jekyll',
+            '<%= yeoman.app %>'
+          ]
         }
       },
       dist: {
         options: {
-          server: {
-            baseDir: "<%= yeoman.dist %>"
-          }
+          open: true,
+          base: [
+            '<%= yeoman.dist %>'
+          ]
         }
       },
       test: {
-        bsFiles: {
-          src: [
-            '.jekyll/**/*.html',
-            '.tmp/css/**/*.css',
-            '{.tmp,<%= yeoman.app %>}/js/**/*.js',
-            '{<%= yeoman.app %>}/_bower_components/**/*.js',
-            '<%= yeoman.app %>/img/**/*.{gif,jpg,jpeg,png,svg,webp}'
-          ]
-        },
         options: {
-          server: {
-            baseDir: [
-              ".jekyll",
-              ".tmp",
-              "<%= yeoman.app %>"
-            ]
-          },
-          watchTask: true
+          base: [
+            '.tmp',
+            '.jekyll',
+            'test',
+            '<%= yeoman.app %>'
+          ]
         }
       }
     },
@@ -108,6 +104,7 @@ module.exports = function (grunt) {
     },
     sass: {
       options: {
+        bundleExec: true,
         debugInfo: false,
         lineNumbers: false,
         loadPath: 'app/_bower_components'
@@ -140,14 +137,25 @@ module.exports = function (grunt) {
         browsers: ['last 2 versions']
       },
       dist: {
-        expand: true,
-        cwd: '.tmp',
-        src: '**/{css,concat}/*.css',
-        dest: '.tmp'
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>/css',
+          src: '**/*.css',
+          dest: '<%= yeoman.dist %>/css'
+        }]
+      },
+      server: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/css',
+          src: '**/*.css',
+          dest: '.tmp/css'
+        }]
       }
     },
     jekyll: {
       options: {
+        bundleExec: true,
         config: '_config.yml,_config.build.yml',
         src: '<%= yeoman.app %>'
       },
@@ -176,7 +184,7 @@ module.exports = function (grunt) {
     },
     usemin: {
       options: {
-        assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/img']
+        assetsDirs: '<%= yeoman.dist %>',
       },
       html: ['<%= yeoman.dist %>/**/*.html'],
       css: ['<%= yeoman.dist %>/css/**/*.css']
@@ -199,7 +207,7 @@ module.exports = function (grunt) {
     },
     // Usemin adds files to concat
     concat: {},
-    // Usemin adds files to uglify
+    // Usemin adds files to uify
     uglify: {},
     // Usemin adds files to cssmin
     cssmin: {
@@ -243,13 +251,15 @@ module.exports = function (grunt) {
             // Usemin moves CSS and javascript inside of Usemin blocks.
             // Copy moves asset files and directories.
             'img/**/*',
+            'assets/**/*',
             'fonts/**/*',
             // Like Jekyll, exclude files & folders prefixed with an underscore.
             '!**/_*{,/**}',
             // Explicitly add any files your site needs for distribution here.
-            '_bower_components/jquery/jquery.min.js',
+            '_bower_components/jquery/jquery.js',
             'favicon.ico',
-            'apple-touch*.png'
+            'apple-touch*.png',
+            '/index.html'
           ],
           dest: '<%= yeoman.dist %>'
         }]
@@ -283,23 +293,12 @@ module.exports = function (grunt) {
     buildcontrol: {
       dist: {
         options: {
-          remote: '../',
+          remote: 'git@github.com:raksonibs/Calc-u-later.git',
           branch: 'gh-pages',
           commit: true,
           push: true
         }
       }
-    },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: [
-        'Gruntfile.js',
-        '<%= ybroeoman.app %>/js/**/*.js',
-        'test/spec/**/*.js'
-      ]
     },
     csslint: {
       options: {
@@ -307,17 +306,9 @@ module.exports = function (grunt) {
       },
       check: {
         src: [
-          '<%= yeoman.app %>/css/**/*.css'
         ]
       }
     },
-    // https://github.com/robwierzbowski/generator-jekyllrb/issues/106
-    // scsslint: {
-    //   // See https://www.npmjs.org/package/grunt-scss-lint for options.
-    //   allFiles: [
-    //     '<%= yeoman.app %>/_scss/**/*.scss'
-    //   ]
-    // },
     concurrent: {
       server: [
         'sass:server',
@@ -334,14 +325,14 @@ module.exports = function (grunt) {
   // Define Tasks
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'browserSync:dist']);
+      return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
     grunt.task.run([
       'clean:server',
       'concurrent:server',
-      'autoprefixer:dist',
-      'browserSync:server',
+      'autoprefixer:server',
+      'connect:livereload',
       'watch'
     ]);
   });
@@ -355,7 +346,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
   //   'clean:server',
   //   'concurrent:test',
-  //   'browserSync:test'
+  //   'connect:test'
   ]);
 
   grunt.registerTask('check', [
@@ -363,7 +354,6 @@ module.exports = function (grunt) {
     'jekyll:check',
     'sass:server',
     'csslint:check'
-    // 'scsslint'
   ]);
 
   grunt.registerTask('build', [
@@ -373,8 +363,8 @@ module.exports = function (grunt) {
     'concurrent:dist',
     'useminPrepare',
     'concat',
-    'cssmin',
     'autoprefixer:dist',
+    'cssmin',
     'uglify',
     'imagemin',
     'svgmin',
@@ -395,4 +385,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.loadNpmTasks('grunt-contrib-compass');
 };
