@@ -297,7 +297,7 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/js/**/*.js',
+        '<%= ybroeoman.app %>/js/**/*.js',
         'test/spec/**/*.js'
       ]
     },
@@ -362,7 +362,6 @@ module.exports = function (grunt) {
     'clean:server',
     'jekyll:check',
     'sass:server',
-    'jshint:all',
     'csslint:check'
     // 'scsslint'
   ]);
