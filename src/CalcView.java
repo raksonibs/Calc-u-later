@@ -605,6 +605,9 @@ public class CalcView extends JFrame
 		
 		String uV = userValueText.getText();
 		
+		//Checking to see how many digits to keep on the left hand side of the result
+		//As well as how many digits on the right side to keep
+		//Some rounding does still occur due to doubles.
 		if(uV.contains("."))
 		{
 			String leftDecimal = uV.substring(0, uV.indexOf("."));
@@ -628,7 +631,7 @@ public class CalcView extends JFrame
 			
 		}
 		
-		System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
+		//System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
 		
 		double val = Double.parseDouble(userValueText.getText());
 		
