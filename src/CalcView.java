@@ -668,7 +668,7 @@ public class CalcView extends JFrame
 		//Here we see what the largest number of digits before the decimal is
 		//and the largest number of digits after the decimal place is
 		//Combine these two values together to get the total length we want out result to be
-		if(value.length() > 1){
+		if(value.length() >  roundingLengthBeforeDecimal + roundingLengthAfterDecimal){
 		value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
 		}
 		calcText.setText(value);
@@ -688,14 +688,14 @@ public class CalcView extends JFrame
 			
 			if(leftDecimal.length() > roundingLengthBeforeDecimal){
 				roundingLengthBeforeDecimal = leftDecimal.length();
-				//System.out.println("Digits to the left " + leftDecimal.length());
+				System.out.println("Digits to the left " + leftDecimal.length());
 			}
 			
 			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
 			
 			if(rightDecimal.length() > roundingLengthAfterDecimal){
 				roundingLengthAfterDecimal = rightDecimal.length();
-				//System.out.println("Digits to the right " + rightDecimal.length());
+				System.out.println("Digits to the right " + rightDecimal.length());
 			}
 			
 		}
@@ -708,7 +708,7 @@ public class CalcView extends JFrame
 			
 		}
 
-		//System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
+		System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
 		
 	}
 	
