@@ -603,66 +603,32 @@ public class CalcView extends JFrame
 	public static void addToHistory() {
 		String value = history.getText();
 		
-		//AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH!!!!
-		//What is this monster of a line??????????????????
-		//
-		//Its creating a substring of the values after a decimal
-		//So 1.03 becomes .03
-		//We do this to find the length to round to after the decimal place
+		String uV = userValueText.getText();
 		
-		String afterDecimal;
-		
-		//First things first, lets see if the input contains a decimal in the first place
-		if(userValueText.getText().contains("."))
-			//If it does, lets see if there's more digits on the left of the decimal or the right
+		if(uV.contains("."))
 		{
-			//This is the case for more digits on the right
-			if(userValueText.getText().substring(userValueText.getText().indexOf("."), userValueText.getText().length()).length() >
-			userValueText.getText().substring(0, userValueText.getText().indexOf(".")).length()){
-				
-			afterDecimal = userValueText.getText().substring(userValueText.getText().indexOf("."), userValueText.getText().length());
-			System.out.println("The digits after the decimal are: " + afterDecimal);
-			int lengthAfterDecimal = afterDecimal.length();
-			if(lengthAfterDecimal > roundingLengthAfterDecimal){
-				roundingLengthAfterDecimal = lengthAfterDecimal +1;
-				
-				}
-			}	
-			//This is the case for more digits on the left
-			else if(userValueText.getText().substring(userValueText.getText().indexOf("."), userValueText.getText().length()).length() <
-			userValueText.getText().substring(0, userValueText.getText().indexOf(".")).length()){
-				
-			afterDecimal = userValueText.getText().substring(0, userValueText.getText().indexOf("."));	
-			System.out.println("The digits before the decimal are: " + afterDecimal);	
-			int lengthBeforeDecimal = afterDecimal.length();
-				
-				if(lengthBeforeDecimal > roundingLengthBeforeDecimal){
-					roundingLengthBeforeDecimal = lengthBeforeDecimal;
-					
-					}
-				}
-		}
-		//But if there isn't a decimal in the input....
-		else if(!userValueText.getText().contains("."))
-		{
-			//Here we check how many digits to hold before (where the decimal place would be)
-			//(This is for numbers without a decimal in them)
-			afterDecimal = userValueText.getText();
-			System.out.println("The digits in the value are: " + afterDecimal);
-			int lengthAfterDecimal = afterDecimal.length();
-			if(lengthAfterDecimal > roundingLengthBeforeDecimal){
-				roundingLengthBeforeDecimal = lengthAfterDecimal;
+			String leftDecimal = uV.substring(0, uV.indexOf("."));
+			
+			if(leftDecimal.length() > roundingLengthBeforeDecimal){
+				roundingLengthBeforeDecimal = leftDecimal.length();
 			}
+			
+			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
+			
+			if(rightDecimal.length() > roundingLengthAfterDecimal){
+				roundingLengthAfterDecimal = rightDecimal.length();
+			}
+			
 		}
-
-		//Basically what we did there was this, 
-		//Say were adding two numbers, 1.03 + 1.07 
-		//We need the string to retain 5 digits before the decimal and 3 digits after the decimal to retain some sort of accuracy
-		//When you add these numbers purely as doubles we get the following result
-		//1.0300000000000000266453525910037569701671600341796875 + 0.001000000000000000020816681711721685132943093776702880859375
-		// = 2.100000000000000088817... simply because of how doubles are handled
-		//The really important digits that we want to retain are only as large as the inputs we gave
-		//And the above method shaves off the excess
+		else
+		{
+			if(uV.length() > roundingLengthBeforeDecimal){
+				roundingLengthBeforeDecimal = uV.length();
+			}
+			
+		}
+		
+		System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
 		
 		double val = Double.parseDouble(userValueText.getText());
 		
