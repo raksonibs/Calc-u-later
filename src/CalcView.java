@@ -591,11 +591,11 @@ public class CalcView extends JFrame
 			history.setText(his+","+input+button+"=");
 
 			Double num1 = numbers.pop().doubleValue();
-			num1 = factorial(num1);
-			System.out.println(num1);
-			BigDecimal b = BigDecimal.valueOf(num1);
+			Double ans = factorial(num1);
+			System.out.println(ans);
+			BigDecimal b = BigDecimal.valueOf(ans);
 			numbers.push(b);
-			setCalcValue(num1.toString());
+			calcText.setText(ans.toString());
 			userValueText.setText("");
 
 		}
@@ -606,8 +606,8 @@ public class CalcView extends JFrame
 	public static double factorial(double b)
 	{
 		double r = 1.0;
-
-		while (b != 1.0)
+		System.out.println("working with: " + b);
+		while (b > 1.0)
 		{
 			r = r * b;
 			b -= 1;
