@@ -398,6 +398,10 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
 			
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.add(num2, roundVal);
+			findRoundingValue(result.toPlainString());
+			
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
@@ -421,7 +425,9 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
 			
-			//findCalculatedRoundingValue(num1,num2);
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.subtract(num2, roundVal);
+			findRoundingValue(result.toPlainString());
 			
 			setCalcValue(value.toString());
 			
@@ -450,7 +456,7 @@ public class CalcView extends JFrame
 			//the steps below help maintain a manageable size to display the numbers
 			MathContext roundVal = new MathContext(5);
 			BigDecimal result = num1.multiply(num2, roundVal);
-			findRoundingValue(result.toString());
+			findRoundingValue(result.toPlainString());
 			
 			setCalcValue(value.toString());
 			
@@ -476,7 +482,7 @@ public class CalcView extends JFrame
 			
 			MathContext roundVal = new MathContext(5);
 			BigDecimal result = num1.divide(num2, roundVal);
-			findRoundingValue(result.toString());
+			findRoundingValue(result.toPlainString());
 
 			if (num1 == BigDecimal.ZERO){
 				setCalcValue("YOU JUST DIVIDED BY ZERO");
@@ -688,14 +694,14 @@ public class CalcView extends JFrame
 			
 			if(leftDecimal.length() > roundingLengthBeforeDecimal){
 				roundingLengthBeforeDecimal = leftDecimal.length();
-				System.out.println("Digits to the left " + leftDecimal.length());
+				//System.out.println("Digits to the left " + leftDecimal.length());
 			}
 			
 			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
 			
 			if(rightDecimal.length() > roundingLengthAfterDecimal){
 				roundingLengthAfterDecimal = rightDecimal.length();
-				System.out.println("Digits to the right " + rightDecimal.length());
+				//System.out.println("Digits to the right " + rightDecimal.length());
 			}
 			
 		}
@@ -708,7 +714,7 @@ public class CalcView extends JFrame
 			
 		}
 
-		System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
+		//System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
 		
 	}
 	
