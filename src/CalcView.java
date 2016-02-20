@@ -398,6 +398,10 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
 			
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.add(num2, roundVal);
+			findRoundingValue(result.toPlainString());
+			
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
@@ -421,7 +425,9 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
 			
-			//findCalculatedRoundingValue(num1,num2);
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.subtract(num2, roundVal);
+			findRoundingValue(result.toPlainString());
 			
 			setCalcValue(value.toString());
 			
@@ -450,7 +456,7 @@ public class CalcView extends JFrame
 			//the steps below help maintain a manageable size to display the numbers
 			MathContext roundVal = new MathContext(5);
 			BigDecimal result = num1.multiply(num2, roundVal);
-			findRoundingValue(result.toString());
+			findRoundingValue(result.toPlainString());
 			
 			setCalcValue(value.toString());
 			
@@ -471,12 +477,17 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-			BigDecimal value = num2.divide(num1);
-			numbers.push(value);
 			
 			MathContext roundVal = new MathContext(5);
-			BigDecimal result = num1.divide(num2, roundVal);
-			findRoundingValue(result.toString());
+			
+			//We are rounding the result here to 5 decimal places
+			//This is to handle results that end up having infinite digits
+			BigDecimal value = num2.divide(num1, roundVal);
+			numbers.push(value);
+			
+
+			BigDecimal result = num2.divide(num1, roundVal);
+			findRoundingValue(result.toPlainString());
 
 			if (num1 == BigDecimal.ZERO){
 				setCalcValue("YOU JUST DIVIDED BY ZERO");
@@ -668,7 +679,7 @@ public class CalcView extends JFrame
 		//Here we see what the largest number of digits before the decimal is
 		//and the largest number of digits after the decimal place is
 		//Combine these two values together to get the total length we want out result to be
-		if(value.length() > 1){
+		if(value.length() >  roundingLengthBeforeDecimal + roundingLengthAfterDecimal){
 		value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
 		}
 		calcText.setText(value);
