@@ -48,7 +48,6 @@ public class CalcView extends JFrame
 		this.setVisible(true);
 		this.numbers = new Stack();
 		this.inputNum = new Stack();
-		inputNum.push(" ");
 	}
 
 	public static void addComponentsToPane(Container pane, final CalcController theController) {
@@ -401,13 +400,20 @@ public class CalcView extends JFrame
 				double val = Double.valueOf(userValueText.getText());
 				numbers.push(new BigDecimal(val));
 			}
-			String pervious = inputNum.pop();
+
+			String pervious;
 			//history.setText(pervious+","+input+button+"=");
 			BigDecimal num1 = numbers.pop();
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			if (! inputNum.empty()){
+			pervious = inputNum.pop();	
 			history.setText(pervious+","+num2+button+num1+"=");
+			}
+			else if (inputNum.empty())
+			history.setText(num2+button+num1+"=");
+
 			inputNum.push(num2+"+"+num1);
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
@@ -417,6 +423,7 @@ public class CalcView extends JFrame
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
+			
 		} else if (button.equals("-")) {
 			System.out.println("subtracting");
 			String input = userValueText.getText();
