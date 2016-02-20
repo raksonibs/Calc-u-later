@@ -352,8 +352,7 @@ module.exports = function (grunt) {
   grunt.registerTask('check', [
     'clean:server',
     'jekyll:check',
-    'sass:server',
-    'csslint:check'
+    'sass:server'
   ]);
 
   grunt.registerTask('build', [
