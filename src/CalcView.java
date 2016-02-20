@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.GridBagLayout;
 import java.awt.Container;
@@ -31,7 +32,7 @@ public class CalcView extends JFrame
 	private static JTextField calcText;
 	private static JTextField history;
 	private static Stack<BigDecimal> numbers;
-	private static Stack<String> inputNum; 
+	private static Stack<String> expression; 
 	
 	private static int roundingLengthAfterDecimal;
 	private static int roundingLengthBeforeDecimal;
@@ -47,7 +48,8 @@ public class CalcView extends JFrame
 		this.pack();
 		this.setVisible(true);
 		this.numbers = new Stack();
-		this.inputNum = new Stack();
+		this.expression = new Stack();
+
 	}
 
 	public static void addComponentsToPane(Container pane, final CalcController theController) {
@@ -377,7 +379,8 @@ public class CalcView extends JFrame
 		return new BigInteger(userValueText.getText());
 	}
 	
-	public static void registerButton(String button, CalcController theController) {		
+	public static void registerButton(String button, CalcController theController) {	
+		String pervious;
 		String his = history.getText();
 		// right now this method is big, so when we refactor it we will put each button into its own controller method
 		// furthermore, we will make the stack and history be part of the model
@@ -400,21 +403,19 @@ public class CalcView extends JFrame
 				double val = Double.valueOf(userValueText.getText());
 				numbers.push(new BigDecimal(val));
 			}
-
-			String pervious;
 			//history.setText(pervious+","+input+button+"=");
 			BigDecimal num1 = numbers.pop();
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-			if (! inputNum.empty()){
-			pervious = inputNum.pop();	
+			if (! expression.empty()){
+			pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
 			history.setText(pervious+","+num2+button+num1+"=");
 			}
-			else if (inputNum.empty())
+			else if (expression.empty())
 			history.setText(num2+button+num1+"=");
 
-			inputNum.push(num2+"+"+num1);
+			expression.push(num2+"+"+num1);
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
 			
@@ -433,13 +434,22 @@ public class CalcView extends JFrame
 				double val = Double.parseDouble(userValueText.getText());
 				numbers.push(BigDecimal.valueOf(val));
 			}
-
-			history.setText(his+","+input+button+"=");
+			
+			//history.setText(his+","+input+button+"=");
 
 			BigDecimal num1 = numbers.pop();
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			
+			if (! expression.empty()){
+				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+				history.setText(pervious+","+num2+button+num1+"=");
+				}
+				else if (expression.empty())
+				history.setText(num2+button+num1+"=");
+
+				expression.push(num2+"-"+num1);
 			
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
