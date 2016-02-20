@@ -4,7 +4,7 @@
 # 3. config.yml
 
 name: Calc-u-later
-description: Calc-u-later
+description: Personal site
 author:
   name: Oskar Niburski
   email: oskarniburski@gmail.com
@@ -21,17 +21,10 @@ show_drafts: true
 
 # Markdown library
 markdown: kramdown
-#   auto_ids: true
-#   footnote_nr: 1
-#   entity_output: as_char
-#   toc_levels: 1..6
-#   use_coderay: false
-#   coderay:
-#     coderay_wrap: div
-#     coderay_line_numbers: inline
-#     coderay_line_numbers_start: 1
-#     coderay_tab_width: 4
-#     coderay_bold_every: 10
-#     coderay_css: style
+#   extensions: ['fenced_code_blocks', 'smart']
 
-highlighter: true
+pygments: true
+
+paginate: 1
+
+url: http://localhost:9000

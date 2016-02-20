@@ -4,5 +4,14 @@ title: Blog Posts
 ---
 
 <div id="marketing" class="marketing">
-  <!-- flat ui minimal scroll down -->
+  {% for post in site.posts %}
+    <div class="post-cont">
+      <h1>{{post.title}}</h1>
+      <h3>{{ post.date | date_to_string }}</h3>
+      <div id="post">
+        {{post.content}}
+      </div>
+    </div>
+    <hr/ >
+  {% endfor %}
 </div>

@@ -11,6 +11,7 @@
     "slick.js": "~1.5.5",
     "bourbon": "~4.2.3",
     "neat": "~1.7.2",
-    "simple-jekyll-search": "~1.0.8"
+    "simple-jekyll-search": "~1.0.8",
+    "foundation": "~5.5.3"
   }
 }
