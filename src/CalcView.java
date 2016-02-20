@@ -477,11 +477,16 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-			BigDecimal value = num2.divide(num1);
-			numbers.push(value);
 			
 			MathContext roundVal = new MathContext(5);
-			BigDecimal result = num1.divide(num2, roundVal);
+			
+			//We are rounding the result here to 5 decimal places
+			//This is to handle results that end up having infinite digits
+			BigDecimal value = num2.divide(num1, roundVal);
+			numbers.push(value);
+			
+
+			BigDecimal result = num2.divide(num1, roundVal);
 			findRoundingValue(result.toPlainString());
 
 			if (num1 == BigDecimal.ZERO){
