@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class CalcControllerTest {
 	
-	CalcModel model;
+	/*CalcModel model;
 	CalcController controller;
 	
 	
@@ -78,14 +78,14 @@ public class CalcControllerTest {
 		assertEquals(BigInteger.valueOf(2), model.getCalcValue());
 		
 		//Divide by zero test case
-		/*
+		
 		s.removeAllElements();
 		
 		s.add(BigInteger.valueOf(10));
 		s.add(BigInteger.valueOf(0));
 		
 		controller.divide(s);
-		*/
+		
 		
 	}
 	
@@ -95,6 +95,6 @@ public class CalcControllerTest {
 	
 	
 	
-	
+	*/
 	
 }
