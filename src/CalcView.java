@@ -343,6 +343,16 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button, c);
+
+		button = new ButtonAdapter("!"){
+			public void pressed(){
+				registerButton("!", theController);
+			}
+		};
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		pane.add(button, c);
 		
 		y += 1;
 
@@ -408,18 +418,23 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+<<<<<<< HEAD
 			if (! expression.empty()){
 			pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
 			history.setText(pervious+","+num2+button+num1+"=");
 			}
 			else if (expression.empty())
 			history.setText(num2+button+num1+"=");
+=======
+>>>>>>> f4465da344082b4e3b9ffb2b9e783fc5eec9d7e3
 
 			expression.push(num2+"+"+num1);
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
 			
-			findCalculatedRoundingValue(num1,num2);
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.add(num2, roundVal);
+			findRoundingValue(result.toPlainString());
 			
 			setCalcValue(value.toString());
 			
@@ -454,7 +469,9 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
 			
-			findCalculatedRoundingValue(num1,num2);
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.subtract(num2, roundVal);
+			findRoundingValue(result.toPlainString());
 			
 			setCalcValue(value.toString());
 			
@@ -479,7 +496,11 @@ public class CalcView extends JFrame
 			BigDecimal value = num2.multiply(num1);
 			numbers.push(value);
 			
-			findCalculatedRoundingValue(num1,num2);	
+			//Because multiplying numbers can increase the number of digits very easily
+			//the steps below help maintain a manageable size to display the numbers
+			MathContext roundVal = new MathContext(5);
+			BigDecimal result = num1.multiply(num2, roundVal);
+			findRoundingValue(result.toPlainString());
 			
 			setCalcValue(value.toString());
 			
@@ -500,10 +521,17 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-			BigDecimal value = num2.divide(num1);
+			
+			MathContext roundVal = new MathContext(5);
+			
+			//We are rounding the result here to 5 decimal places
+			//This is to handle results that end up having infinite digits
+			BigDecimal value = num2.divide(num1, roundVal);
 			numbers.push(value);
 			
-			findCalculatedRoundingValue(num1,num2);
+
+			BigDecimal result = num2.divide(num1, roundVal);
+			findRoundingValue(result.toPlainString());
 
 			if (num1 == BigDecimal.ZERO){
 				setCalcValue("YOU JUST DIVIDED BY ZERO");
@@ -605,6 +633,23 @@ public class CalcView extends JFrame
 			
 		}
 
+		else if (button.equals("!")){
+
+			System.out.println("factorial");
+			String input = userValueText.getText();
+
+			history.setText(his+","+input+button+"=");
+
+			Double num1 = numbers.pop().doubleValue();
+			Double ans = factorial(num1);
+			System.out.println(ans);
+			BigDecimal b = BigDecimal.valueOf(ans);
+			numbers.push(b);
+			calcText.setText(ans.toString());
+			userValueText.setText("");
+
+		}
+
 	}
 	public static double factorial(double num){
 		if(num == 1)
@@ -613,6 +658,20 @@ public class CalcView extends JFrame
 			return num * factorial(num-1);
 	}
 	
+	//method for factorial button
+	public static double factorial(double b)
+	{
+		double r = 1.0;
+		System.out.println("working with: " + b);
+		while (b > 1.0)
+		{
+			r = r * b;
+			b -= 1;
+			System.out.println(r);
+		}
+		return r;
+	}
+
 	//Can we remove this method now?
 	public static void changeInputButton(int buttonInput) {
 
@@ -717,7 +776,9 @@ public class CalcView extends JFrame
 		//Here we see what the largest number of digits before the decimal is
 		//and the largest number of digits after the decimal place is
 		//Combine these two values together to get the total length we want out result to be
+		if(value.length() >  roundingLengthBeforeDecimal + roundingLengthAfterDecimal){
 		value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
+		}
 		calcText.setText(value);
 	}
 	
@@ -735,12 +796,14 @@ public class CalcView extends JFrame
 			
 			if(leftDecimal.length() > roundingLengthBeforeDecimal){
 				roundingLengthBeforeDecimal = leftDecimal.length();
+				//System.out.println("Digits to the left " + leftDecimal.length());
 			}
 			
 			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
 			
 			if(rightDecimal.length() > roundingLengthAfterDecimal){
 				roundingLengthAfterDecimal = rightDecimal.length();
+				//System.out.println("Digits to the right " + rightDecimal.length());
 			}
 			
 		}
@@ -748,6 +811,7 @@ public class CalcView extends JFrame
 		{
 			if(uV.length() > roundingLengthBeforeDecimal){
 				roundingLengthBeforeDecimal = uV.length();
+				System.out.println("Digits " + uV.length());
 			}
 			
 		}
