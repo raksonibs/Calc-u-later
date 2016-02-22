@@ -418,15 +418,15 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-<<<<<<< HEAD
+//<<<<<<< HEAD
 			if (! expression.empty()){
 			pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
 			history.setText(pervious+","+num2+button+num1+"=");
 			}
 			else if (expression.empty())
 			history.setText(num2+button+num1+"=");
-=======
->>>>>>> f4465da344082b4e3b9ffb2b9e783fc5eec9d7e3
+//=======
+//>>>>>>> f4465da344082b4e3b9ffb2b9e783fc5eec9d7e3
 
 			expression.push(num2+"+"+num1);
 			BigDecimal value = num2.add(num1);
@@ -456,6 +456,12 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			if (! expression.empty()){
+				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+				history.setText(pervious+","+num2+button+num1+"=");
+				}
+				else if (expression.empty())
+				history.setText(num2+button+num1+"=");
 			
 			if (! expression.empty()){
 				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
@@ -494,6 +500,13 @@ public class CalcView extends JFrame
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
 			BigDecimal value = num2.multiply(num1);
+			if (! expression.empty()){
+				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+				history.setText(pervious+","+num2+button+num1+"=");
+				}
+				else if (expression.empty())
+				history.setText(num2+button+num1+"=");
+			
 			numbers.push(value);
 			
 			//Because multiplying numbers can increase the number of digits very easily
@@ -521,6 +534,12 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			if (! expression.empty()){
+				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+				history.setText(pervious+","+num2+button+num1+"=");
+				}
+				else if (expression.empty())
+				history.setText(num2+button+num1+"=");
 			
 			MathContext roundVal = new MathContext(5);
 			
@@ -659,18 +678,18 @@ public class CalcView extends JFrame
 	}
 	
 	//method for factorial button
-	public static double factorial(double b)
-	{
-		double r = 1.0;
-		System.out.println("working with: " + b);
-		while (b > 1.0)
-		{
-			r = r * b;
-			b -= 1;
-			System.out.println(r);
-		}
-		return r;
-	}
+//	public static double factorial(double b)
+//	{
+//		double r = 1.0;
+//		System.out.println("working with: " + b);
+//		while (b > 1.0)
+//		{
+//			r = r * b;
+//			b -= 1;
+//			System.out.println(r);
+//		}
+//		return r;
+//	}
 
 	//Can we remove this method now?
 	public static void changeInputButton(int buttonInput) {
