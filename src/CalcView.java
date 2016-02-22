@@ -350,7 +350,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 1;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 7;       //third row
+		c.gridy = 8;       //third row
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
@@ -361,7 +361,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 3;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 7;       //third row
+		c.gridy = 8;       //third row
 		pane.add(button, c);
 }
 
@@ -595,7 +595,10 @@ public class CalcView extends JFrame
 			System.out.println(ans);
 			BigDecimal b = BigDecimal.valueOf(ans);
 			numbers.push(b);
-			calcText.setText(ans.toString());
+
+			findRoundingValue(b.toPlainString());
+			
+			setCalcValue(b.toPlainString());
 			userValueText.setText("");
 
 		}
