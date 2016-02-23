@@ -54,32 +54,32 @@ function setHandler(direction) {
     }
 }
 
-if ( document.getElementById('marketing')) {
-  var waypoint = new Waypoint({
-    element: document.getElementById('marketing'),
-    handler: function(direction) {
-      setHandler(direction)
-    }
-  })
-} else if (document.getElementById('projects-text')) {
-  var waypoint = new Waypoint({
-    element: document.getElementById('projects-text'),
-    handler: function(direction) {
-      setHandler(direction)
-    }
-  })
-} else if (document.getElementById('book-text')) {
-  var waypoint = new Waypoint({
-    element: document.getElementById('book-text'),
-    handler: function(direction) {
-      setHandler(direction)
-    }
-  })
-} else if (document.getElementById('about-text')) {
-  var waypoint = new Waypoint({
-    element: document.getElementById('about-text'),
-    handler: function(direction) {
-      setHandler(direction)
-    }
-  })
-}
+// if ( document.getElementById('marketing')) {
+//   var waypoint = new Waypoint({
+//     element: document.getElementById('marketing'),
+//     handler: function(direction) {
+//       setHandler(direction)
+//     }
+//   })
+// } else if (document.getElementById('projects-text')) {
+//   var waypoint = new Waypoint({
+//     element: document.getElementById('projects-text'),
+//     handler: function(direction) {
+//       setHandler(direction)
+//     }
+//   })
+// } else if (document.getElementById('book-text')) {
+//   var waypoint = new Waypoint({
+//     element: document.getElementById('book-text'),
+//     handler: function(direction) {
+//       setHandler(direction)
+//     }
+//   })
+// } else if (document.getElementById('about-text')) {
+//   var waypoint = new Waypoint({
+//     element: document.getElementById('about-text'),
+//     handler: function(direction) {
+//       setHandler(direction)
+//     }
+//   })
+// }
