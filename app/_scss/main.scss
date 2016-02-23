@@ -1056,3 +1056,14 @@ body {
 pre {
   font-size: 0.7em;
 }
+
+.header.fixed-header {
+  height: 60px;
+}
+
+#trigger {
+  padding: 0;
+  margin-right: 11px;
+  margin-bottom: 10px;
+  top: -9px;
+}
