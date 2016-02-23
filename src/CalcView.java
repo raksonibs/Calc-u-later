@@ -635,21 +635,6 @@ public class CalcView extends JFrame
 			setCalcValue(b.toPlainString());
 			userValueText.setText("");
 			
-		}else if (button.equals("!")){
-			
-			System.out.println("Factorial");
-			String input  = userValueText.getText();
-			double d = Double.valueOf(numbers.pop().toString());
-			
-			history.setText(his+","+input+button+"=");
-			Double result = factorial(d);
-			BigDecimal ans = new BigDecimal(result);
-			
-			numbers.push(ans);
-			setCalcValue(result.toString());
-			userValueText.setText("");
-			
-			
 		}
 
 		else if (button.equals("!")){
@@ -670,26 +655,26 @@ public class CalcView extends JFrame
 		}
 
 	}
-	public static double factorial(double num){
-		if(num == 1)
-			return 1;
-		else
-			return num * factorial(num-1);
-	}
+//	public static double factorial(double num){
+//		if(num == 1)
+//			return 1;
+//		else
+//			return num * factorial(num-1);
+//	}
 	
 	//method for factorial button
-//	public static double factorial(double b)
-//	{
-//		double r = 1.0;
-//		System.out.println("working with: " + b);
-//		while (b > 1.0)
-//		{
-//			r = r * b;
-//			b -= 1;
-//			System.out.println(r);
-//		}
-//		return r;
-//	}
+	public static double factorial(double b)
+	{
+		double r = 1.0;
+		System.out.println("working with: " + b);
+		while (b > 1.0)
+		{
+			r = r * b;
+			b -= 1;
+			System.out.println(r);
+		}
+		return r;
+	}
 
 	//Can we remove this method now?
 	public static void changeInputButton(int buttonInput) {
