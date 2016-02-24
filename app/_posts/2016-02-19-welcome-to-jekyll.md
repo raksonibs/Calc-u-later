@@ -10,7 +10,12 @@ Go ahead and explore this site. New improvements are on the way like CLI, an API
 
 So go on and explore!
 
+Here are our current documents:
+
+[Tests][tests]
+
 Please file all bugs/feature requests at [the Calc-u-later repo][jekyll-gh].
 
+[tests]: https://s3-us-west-2.amazonaws.com/bookpdftest/tests.pdf
 [jekyll-gh]:   https://github.com/raksonibs/Calc-u-later
 [jekyll-help]: https://github.com/jekyll/jekyll-help
