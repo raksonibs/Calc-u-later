@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.awt.GridBagLayout;
 import java.awt.Container;
@@ -32,7 +31,6 @@ public class CalcView extends JFrame
 	private static JTextField calcText;
 	private static JTextField history;
 	private static Stack<BigDecimal> numbers;
-	private static Stack<String> expression; 
 	
 	private static int roundingLengthAfterDecimal;
 	private static int roundingLengthBeforeDecimal;
@@ -48,8 +46,7 @@ public class CalcView extends JFrame
 		this.pack();
 		this.setVisible(true);
 		this.numbers = new Stack();
-		this.expression = new Stack();
-
+		
 	}
 
 	public static void addComponentsToPane(Container pane, final CalcController theController) {
@@ -237,6 +234,16 @@ public class CalcView extends JFrame
 		c.gridy = 4;
 		pane.add(button9, c);
 		
+		button =  new ButtonAdapter("UNDO") {
+			public void pressed(){
+				registerButton("UNDO", theController);
+			}
+		};
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 5;
+		pane.add(button, c);
+		
 		button =  new ButtonAdapter("+") {
 			public void pressed(){
 				registerButton("+", theController);
@@ -316,17 +323,6 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter("!") {
-			public void pressed(){
-				registerButton("!", theController);
-			}
-		};
-		c.gridx = 0;
-		c.gridwidth = 1;
-		c.gridy = 7;
-		pane.add(button, c);
-
 
 		button =  new ButtonAdapter("cos") {
 			public void pressed(){
@@ -358,7 +354,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 1;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 7;       //third row
+		c.gridy = 8;       //third row
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
@@ -369,7 +365,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 3;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 7;       //third row
+		c.gridy = 8;       //third row
 		pane.add(button, c);
 }
 
@@ -383,8 +379,7 @@ public class CalcView extends JFrame
 		return new BigInteger(userValueText.getText());
 	}
 	
-	public static void registerButton(String button, CalcController theController) {	
-		String pervious;
+	public static void registerButton(String button, CalcController theController) {		
 		String his = history.getText();
 		// right now this method is big, so when we refactor it we will put each button into its own controller method
 		// furthermore, we will make the stack and history be part of the model
@@ -407,22 +402,13 @@ public class CalcView extends JFrame
 				double val = Double.valueOf(userValueText.getText());
 				numbers.push(new BigDecimal(val));
 			}
-			//history.setText(pervious+","+input+button+"=");
+			history.setText(his+","+input+button+"=");
+
 			BigDecimal num1 = numbers.pop();
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-//<<<<<<< HEAD
-			if (! expression.empty()){
-			pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-			history.setText(pervious+","+num2+button+num1+"=");
-			}
-			else if (expression.empty())
-			history.setText(num2+button+num1+"=");
-//=======
-//>>>>>>> f4465da344082b4e3b9ffb2b9e783fc5eec9d7e3
 
-			expression.push(num2+"+"+num1);
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
 			
@@ -433,7 +419,6 @@ public class CalcView extends JFrame
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
-			
 		} else if (button.equals("-")) {
 			System.out.println("subtracting");
 			String input = userValueText.getText();
@@ -443,28 +428,13 @@ public class CalcView extends JFrame
 				double val = Double.parseDouble(userValueText.getText());
 				numbers.push(BigDecimal.valueOf(val));
 			}
-			
-			//history.setText(his+","+input+button+"=");
+
+			history.setText(his+","+input+button+"=");
 
 			BigDecimal num1 = numbers.pop();
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-			if (! expression.empty()){
-				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-				history.setText(pervious+","+num2+button+num1+"=");
-				}
-				else if (expression.empty())
-				history.setText(num2+button+num1+"=");
-			
-			if (! expression.empty()){
-				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-				history.setText(pervious+","+num2+button+num1+"=");
-				}
-				else if (expression.empty())
-				history.setText(num2+button+num1+"=");
-
-				expression.push(num2+"-"+num1);
 			
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
@@ -494,13 +464,6 @@ public class CalcView extends JFrame
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
 			BigDecimal value = num2.multiply(num1);
-			if (! expression.empty()){
-				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-				history.setText(pervious+","+num2+button+num1+"=");
-				}
-				else if (expression.empty())
-				history.setText(num2+button+num1+"=");
-			
 			numbers.push(value);
 			
 			//Because multiplying numbers can increase the number of digits very easily
@@ -528,12 +491,6 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
-			if (! expression.empty()){
-				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-				history.setText(pervious+","+num2+button+num1+"=");
-				}
-				else if (expression.empty())
-				history.setText(num2+button+num1+"=");
 			
 			MathContext roundVal = new MathContext(5);
 			
@@ -628,7 +585,6 @@ public class CalcView extends JFrame
 			numbers.push(b);
 			setCalcValue(b.toPlainString());
 			userValueText.setText("");
-			
 		}
 
 		else if (button.equals("!")){
@@ -643,18 +599,41 @@ public class CalcView extends JFrame
 			System.out.println(ans);
 			BigDecimal b = BigDecimal.valueOf(ans);
 			numbers.push(b);
-			calcText.setText(ans.toString());
+
+			findRoundingValue(b.toPlainString());
+			
+			setCalcValue(b.toPlainString());
 			userValueText.setText("");
 
 		}
 
+		
+		else if (button.equals("UNDO")){
+
+			/*System.out.println("factorial");
+			String input = userValueText.getText();
+
+			history.setText(his+","+input+button+"=");
+
+			Double num1 = numbers.pop().doubleValue();
+			Double ans = factorial(num1);
+			System.out.println(ans);
+			BigDecimal b = BigDecimal.valueOf(ans);
+			numbers.push(b);
+
+			findRoundingValue(b.toPlainString());
+			
+			setCalcValue(b.toPlainString());
+			userValueText.setText("");*/
+			
+			numbers.pop();
+			
+			String newText = history.getText();
+			newText = newText.substring(0, newText.length()-2);
+			history.setText(newText);
+
+		}
 	}
-//	public static double factorial(double num){
-//		if(num == 1)
-//			return 1;
-//		else
-//			return num * factorial(num-1);
-//	}
 	
 	//method for factorial button
 	public static double factorial(double b)
