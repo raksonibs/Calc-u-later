@@ -393,6 +393,8 @@ public class CalcView extends JFrame
 		
 		
 		if (button.equals("+")) {
+//			should call controller method addition
+//			which calls model method of addition
 			System.out.println("addition");
 			String input = userValueText.getText();
 			
@@ -647,25 +649,6 @@ public class CalcView extends JFrame
 			System.out.println(r);
 		}
 		return r;
-	}
-
-	//Can we remove this method now?
-	public static void changeInputButton(int buttonInput) {
-
-		String value = String.valueOf(buttonInput);
-		value = userValueText.getText() + value;
-		userValueText.setText(value);
-		String his = history.getText();
-		
-		if (history.getText().equals("Start a new calculation")) {
-			history.setText("");
-		}
-		
-		char lastChar = his.charAt(his.length() - 1);
-		if (lastChar == '=') {
-			String removeEquals = his.substring(0, his.length() - 1);
-			history.setText(removeEquals);
-		}
 	}
 	
 	//Added to handle doubles such as pi

@@ -3,5 +3,12 @@
 
 Basic calculator example in Java.
 
+TODO:
 
-- Divide history array into next =, last sign in that is it's sign to do. 
+1. Factor logic out of View
+2. Write Tests according to test document
+
+Current Bugs:
+
+1. Undo
+2. Infix has problems
