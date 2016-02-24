@@ -52,7 +52,7 @@ html, body {
 }
 
 body {
-  color: #17a689;
+  color: #4E82E1;
   background: #F3F3F3;
   padding-top: 100px;
 }
@@ -79,26 +79,26 @@ body {
 .header .text-muted .starter {
   float: right;
   line-height: 2.5;
-  color: #17a689;
+  color: #4E82E1;
 }
 
 .nav li:hover a {
   background: transparent;
 }
 .nav li:hover a span {
-  background: #1abc9c;
+  background: #265997;
   color: #F3F3F3;
 }
 .nav li a {
-  color: #17a689;
+  color: #4E82E1;
   line-height: 3;
 }
 .nav li a.active span {
-  background: #1abc9c;
+  background: #265997;
   color: #F3F3F3;
 }
 .nav li a span {
-  box-shadow: inset 0 0 0 0.1em #1abc9c;
+  box-shadow: inset 0 0 0 0.1em #265997;
   font-size: 1.6em;
   padding: .2em .4em;
   height: 30px !important;
@@ -109,7 +109,7 @@ body {
 ----------------------------------------------*/
 .jumbotron {
   color: #fff;
-  background: #1abc9c;
+  background: #265997;
 }
 
 /* Sidebar
@@ -135,7 +135,7 @@ body {
   background: #F3F3F3;
   -webkit-transition: left 0.3s ease, box-shadow 0.3s ease 0.2s;
   transition: left 0.3s ease, box-shadow 0.3s ease 0.2s;
-  box-shadow: 0.5em 0 0 0 #1abc9c, 0.6em 0 0 0 #17a689;
+  box-shadow: 0.5em 0 0 0 #265997, 0.6em 0 0 0 #4E82E1;
 }
 .sidebar #close {
   float: right;
@@ -146,11 +146,11 @@ body {
 }
 .sidebar.closed {
   left: -260px;
-  box-shadow: 0 0 0 #1abc9c;
+  box-shadow: 0 0 0 #265997;
 }
 .sidebar h2 {
   padding: .5em;
-  color: #1abc9c;
+  color: #265997;
 }
 .sidebar ul {
   padding: 0;
@@ -177,20 +177,20 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  border: 2px solid #1abc9c;
-  background: #1abc9c;
+  border: 2px solid #265997;
+  background: #265997;
   color: #F3F3F3;
 }
 .sidebar ul li a {
   color: white;
 }
 .sidebar ul li:hover {
-  background: #17a689;
-  border-color: #17a689;
+  background: #4E82E1;
+  border-color: #4E82E1;
 }
 
 .footer a {
-  color: #17a689;
+  color: #4E82E1;
 }
 
 /* Blurred class
