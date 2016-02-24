@@ -13,11 +13,14 @@ Go ahead and explore this site!
 Here are our current documents:
 
 [Tests][tests]
+[User_manual][user_manual]
+[Requirements][req]
 
 Features:
 1. Math operations
 2. History
 3. GridLayout
+4. Big Decimal
 
 ### 1. Example Math Operation:
 {% highlight java %}
@@ -99,6 +102,10 @@ public static void registerButton(String button, CalcController theController) {
 
 Plans:
 1. Refactoring Majorly (ie: Change Stack, build thin controllers, logicless views, and bulky util/model files)
+### 2.Testing:
+{% highlight java %}
+...
+{% endhighlight %}
 2. Enchancement of Documents
 3. New requirements
 
@@ -109,5 +116,7 @@ Strech Goals:
 Please file all bugs/feature requests at [the Calc-u-later repo][jekyll-gh].
 
 [tests]: https://s3-us-west-2.amazonaws.com/bookpdftest/tests.pdf
+[User_manual]: https://s3-us-west-2.amazonaws.com/bookpdftest/User+Manual.pdf
+[req]: https://s3-us-west-2.amazonaws.com/bookpdftest/req.pdf
 [jekyll-gh]:   https://github.com/raksonibs/Calc-u-later
 [jekyll-help]: https://github.com/jekyll/jekyll-help
