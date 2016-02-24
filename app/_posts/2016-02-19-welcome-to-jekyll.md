@@ -17,6 +17,7 @@ Here are our current documents:
 [Requirements][req]
 
 Features:
+
 1. Math operations
 2. History
 3. GridLayout
@@ -64,14 +65,29 @@ c.gridy = 6;
 pane.add(button, c);
 {% endhighlight %}
 
+### 4.BigDecimal:
+{% highlight java %}
+BigDecimal num1 = numbers.pop();
+System.out.println(num1);
+BigDecimal num2 = numbers.pop();
+System.out.println(num2);
+
+MathContext roundVal = new MathContext(5);
+
+private static Stack<BigDecimal> numbers;
+BigDecimal result = num2.divide(num1, roundVal);
+findRoundingValue(result.toPlainString());
+{% endhighlight %}
 
 Highlights:
+
 1. Stack
 2. Testing (Incomplete right now)
 3. Dispatcher in our View (needs refactoring)
 
 ### 1.Stack:
 {% highlight java %}
+private static Stack<BigDecimal> numbers;
 this.numbers = new Stack();
 {% endhighlight %}
 
@@ -83,7 +99,7 @@ this.numbers = new Stack();
 ### 3.Dispatcher:
 {% highlight java %}
 public static void registerButton(String button, CalcController theController) {  
-    String pervious;
+    String previous;
     String his = history.getText();
     // right now this method is big, so when we refactor it we will put each button into its own controller method
     // furthermore, we will make the stack and history be part of the model
@@ -101,16 +117,13 @@ public static void registerButton(String button, CalcController theController) {
 {% endhighlight %}
 
 Plans:
-1. Refactoring Majorly (ie: Change Stack, build thin controllers, logicless views, and bulky util/model files)
 
-### 2.Testing:
-{% highlight java %}
-...
-{% endhighlight %}
+1. Refactoring Majorly (ie: Change Stack, build thin controllers, logicless views, and bulky util/model files)
 2. Enchancement of Documents
 3. New requirements
 
 Strech Goals:
+
 1. Servlet
 2. CLI
 
@@ -119,5 +132,6 @@ Please file all bugs/feature requests at [the Calc-u-later repo][jekyll-gh].
 [tests]: https://s3-us-west-2.amazonaws.com/bookpdftest/tests.pdf
 [User_manual]: https://s3-us-west-2.amazonaws.com/bookpdftest/User+Manual.pdf
 [req]: https://s3-us-west-2.amazonaws.com/bookpdftest/req.pdf
+[application]: https://s3-us-west-2.amazonaws.com/bookpdftest/Export1.jar
 [jekyll-gh]:   https://github.com/raksonibs/Calc-u-later
 [jekyll-help]: https://github.com/jekyll/jekyll-help
