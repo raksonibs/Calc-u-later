@@ -102,6 +102,7 @@ public static void registerButton(String button, CalcController theController) {
 
 Plans:
 1. Refactoring Majorly (ie: Change Stack, build thin controllers, logicless views, and bulky util/model files)
+
 ### 2.Testing:
 {% highlight java %}
 ...
