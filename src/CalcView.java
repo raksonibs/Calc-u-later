@@ -237,12 +237,6 @@ public class CalcView extends JFrame
 		c.gridy = 4;
 		pane.add(button9, c);
 		
-		button = new ButtonAdapter(".") {public void pressed(){ theController.clear();}};
-		c.gridx = 0;
-		c.gridwidth = 1;
-		c.gridy = 5;
-		pane.add(button, c);
-		
 		button =  new ButtonAdapter("+") {
 			public void pressed(){
 				registerButton("+", theController);
