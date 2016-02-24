@@ -6,8 +6,6 @@ import org.junit.runners.Suite;
 
 // Within the {} in the following use a comma separated list of *.class
 
-@Suite.SuiteClasses({ 
-	CalcViewTest.class, 
-	CalcModelTest.class })
+@Suite.SuiteClasses({ })
 
 public class AllTests { } 
