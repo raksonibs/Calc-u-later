@@ -31,7 +31,8 @@ public class CalcView extends JFrame
 	private static JTextField calcText;
 	private static JTextField history;
 	private static Stack<BigDecimal> numbers;
-	
+	private static Stack<String> expression; 
+
 	private static int roundingLengthAfterDecimal;
 	private static int roundingLengthBeforeDecimal;
 	
@@ -46,7 +47,8 @@ public class CalcView extends JFrame
 		this.pack();
 		this.setVisible(true);
 		this.numbers = new Stack();
-		
+		this.expression = new Stack();
+
 	}
 
 	public static void addComponentsToPane(Container pane, final CalcController theController) {
@@ -381,6 +383,7 @@ public class CalcView extends JFrame
 	
 	public static void registerButton(String button, CalcController theController) {		
 		String his = history.getText();
+		String pervious;
 		// right now this method is big, so when we refactor it we will put each button into its own controller method
 		// furthermore, we will make the stack and history be part of the model
 		if (!button.equals("+/-") && !button.equals(".")) {
@@ -410,6 +413,14 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			//the following part is for infix entry of the addition
+			if (! expression.empty()){
+				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+				history.setText(pervious+","+num2+button+num1+"=");
+				}
+				else if (expression.empty())
+				history.setText(num2+button+num1+"=");
+			expression.push(num2+"+"+num1);
 
 			BigDecimal value = num2.add(num1);
 			numbers.push(value);
@@ -437,6 +448,15 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			// the following part is for the infix entry of subtraction
+			if (! expression.empty()){
+				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+				history.setText(pervious+","+num2+button+num1+"=");
+				}
+				else if (expression.empty())
+				history.setText(num2+button+num1+"=");
+
+				expression.push(num2+"-"+num1);
 			
 			BigDecimal value = num2.subtract(num1);
 			numbers.push(value);
@@ -466,6 +486,17 @@ public class CalcView extends JFrame
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
 			BigDecimal value = num2.multiply(num1);
+			//the following part is for infix entry of the multiplication
+			if (! expression.empty()){
+				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+				history.setText(pervious+","+num2+button+num1+"=");
+				}
+				else if (expression.empty())
+				history.setText(num2+button+num1+"=");
+			
+			expression.push(num2+"*"+num1);
+
+			
 			numbers.push(value);
 			
 			//Because multiplying numbers can increase the number of digits very easily
@@ -493,6 +524,16 @@ public class CalcView extends JFrame
 			System.out.println(num1);
 			BigDecimal num2 = numbers.pop();
 			System.out.println(num2);
+			//the following part is for infix entry of division 
+			if (! expression.empty()){
+				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+				history.setText(pervious+","+num2+button+num1+"=");
+				}
+				else if (expression.empty())
+				history.setText(num2+button+num1+"=");
+			
+			expression.push(num2+"*"+num1);
+
 			
 			MathContext roundVal = new MathContext(5);
 			
