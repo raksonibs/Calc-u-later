@@ -13,8 +13,12 @@ Go ahead and explore this site!
 Here are our current documents:
 
 [Tests][tests]
+
 [User_manual][user_manual]
+
 [Requirements][req]
+
+[Design][design]
 
 Features:
 
@@ -132,6 +136,7 @@ Please file all bugs/feature requests at [the Calc-u-later repo][jekyll-gh].
 [tests]: https://s3-us-west-2.amazonaws.com/bookpdftest/tests.pdf
 [User_manual]: https://s3-us-west-2.amazonaws.com/bookpdftest/User+Manual.pdf
 [req]: https://s3-us-west-2.amazonaws.com/bookpdftest/req.pdf
+[design]: https://s3-us-west-2.amazonaws.com/bookpdftest/design.pdf
 [application]: https://s3-us-west-2.amazonaws.com/bookpdftest/Export1.jar
 [jekyll-gh]:   https://github.com/raksonibs/Calc-u-later
 [jekyll-help]: https://github.com/jekyll/jekyll-help
