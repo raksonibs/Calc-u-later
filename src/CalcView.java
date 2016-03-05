@@ -555,19 +555,24 @@ public class CalcView extends JFrame
 			userValueText.setText("");
 
 			}	
-
+		// fixed negate button
 		else if (button.equals("+/-")) {
 			
 			String userVal = userValueText.getText();
 			char changeSign = userVal.charAt(0);
 			
 			if (changeSign == '-') {
-				userVal = userVal.substring(1, his.length());
+				userVal = userVal.replace('-', '+');
 				userValueText.setText(userVal);
-			} else {
-				userVal = "-"+userVal;
+			} else if(changeSign == '+'){
+				userVal = userVal.replace('+', '-');
+				userValueText.setText(userVal);
+			}else
+			{
+				userVal = '-'+userVal;
 				userValueText.setText(userVal);
 			}
+			
 			
 			
 		} else if (button.equals(".")) {
@@ -668,6 +673,7 @@ public class CalcView extends JFrame
 			
 			setCalcValue(b.toPlainString());
 			userValueText.setText("");*/
+			//if(userValueText.)
 			
 			numbers.pop();
 			
@@ -700,7 +706,7 @@ public class CalcView extends JFrame
 		//completely confident in my logic for it...
 		//I think the only reason this works is because of the way decimals are handled earlier
 		
-		String value = String.format("%.5f", buttonInput);
+		String value = String.valueOf(buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
