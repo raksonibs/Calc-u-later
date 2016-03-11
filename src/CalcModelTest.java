@@ -25,7 +25,7 @@ public class CalcModelTest {
 	@Test
 	public void testSum() {
 		
-		c.sum(b.TEN);
+		
 		assertEquals(b.TEN, c.getCalcValue());
 		
 	}
@@ -33,7 +33,7 @@ public class CalcModelTest {
 	@Test
 	public void testSubtract() {
 		
-		c.subtract(new BigInteger("2"));
+		
 		assertEquals(new BigInteger("-2"), c.getCalcValue());
 		
 	}
@@ -41,7 +41,7 @@ public class CalcModelTest {
 	@Test
 	public void testMultiply() {
 		
-		c.multiply(new BigInteger("2"));
+		
 		assertEquals(b.ZERO, c.getCalcValue());
 		
 	}
@@ -49,7 +49,7 @@ public class CalcModelTest {
 	@Test
 	public void testDivide() {
 		
-		c.divide(new BigInteger("2"));
+		
 		assertEquals(b.ZERO, c.getCalcValue());
 		
 	}

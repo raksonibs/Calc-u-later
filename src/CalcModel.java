@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,7 +6,9 @@ import java.util.Stack;
 
 public class CalcModel
 {
-	private BigInteger calcValue;
+	private BigDecimal calcValue;
+	private Stack history;
+	private Stack numbers;
 
 	/**
 	 * Creates a model with no user values and a calculated
@@ -20,6 +23,10 @@ public class CalcModel
 	public void setValue() {
 		
 	}
+	
+	public void pushNumber(BigDecimal number) {
+		numbers.push(number);
+	}
 
 
 	/**
@@ -27,7 +34,9 @@ public class CalcModel
 	 */
 	public void clear()
 	{
-		calcValue = calcValue.ZERO;//BigInteger.ZERO;
+		history = new Stack();
+		numbers = new Stack();
+		calcValue = calcValue.ZERO;
 	}
 
 	/**
@@ -36,9 +45,15 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to add to the current calculated value by.
 	 */
-	public void sum(BigInteger number)
+	public void sum(BigDecimal number)
 	{
-		calcValue = calcValue.add(number);		
+		BigDecimal num1 = (BigDecimal) numbers.pop();
+		System.out.println(num1);
+		BigDecimal num2 = (BigDecimal) numbers.pop();
+		System.out.println(num2);
+		calcValue = num2.add(num1);
+		
+		numbers.push(calcValue);
 	}
 	
 	/**
@@ -47,7 +62,7 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to subtract from the current calculated value by.
 	 */
-	public void subtract(BigInteger userValue)
+	public void subtract(BigDecimal userValue)
 	{
 		calcValue = calcValue.subtract(userValue);
 	}
@@ -58,7 +73,7 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to multiply the current calculated value by.
 	 */
-	public void multiply(BigInteger userValue)
+	public void multiply(BigDecimal userValue)
 	{
 		calcValue = calcValue.multiply(userValue);
 	}
@@ -70,7 +85,7 @@ public class CalcModel
 	 *            The value to multiply the current calculated value by.
 	 * @pre. userValue is not equivalent to zero.
 	 */
-	public void divide(BigInteger userValue)
+	public void divide(BigDecimal userValue)
 	{
 		calcValue = calcValue.divide(userValue);
 	}
@@ -80,8 +95,8 @@ public class CalcModel
 	 * 
 	 * @return The current calculated value.
 	 */
-	public BigInteger getCalcValue()
+	public BigDecimal getCalcValue()
 	{
-		return calcValue;
+		return (BigDecimal) numbers.peek();
 	}
 }

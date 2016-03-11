@@ -404,32 +404,35 @@ public class CalcView extends JFrame
 			
 			if (!userValueText.getText().equals("")) {
 				// push number only if value inputted
-				double val = Double.valueOf(userValueText.getText());
-				numbers.push(new BigDecimal(val));
+				double val = Double.parseDouble(userValueText.getText());
+				BigDecimal value = BigDecimal.valueOf(val);
+				
+				theController.sum(value);
 			}
-			history.setText(his+","+input+button+"=");
-
-			BigDecimal num1 = numbers.pop();
-			System.out.println(num1);
-			BigDecimal num2 = numbers.pop();
-			System.out.println(num2);
-			//the following part is for infix entry of the addition
-			if (! expression.empty()){
-				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-				history.setText(pervious+","+num2+button+num1+"=");
-				}
-				else if (expression.empty())
-				history.setText(num2+button+num1+"=");
-			expression.push(num2+"+"+num1);
-
-			BigDecimal value = num2.add(num1);
-			numbers.push(value);
-			
-			MathContext roundVal = new MathContext(5);
-			BigDecimal result = num1.add(num2, roundVal);
-			findRoundingValue(result.toPlainString());
-			
-			setCalcValue(value.toString());
+//			history.setText(his+","+input+button+"=");
+//
+//			BigDecimal num1 = numbers.pop();
+//			System.out.println(num1);
+//			BigDecimal num2 = numbers.pop();
+//			System.out.println(num2);
+//			//the following part is for infix entry of the addition
+//			if (! expression.empty()){
+//				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
+//				history.setText(pervious+","+num2+button+num1+"=");
+//				}
+//				else if (expression.empty())
+//				history.setText(num2+button+num1+"=");
+//			expression.push(num2+"+"+num1);
+//
+//			BigDecimal value = num2.add(num1);
+//			numbers.push(value);
+//			
+//			MathContext roundVal = new MathContext(5);
+//			BigDecimal result = num1.add(num2, roundVal);
+//			BigDecimal result = 
+//			findRoundingValue(result.toPlainString());
+//			
+//			setCalcValue(value.toString());
 			
 			userValueText.setText("");
 		} else if (button.equals("-")) {

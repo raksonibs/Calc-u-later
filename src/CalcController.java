@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,22 +61,23 @@ public class CalcController
 		
 	}
 //	  NTD: should be bigint array
-public void sum(BigInteger number) {
+public void sum(BigDecimal number) {
+	model.pushNumber(number);
 	model.sum(number);
 	showValue();
 }
 	  
-public void subtract(BigInteger userValue) {
+public void subtract(BigDecimal userValue) {
 	model.subtract(userValue);
 	showValue();
 }
 
-public void multiply(BigInteger userValue) {
+public void multiply(BigDecimal userValue) {
 	model.multiply(userValue);
 	showValue();
 }
 
-public void divide(BigInteger userValue) {
+public void divide(BigDecimal userValue) {
 	if(!userValue.equals(BigInteger.ZERO)) {
 		model.divide(userValue);
 	}
@@ -94,7 +96,7 @@ public void setValue(int value) {
 }
 
 private void showValue() {
-    BigInteger calcValue = model.getCalcValue();
+    BigDecimal calcValue = model.getCalcValue();
     view.setCalcValue(calcValue.toString());
     
 }
