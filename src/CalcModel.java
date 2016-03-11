@@ -45,7 +45,7 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to add to the current calculated value by.
 	 */
-	public void sum(BigDecimal number)
+	public void sum()
 	{
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);

@@ -61,9 +61,8 @@ public class CalcController
 		
 	}
 //	  NTD: should be bigint array
-public void sum(BigDecimal number) {
-	model.pushNumber(number);
-	model.sum(number);
+public void sum() {
+	model.sum();
 	showValue();
 }
 	  
@@ -97,8 +96,13 @@ public void setValue(int value) {
 
 private void showValue() {
     BigDecimal calcValue = model.getCalcValue();
+    System.out.println("Current value is: " + calcValue.toString());
     view.setCalcValue(calcValue.toString());
     
+}
+
+public void addValue(BigDecimal value) {
+	model.pushNumber(value);
 }
 
 

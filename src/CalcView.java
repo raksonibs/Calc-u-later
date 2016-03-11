@@ -348,7 +348,7 @@ public class CalcView extends JFrame
 		
 		y += 1;
 
-		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory();}};
+		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 0;       //reset to default
 		c.weighty = 1.0;   //request any extra vertical space
@@ -398,43 +398,10 @@ public class CalcView extends JFrame
 		if (button.equals("+")) {
 //			should call controller method addition
 //			which calls model method of addition
-			System.out.println("addition");
-			String input = userValueText.getText();
-			
-			
-			if (!userValueText.getText().equals("")) {
-				// push number only if value inputted
-				double val = Double.parseDouble(userValueText.getText());
-				BigDecimal value = BigDecimal.valueOf(val);
-				
-				theController.sum(value);
-			}
-//			history.setText(his+","+input+button+"=");
-//
-//			BigDecimal num1 = numbers.pop();
-//			System.out.println(num1);
-//			BigDecimal num2 = numbers.pop();
-//			System.out.println(num2);
-//			//the following part is for infix entry of the addition
-//			if (! expression.empty()){
-//				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-//				history.setText(pervious+","+num2+button+num1+"=");
-//				}
-//				else if (expression.empty())
-//				history.setText(num2+button+num1+"=");
-//			expression.push(num2+"+"+num1);
-//
-//			BigDecimal value = num2.add(num1);
-//			numbers.push(value);
-//			
-//			MathContext roundVal = new MathContext(5);
-//			BigDecimal result = num1.add(num2, roundVal);
-//			BigDecimal result = 
-//			findRoundingValue(result.toPlainString());
-//			
-//			setCalcValue(value.toString());
-			
+			System.out.println("addition");			
+			theController.sum();			
 			userValueText.setText("");
+			
 		} else if (button.equals("-")) {
 			System.out.println("subtracting");
 			String input = userValueText.getText();
@@ -727,7 +694,7 @@ public class CalcView extends JFrame
 	}
 	
 
-	public static void addToHistory() {
+	public static void addToHistory(CalcController theController) {
 		String value = history.getText();
 		
 		findRoundingValue(userValueText.getText());
@@ -738,6 +705,7 @@ public class CalcView extends JFrame
 		
 		BigDecimal allValue = new BigDecimal(val);
 		numbers.push(allValue);
+		theController.addValue(allValue);
 		System.out.println(numbers.get(numbers.size() -1));
 		
 		System.out.println("over here");
@@ -786,6 +754,7 @@ public class CalcView extends JFrame
 		//Here we see what the largest number of digits before the decimal is
 		//and the largest number of digits after the decimal place is
 		//Combine these two values together to get the total length we want out result to be
+		
 		if(value.length() >  roundingLengthBeforeDecimal + roundingLengthAfterDecimal){
 		value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
 		}
