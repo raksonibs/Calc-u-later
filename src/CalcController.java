@@ -83,6 +83,21 @@ public void divide() {
 	showValue();
 }
 
+public void cos() {
+	model.cos();
+	showValue();
+}
+
+public void factorial() {
+	model.factorial();
+	showValue();
+}
+
+public void sin() {
+	model.sin();
+	showValue();
+}
+
 public void clear() {
 	model.clear();
 	showValue();

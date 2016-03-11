@@ -459,60 +459,25 @@ public class CalcView extends JFrame
 		} else if (button.equals("sin")) {
 			
 			System.out.print("Sin of ");
-			String input = userValueText.getText();
-
-			history.setText(his+","+input+button+"=");
-	
-			//Fixed convolution
-			Double num1 = numbers.pop().doubleValue();
-			System.out.println(num1);
-			num1 = Math.sin(num1);
-			System.out.println(num1);
 			
-			BigDecimal b = BigDecimal.valueOf(num1);
+			theController.sin();
 			
-			numbers.push(b);
-			
-			setCalcValue(b.toPlainString());
 			userValueText.setText("");
 		} 
 
 		else if (button.equals("cos")) {
 			
 			System.out.print("Cos of ");
-			String input = userValueText.getText();
-
-			history.setText(his+","+input+button+"=");
-	
-			//Fixed convolution
-			Double num1 = numbers.pop().doubleValue();
-			System.out.println(num1);
-			num1 = Math.cos(num1);
-			System.out.println(num1);
 			
-			BigDecimal b = BigDecimal.valueOf(num1);
-
-			numbers.push(b);
-			setCalcValue(b.toPlainString());
+			theController.cos();
+			
 			userValueText.setText("");
 		}
 
 		else if (button.equals("!")){
 
 			System.out.println("factorial");
-			String input = userValueText.getText();
-
-			history.setText(his+","+input+button+"=");
-
-			Double num1 = numbers.pop().doubleValue();
-			Double ans = factorial(num1);
-			System.out.println(ans);
-			BigDecimal b = BigDecimal.valueOf(ans);
-			numbers.push(b);
-
-			findRoundingValue(b.toPlainString());
-			
-			setCalcValue(b.toPlainString());
+			theController.factorial();
 			userValueText.setText("");
 
 		}
@@ -547,18 +512,7 @@ public class CalcView extends JFrame
 	}
 	
 	//method for factorial button
-	public static double factorial(double b)
-	{
-		double r = 1.0;
-		System.out.println("working with: " + b);
-		while (b > 1.0)
-		{
-			r = r * b;
-			b -= 1;
-			System.out.println(r);
-		}
-		return r;
-	}
+	
 	
 	//Added to handle doubles such as pi
 	public static void changeInputButton(double buttonInput) {

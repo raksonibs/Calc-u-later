@@ -89,7 +89,53 @@ public class CalcModel
 		
 		numbers.push(calcValue);
 	}
-
+	
+	public void sin() {
+		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
+		System.out.println(num1);
+		num1 = Math.sin(num1);
+		System.out.println(num1);
+		
+		BigDecimal b = BigDecimal.valueOf(num1);
+		
+		numbers.push(b);
+	}
+	
+	public void cos() {
+		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
+		System.out.println(num1);
+		num1 = Math.cos(num1);
+		System.out.println(num1);
+		
+		BigDecimal b = BigDecimal.valueOf(num1);
+		
+		numbers.push(b);
+	}
+	
+	public void factorial() {
+		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
+		System.out.println(num1);
+		num1 = fact(num1);
+		System.out.println(num1);
+		
+		BigDecimal b = BigDecimal.valueOf(num1);
+		
+		numbers.push(b);
+	}
+	
+	public static double fact(double b)
+	{
+		double r = 1.0;
+		System.out.println("working with: " + b);
+		while (b > 1.0)
+		{
+			r = r * b;
+			b -= 1;
+			System.out.println(r);
+		}
+		return r;
+	}
+	
 	/**
 	 * Divides the calculated value by a user value.
 	 * 
