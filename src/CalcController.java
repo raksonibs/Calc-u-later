@@ -115,6 +115,10 @@ public class CalcController
 		view.setCalcValue(calcValue.toString());
 		
 	}
+	
+	public void undo() {
+		model.undo();
+	}
 
 	public void addValue(BigDecimal value) {
 		model.pushNumber(value);

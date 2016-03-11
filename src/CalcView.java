@@ -483,30 +483,10 @@ public class CalcView extends JFrame
 		}
 
 		
-		else if (button.equals("UNDO")){
-
-			/*System.out.println("factorial");
-			String input = userValueText.getText();
-
-			history.setText(his+","+input+button+"=");
-
-			Double num1 = numbers.pop().doubleValue();
-			Double ans = factorial(num1);
-			System.out.println(ans);
-			BigDecimal b = BigDecimal.valueOf(ans);
-			numbers.push(b);
-
-			findRoundingValue(b.toPlainString());
+		else if (button.equals("UNDO")){			
 			
-			setCalcValue(b.toPlainString());
-			userValueText.setText("");*/
-			//if(userValueText.)
-			
-			numbers.pop();
-			
-			String newText = history.getText();
-			newText = newText.substring(0, newText.length()-2);
-			history.setText(newText);
+			System.out.println("UNDO");
+			theController.undo();
 
 		}
 	}
@@ -601,9 +581,9 @@ public class CalcView extends JFrame
 		//and the largest number of digits after the decimal place is
 		//Combine these two values together to get the total length we want out result to be
 		
-		if(value.length() >  roundingLengthBeforeDecimal + roundingLengthAfterDecimal){
-			value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
-		}
+//		if(value.length() >  roundingLengthBeforeDecimal + roundingLengthAfterDecimal){
+//			value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
+//		}
 		calcText.setText(value);
 	}
 	

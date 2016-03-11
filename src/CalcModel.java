@@ -123,6 +123,10 @@ public class CalcModel
 		numbers.push(b);
 	}
 	
+	public void undo() {
+		numbers.pop();
+	}
+	
 	public static double fact(double b)
 	{
 		double r = 1.0;
