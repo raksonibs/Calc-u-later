@@ -369,7 +369,7 @@ public class CalcView extends JFrame
 		c.gridwidth = 2;   //2 columns wide
 		c.gridy = 8;       //third row
 		pane.add(button, c);
-}
+	}
 
 	/**
 	 * Get the string value of the user input text field.
@@ -416,7 +416,7 @@ public class CalcView extends JFrame
 			theController.divide();			
 			userValueText.setText("");
 
-			}	
+		}	
 		// fixed negate button
 		else if (button.equals("+/-")) {
 			
@@ -555,7 +555,7 @@ public class CalcView extends JFrame
 		System.out.println(numbers.get(numbers.size() -1));
 		
 		System.out.println("over here");
-				
+		
 		if (buttonClicked == 0) {
 			buttonClicked += 1;
 		} else {
@@ -602,7 +602,7 @@ public class CalcView extends JFrame
 		//Combine these two values together to get the total length we want out result to be
 		
 		if(value.length() >  roundingLengthBeforeDecimal + roundingLengthAfterDecimal){
-		value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
+			value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
 		}
 		calcText.setText(value);
 	}

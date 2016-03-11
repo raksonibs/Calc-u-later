@@ -48,7 +48,7 @@ public class CalcController
 	{
 		model = new CalcModel();
 		view = new CalcView(this);
-        view.setVisible(true);
+		view.setVisible(true);
 		model.clear();
 	}
 	
@@ -56,69 +56,69 @@ public class CalcController
 		
 		model = modelIn;
 		view = new CalcView(this);
-        view.setVisible(true);
+		view.setVisible(true);
 		model.clear();
 		
 	}
 //	  NTD: should be bigint array
-public void sum() {
-	model.sum();
-	showValue();
-}
-	  
-public void subtract() {
-	model.subtract();
-	showValue();
-}
-
-public void multiply() {
-	model.multiply();
-	showValue();
-}
-
-public void divide() {
-	if(!model.lastValue().equals(BigDecimal.ZERO)) {
-		model.divide();
+	public void sum() {
+		model.sum();
+		showValue();
 	}
-	showValue();
-}
-
-public void cos() {
-	model.cos();
-	showValue();
-}
-
-public void factorial() {
-	model.factorial();
-	showValue();
-}
-
-public void sin() {
-	model.sin();
-	showValue();
-}
-
-public void clear() {
-	model.clear();
-	showValue();
-	view.setHistory("Start a new calculation");
-	view.setButtonClicked();
-}
-
-public void setValue(int value) {
 	
-}
+	public void subtract() {
+		model.subtract();
+		showValue();
+	}
 
-private void showValue() {
-    BigDecimal calcValue = model.getCalcValue();
-    System.out.println("Current value is: " + calcValue.toString());
-    view.setCalcValue(calcValue.toString());
-    
-}
+	public void multiply() {
+		model.multiply();
+		showValue();
+	}
 
-public void addValue(BigDecimal value) {
-	model.pushNumber(value);
-}
+	public void divide() {
+		if(!model.lastValue().equals(BigDecimal.ZERO)) {
+			model.divide();
+		}
+		showValue();
+	}
+
+	public void cos() {
+		model.cos();
+		showValue();
+	}
+
+	public void factorial() {
+		model.factorial();
+		showValue();
+	}
+
+	public void sin() {
+		model.sin();
+		showValue();
+	}
+
+	public void clear() {
+		model.clear();
+		showValue();
+		view.setHistory("Start a new calculation");
+		view.setButtonClicked();
+	}
+
+	public void setValue(int value) {
+		
+	}
+
+	private void showValue() {
+		BigDecimal calcValue = model.getCalcValue();
+		System.out.println("Current value is: " + calcValue.toString());
+		view.setCalcValue(calcValue.toString());
+		
+	}
+
+	public void addValue(BigDecimal value) {
+		model.pushNumber(value);
+	}
 
 
 
