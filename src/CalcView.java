@@ -401,127 +401,19 @@ public class CalcView extends JFrame
 			System.out.println("addition");			
 			theController.sum();			
 			userValueText.setText("");
-			
+
 		} else if (button.equals("-")) {
-			System.out.println("subtracting");
-			String input = userValueText.getText();
-			
-			if (!userValueText.getText().equals("")) {
-				// push number only if value inputted
-				double val = Double.parseDouble(userValueText.getText());
-				numbers.push(BigDecimal.valueOf(val));
-			}
-
-			history.setText(his+","+input+button+"=");
-
-			BigDecimal num1 = numbers.pop();
-			System.out.println(num1);
-			BigDecimal num2 = numbers.pop();
-			System.out.println(num2);
-			// the following part is for the infix entry of subtraction
-			if (! expression.empty()){
-				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-				history.setText(pervious+","+num2+button+num1+"=");
-				}
-				else if (expression.empty())
-				history.setText(num2+button+num1+"=");
-
-				expression.push(num2+"-"+num1);
-			
-			BigDecimal value = num2.subtract(num1);
-			numbers.push(value);
-			
-			MathContext roundVal = new MathContext(5);
-			BigDecimal result = num1.subtract(num2, roundVal);
-			findRoundingValue(result.toPlainString());
-			
-			setCalcValue(value.toString());
-			
-			userValueText.setText("");
-			
+			System.out.println("subtract");			
+			theController.subtract();			
 			userValueText.setText("");
 		} else if (button.equals("*")) {
-			System.out.println("multiplying");
-			String input = userValueText.getText();
-			if (!userValueText.getText().equals("")) {
-				// push number only if value inputted
-				int val = Integer.parseInt(userValueText.getText());
-				numbers.push(BigDecimal.valueOf(val));
-			}
-			
-			history.setText(his+","+input+button+"=");
-	
-			BigDecimal num1 = numbers.pop();
-			System.out.println(num1);
-			BigDecimal num2 = numbers.pop();
-			System.out.println(num2);
-			BigDecimal value = num2.multiply(num1);
-			//the following part is for infix entry of the multiplication
-			if (! expression.empty()){
-				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-				history.setText(pervious+","+num2+button+num1+"=");
-				}
-				else if (expression.empty())
-				history.setText(num2+button+num1+"=");
-			
-			expression.push(num2+"*"+num1);
-
-			
-			numbers.push(value);
-			
-			//Because multiplying numbers can increase the number of digits very easily
-			//the steps below help maintain a manageable size to display the numbers
-			MathContext roundVal = new MathContext(5);
-			BigDecimal result = num1.multiply(num2, roundVal);
-			findRoundingValue(result.toPlainString());
-			
-			setCalcValue(value.toString());
-			
+			System.out.println("multiplty");			
+			theController.multiply();			
 			userValueText.setText("");
 
 		} else if (button.equals("/")) {
-			System.out.println("dividng");
-			String s = userValueText.getText();
-			if (!userValueText.getText().equals("")) {
-				// push number only if value inputted
-				double val = Double.parseDouble(userValueText.getText());
-				numbers.push(BigDecimal.valueOf(val));
-			}
-			
-			history.setText(his+","+s+button+"=");
-			
-			BigDecimal num1 = numbers.pop();
-			System.out.println(num1);
-			BigDecimal num2 = numbers.pop();
-			System.out.println(num2);
-			//the following part is for infix entry of division 
-			if (! expression.empty()){
-				pervious = expression.toString().replaceAll("\\[","").replaceAll("\\]", "");
-				history.setText(pervious+","+num2+button+num1+"=");
-				}
-				else if (expression.empty())
-				history.setText(num2+button+num1+"=");
-			
-			expression.push(num2+"*"+num1);
-
-			
-			MathContext roundVal = new MathContext(5);
-			
-			//We are rounding the result here to 5 decimal places
-			//This is to handle results that end up having infinite digits
-			BigDecimal value = num2.divide(num1, roundVal);
-			numbers.push(value);
-			
-
-			BigDecimal result = num2.divide(num1, roundVal);
-			findRoundingValue(result.toPlainString());
-
-			if (num1 == BigDecimal.ZERO){
-				setCalcValue("YOU JUST DIVIDED BY ZERO");
-				throw new IllegalArgumentException("I can't believe you've done this.");
-			}
-
-			setCalcValue(value.toString());
+			System.out.println("multiplty");			
+			theController.divide();			
 			userValueText.setText("");
 
 			}	

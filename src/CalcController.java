@@ -66,19 +66,19 @@ public void sum() {
 	showValue();
 }
 	  
-public void subtract(BigDecimal userValue) {
-	model.subtract(userValue);
+public void subtract() {
+	model.subtract();
 	showValue();
 }
 
-public void multiply(BigDecimal userValue) {
-	model.multiply(userValue);
+public void multiply() {
+	model.multiply();
 	showValue();
 }
 
-public void divide(BigDecimal userValue) {
-	if(!userValue.equals(BigInteger.ZERO)) {
-		model.divide(userValue);
+public void divide() {
+	if(!model.lastValue().equals(BigDecimal.ZERO)) {
+		model.divide();
 	}
 	showValue();
 }

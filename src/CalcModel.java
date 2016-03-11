@@ -62,9 +62,15 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to subtract from the current calculated value by.
 	 */
-	public void subtract(BigDecimal userValue)
+	public void subtract()
 	{
-		calcValue = calcValue.subtract(userValue);
+		BigDecimal num1 = (BigDecimal) numbers.pop();
+		System.out.println(num1);
+		BigDecimal num2 = (BigDecimal) numbers.pop();
+		System.out.println(num2);
+		calcValue = num2.subtract(num1);
+		
+		numbers.push(calcValue);
 	}
 	
 	/**
@@ -73,9 +79,15 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to multiply the current calculated value by.
 	 */
-	public void multiply(BigDecimal userValue)
+	public void multiply()
 	{
-		calcValue = calcValue.multiply(userValue);
+		BigDecimal num1 = (BigDecimal) numbers.pop();
+		System.out.println(num1);
+		BigDecimal num2 = (BigDecimal) numbers.pop();
+		System.out.println(num2);
+		calcValue = num2.multiply(num1);
+		
+		numbers.push(calcValue);
 	}
 
 	/**
@@ -85,9 +97,19 @@ public class CalcModel
 	 *            The value to multiply the current calculated value by.
 	 * @pre. userValue is not equivalent to zero.
 	 */
-	public void divide(BigDecimal userValue)
+	public void divide()
 	{
-		calcValue = calcValue.divide(userValue);
+		BigDecimal num1 = (BigDecimal) numbers.pop();
+		System.out.println(num1);
+		BigDecimal num2 = (BigDecimal) numbers.pop();
+		System.out.println(num2);
+		calcValue = num2.divide(num1);
+		
+		numbers.push(calcValue);
+	}
+	
+	public BigDecimal lastValue(){
+		return (BigDecimal) numbers.peek();
 	}
 	
 	/**
