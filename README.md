@@ -5,10 +5,9 @@ Basic calculator example in Java.
 
 TODO:
 
-1. Factor logic out of View
-2. Write Tests according to test document
-
-Current Bugs:
-
-1. Undo
-2. Infix has problems
+1. Preliminary Tests
+2. Refactor Basic MVC
+3. Change GUI
+4. Match Reqs
+5. Graph stuff
+6. Docs
