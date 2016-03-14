@@ -51,6 +51,7 @@ public class CalcView extends JFrame
 
 	}
 
+	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane, final CalcController theController) {
 		if (RIGHT_TO_LEFT) {
 			pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -131,7 +132,8 @@ public class CalcView extends JFrame
 		JButton button1 = new ButtonAdapter(""+1) {
 			public void pressed() 
 			{
-				changeInputButton(1);
+				theController.updateInput("1");
+				//changeInputButton(1);
 			}
 		};
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -393,7 +395,6 @@ public class CalcView extends JFrame
 				history.setText(removeEquals);
 			}
 		}
-		
 		
 		if (button.equals("+")) {
 //			should call controller method addition

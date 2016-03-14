@@ -9,6 +9,8 @@ public class CalcModel
 	private BigDecimal calcValue;
 	private Stack history;
 	private Stack numbers;
+	
+	private String userInput = "";
 
 	/**
 	 * Creates a model with no user values and a calculated
@@ -170,5 +172,12 @@ public class CalcModel
 	public BigDecimal getCalcValue()
 	{
 		return (BigDecimal) numbers.peek();
+	}
+	
+	public String updateUserInput(String value){
+		
+		userInput = userInput + value;
+		return userInput;
+		
 	}
 }

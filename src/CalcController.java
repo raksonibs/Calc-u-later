@@ -123,7 +123,9 @@ public class CalcController
 	public void addValue(BigDecimal value) {
 		model.pushNumber(value);
 	}
-
-
-
+	
+	public void updateInput(String value){
+		
+		view.setUserValue(model.updateUserInput(value));
+	}
 }
