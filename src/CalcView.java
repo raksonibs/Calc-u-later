@@ -501,7 +501,10 @@ public class CalcView extends JFrame
 		//completely confident in my logic for it...
 		//I think the only reason this works is because of the way decimals are handled earlier
 		
-		String value = String.valueOf(buttonInput);
+		//Made the inputs look like ints
+		int forText = (int) buttonInput;
+
+		String value = String.valueOf(forText);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
