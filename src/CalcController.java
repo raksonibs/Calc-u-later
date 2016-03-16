@@ -115,6 +115,12 @@ public class CalcController
 		view.setCalcValue(calcValue.toString());
 		
 	}
+
+	public void empty()
+	{
+		System.out.println("clearing...");
+		view.setCalcValue("");
+	}
 	
 	public void undo() {
 		model.undo();

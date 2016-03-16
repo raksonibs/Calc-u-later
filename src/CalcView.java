@@ -31,6 +31,8 @@ public class CalcView extends JFrame
 	private static JTextField calcText;
 	private static JTextField history;
 	private static Stack<BigDecimal> numbers;
+	private static Stack<String> userHistory;
+	private static Stack<String> resHistory;
 	private static Stack<String> expression; 
 
 	private static int roundingLengthAfterDecimal;
