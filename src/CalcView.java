@@ -398,8 +398,8 @@ public class CalcView extends JFrame
 		
 		
 		if (button.equals("+")) {
-//			should call controller method addition
-//			which calls model method of addition
+		//should call controller method addition
+		//which calls model method of addition
 			System.out.println("addition");			
 			theController.sum();			
 			userValueText.setText("");
@@ -426,10 +426,7 @@ public class CalcView extends JFrame
 			char changeSign = userVal.charAt(0);
 			
 			if (changeSign == '-') {
-				userVal = userVal.replace('-', '+');
-				userValueText.setText(userVal);
-			} else if(changeSign == '+'){
-				userVal = userVal.replace('+', '-');
+				userVal = userVal.replace('-', '\0');
 				userValueText.setText(userVal);
 			}else
 			{
