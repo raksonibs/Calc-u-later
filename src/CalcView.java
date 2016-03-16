@@ -588,6 +588,14 @@ public class CalcView extends JFrame
 //		}
 		calcText.setText(value);
 	}
+
+	public void clearUserValue()
+	{
+		if (userValueText.getText() != "")
+		{
+			userValueText.setText("");
+		}
+	}
 	
 	public static void findRoundingValue(String num)
 	{

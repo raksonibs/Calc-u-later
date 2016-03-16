@@ -100,7 +100,7 @@ public class CalcController
 
 	public void clear() {
 		model.clear();
-		showValue();
+		empty();
 		view.setHistory("Start a new calculation");
 		view.setButtonClicked();
 	}
@@ -120,6 +120,7 @@ public class CalcController
 	{
 		System.out.println("clearing...");
 		view.setCalcValue("");
+		view.clearUserValue();
 	}
 	
 	public void undo() {
