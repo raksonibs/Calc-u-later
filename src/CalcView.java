@@ -37,6 +37,7 @@ public class CalcView extends JFrame
 
 	private static int roundingLengthAfterDecimal = 5;
 	private static int roundingLengthBeforeDecimal = 6;
+	private static int CHECK = 0;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -502,13 +503,23 @@ public class CalcView extends JFrame
 		//I think the only reason this works is because of the way decimals are handled earlier
 		
 		//Made the inputs look like ints
-		int forText = (int) buttonInput;
 
-		String value = String.valueOf(forText);
-		value = userValueText.getText() + value;
-		userValueText.setText(value);
+		if (buttonInput != Math.PI)
+		{
+			int forText = (int) buttonInput;
+			String value = String.valueOf(forText);
+			value = userValueText.getText() + value;
+			userValueText.setText(value);
+		}
+		else
+		{
+			String value = String.valueOf(buttonInput);
+			value = userValueText.getText() + value;
+			userValueText.setText(value);
+		}
+
 		String his = history.getText();
-		
+	
 		if (history.getText().equals("Start a new calculation")) {
 			history.setText("");
 		}
