@@ -609,33 +609,34 @@ public class CalcView extends JFrame
 			
 			if(rightDecimal.length() > roundingLengthAfterDecimal){
 				//STILL NEED TO IMPLEMENT ROUNDING
-				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 6);
+				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 5);
 				//System.out.println("Digits to the right " + rightDecimal.length());
 			}
+
+			String leftOfDecimal = uV.substring(0, placeholder);
 			
+			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
+				// roundingLengthBeforeDecimal = leftDecimal.length();
+				//System.out.println("Digits to the left " + leftDecimal.length());
+			if (uV.substring(1, uV.length()).length() > 6)
+			{	
+				uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length()).length();
+			}
+		 		System.out.println("it knows");
+			}		
 		}
 
 		//Tries to put in some scientific notation rounding
-		//DOES NOT WORK YET (also super ugly)
-		String leftOfDecimal = uV.substring(placeholder, uV.length());
-			
-		// if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
-		// 		// roundingLengthBeforeDecimal = leftDecimal.length();
-		// 		//System.out.println("Digits to the left " + leftDecimal.length());
-		// 	if (uV.substring(1, uV.length()).length() > 6)
-		// 	{	
-		// 		uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length()).length();
-		// 	}
-		// }
-
-
-		// else
-		// {
-		// 	if(uV.length() > roundingLengthBeforeDecimal){
-		// 		roundingLengthBeforeDecimal = uV.length();
-		// 		System.out.println("Digits " + uV.length());
-		// 	}
-		// }
+		//DOES WORK BUT IS UGLY
+		else
+		{
+			if(uV.length() > roundingLengthBeforeDecimal){
+				// roundingLengthBeforeDecimal = uV.length();
+				// System.out.println("Digits " + uV.length());
+				System.out.println("it knows");	
+				uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length()).length();
+			}
+		}
 		return uV;
 		//System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
 		

@@ -114,6 +114,7 @@ public class CalcController
 
 		System.out.println("Current value is: " + calcValue.toString());
 		view.setCalcValue(view.findRoundingValue(calcValue.toString()));
+		//view.setCalcValue(calcValue.toString());
 		
 	}
 
