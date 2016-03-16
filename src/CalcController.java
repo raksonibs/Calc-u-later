@@ -111,8 +111,9 @@ public class CalcController
 
 	private void showValue() {
 		BigDecimal calcValue = model.getCalcValue();
+
 		System.out.println("Current value is: " + calcValue.toString());
-		view.setCalcValue(calcValue.toString());
+		view.setCalcValue(view.findRoundingValue(calcValue.toString()));
 		
 	}
 

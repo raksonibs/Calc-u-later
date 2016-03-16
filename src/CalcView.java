@@ -35,8 +35,8 @@ public class CalcView extends JFrame
 	private static Stack<String> resHistory;
 	private static Stack<String> expression; 
 
-	private static int roundingLengthAfterDecimal;
-	private static int roundingLengthBeforeDecimal;
+	private static int roundingLengthAfterDecimal = 5;
+	private static int roundingLengthBeforeDecimal = 6;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -594,40 +594,49 @@ public class CalcView extends JFrame
 		}
 	}
 	
-	public static void findRoundingValue(String num)
+	public static String findRoundingValue(String num)
 	{
 		
 		String uV = num;
+		int placeholder = uV.indexOf(".");
 		
 		//Checking to see how many digits to keep on the left hand side of the result
 		//As well as how many digits on the right side to keep
 		//Some rounding does still occur due to doubles.
 		if(uV.contains("."))
-		{
-			String leftDecimal = uV.substring(0, uV.indexOf("."));
-			
-			if(leftDecimal.length() > roundingLengthBeforeDecimal){
-				roundingLengthBeforeDecimal = leftDecimal.length();
-				//System.out.println("Digits to the left " + leftDecimal.length());
-			}
-			
+		{			
 			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
 			
 			if(rightDecimal.length() > roundingLengthAfterDecimal){
-				roundingLengthAfterDecimal = rightDecimal.length();
+				//STILL NEED TO IMPLEMENT ROUNDING
+				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 6);
 				//System.out.println("Digits to the right " + rightDecimal.length());
 			}
 			
 		}
-		else
-		{
-			if(uV.length() > roundingLengthBeforeDecimal){
-				roundingLengthBeforeDecimal = uV.length();
-				System.out.println("Digits " + uV.length());
-			}
-			
-		}
 
+		//Tries to put in some scientific notation rounding
+		//DOES NOT WORK YET (also super ugly)
+		String leftOfDecimal = uV.substring(placeholder, uV.length());
+			
+		// if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
+		// 		// roundingLengthBeforeDecimal = leftDecimal.length();
+		// 		//System.out.println("Digits to the left " + leftDecimal.length());
+		// 	if (uV.substring(1, uV.length()).length() > 6)
+		// 	{	
+		// 		uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length()).length();
+		// 	}
+		// }
+
+
+		// else
+		// {
+		// 	if(uV.length() > roundingLengthBeforeDecimal){
+		// 		roundingLengthBeforeDecimal = uV.length();
+		// 		System.out.println("Digits " + uV.length());
+		// 	}
+		// }
+		return uV;
 		//System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
 		
 	}
