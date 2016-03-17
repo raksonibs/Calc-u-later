@@ -31,10 +31,12 @@ public class CalcView extends JFrame
 	private static JTextField calcText;
 	private static JTextField history;
 	private static Stack<BigDecimal> numbers;
+	private static Stack<String> userHistory;
+	private static Stack<String> resHistory;
 	private static Stack<String> expression; 
 
-	private static int roundingLengthAfterDecimal;
-	private static int roundingLengthBeforeDecimal;
+	private static int roundingLengthAfterDecimal = 5;
+	private static int roundingLengthBeforeDecimal = 6;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -397,8 +399,8 @@ public class CalcView extends JFrame
 		}
 		
 		if (button.equals("+")) {
-//			should call controller method addition
-//			which calls model method of addition
+		//should call controller method addition
+		//which calls model method of addition
 			System.out.println("addition");			
 			theController.sum();			
 			userValueText.setText("");
@@ -425,10 +427,7 @@ public class CalcView extends JFrame
 			char changeSign = userVal.charAt(0);
 			
 			if (changeSign == '-') {
-				userVal = userVal.replace('-', '+');
-				userValueText.setText(userVal);
-			} else if(changeSign == '+'){
-				userVal = userVal.replace('+', '-');
+				userVal = userVal.replace('-', '\0');
 				userValueText.setText(userVal);
 			}else
 			{
@@ -503,7 +502,10 @@ public class CalcView extends JFrame
 		//completely confident in my logic for it...
 		//I think the only reason this works is because of the way decimals are handled earlier
 		
-		String value = String.valueOf(buttonInput);
+		//Made the inputs look like ints
+		int forText = (int) buttonInput;
+
+		String value = String.valueOf(forText);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
@@ -587,41 +589,59 @@ public class CalcView extends JFrame
 //		}
 		calcText.setText(value);
 	}
+
+	public void clearUserValue()
+	{
+		if (userValueText.getText() != "")
+		{
+			userValueText.setText("");
+		}
+	}
 	
-	public static void findRoundingValue(String num)
+	public static String findRoundingValue(String num)
 	{
 		
 		String uV = num;
+		int placeholder = uV.indexOf(".");
 		
 		//Checking to see how many digits to keep on the left hand side of the result
 		//As well as how many digits on the right side to keep
 		//Some rounding does still occur due to doubles.
 		if(uV.contains("."))
-		{
-			String leftDecimal = uV.substring(0, uV.indexOf("."));
-			
-			if(leftDecimal.length() > roundingLengthBeforeDecimal){
-				roundingLengthBeforeDecimal = leftDecimal.length();
-				//System.out.println("Digits to the left " + leftDecimal.length());
-			}
-			
+		{			
 			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
 			
 			if(rightDecimal.length() > roundingLengthAfterDecimal){
-				roundingLengthAfterDecimal = rightDecimal.length();
+				//STILL NEED TO IMPLEMENT ROUNDING
+				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 5);
 				//System.out.println("Digits to the right " + rightDecimal.length());
 			}
+
+			String leftOfDecimal = uV.substring(0, placeholder);
 			
+			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
+				// roundingLengthBeforeDecimal = leftDecimal.length();
+				//System.out.println("Digits to the left " + leftDecimal.length());
+			if (uV.substring(1, uV.length()).length() > 6)
+			{	
+				uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length()).length();
+			}
+		 		System.out.println("it knows");
+			}		
 		}
+
+		//Tries to put in some scientific notation rounding
+		//DOES WORK BUT IS UGLY
 		else
 		{
 			if(uV.length() > roundingLengthBeforeDecimal){
-				roundingLengthBeforeDecimal = uV.length();
-				System.out.println("Digits " + uV.length());
+				// roundingLengthBeforeDecimal = uV.length();
+				// System.out.println("Digits " + uV.length());
+				System.out.println("it knows");	
+				uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length()).length();
 			}
-			
 		}
-
+		return uV;
 		//System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
 		
 	}

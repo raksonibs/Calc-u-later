@@ -100,7 +100,7 @@ public class CalcController
 
 	public void clear() {
 		model.clear();
-		showValue();
+		empty();
 		view.setHistory("Start a new calculation");
 		view.setButtonClicked();
 	}
@@ -111,9 +111,18 @@ public class CalcController
 
 	private void showValue() {
 		BigDecimal calcValue = model.getCalcValue();
+
 		System.out.println("Current value is: " + calcValue.toString());
-		view.setCalcValue(calcValue.toString());
+		view.setCalcValue(view.findRoundingValue(calcValue.toString()));
+		//view.setCalcValue(calcValue.toString());
 		
+	}
+
+	public void empty()
+	{
+		System.out.println("clearing...");
+		view.setCalcValue("");
+		view.clearUserValue();
 	}
 	
 	public void undo() {

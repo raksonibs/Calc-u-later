@@ -19,7 +19,9 @@ public class CalcModel
 	 */
 	public CalcModel()
 	{
-		clear();
+		history = new Stack();
+		numbers = new Stack();
+		calcValue = calcValue.ZERO;	
 	}
 	
 	public void setValue() {
@@ -36,9 +38,12 @@ public class CalcModel
 	 */
 	public void clear()
 	{
-		history = new Stack();
-		numbers = new Stack();
-		calcValue = calcValue.ZERO;
+		while (history.empty() != true && numbers.empty() != true)
+		{
+			history.pop();
+			numbers.pop();
+		}
+		calcValue = calcValue.ZERO;	
 	}
 
 	/**
