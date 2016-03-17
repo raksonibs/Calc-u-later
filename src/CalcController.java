@@ -62,6 +62,7 @@ public class CalcController
 	}
 //	  NTD: should be bigint array
 	public void sum() {
+		
 		model.sum();
 		showValue();
 	}
@@ -102,6 +103,7 @@ public class CalcController
 		model.clear();
 		empty();
 		view.setHistory("Start a new calculation");
+		view.setExpressionValue("");
 		view.setButtonClicked();
 	}
 
@@ -111,9 +113,13 @@ public class CalcController
 
 	private void showValue() {
 		BigDecimal calcValue = model.getCalcValue();
-
+		String expressionValue = model.getExpressionValue();
+		
 		System.out.println("Current value is: " + calcValue.toString());
+		System.out.println("Expression is: " + expressionValue);
+		
 		view.setCalcValue(view.findRoundingValue(calcValue.toString()));
+		view.setExpressionValue(expressionValue);
 		//view.setCalcValue(calcValue.toString());
 		
 	}
@@ -128,9 +134,15 @@ public class CalcController
 	public void undo() {
 		model.undo();
 	}
-
+	
+	//When ENTER is pushed
 	public void addValue(BigDecimal value) {
 		model.pushNumber(value);
+	}
+	
+	public void addExpression(String valueIn) 
+	{
+		model.pushExpression(valueIn);
 	}
 	
 	public void updateInput(String value){

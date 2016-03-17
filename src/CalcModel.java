@@ -9,6 +9,8 @@ public class CalcModel
 	private BigDecimal calcValue;
 	private Stack history;
 	private Stack numbers;
+	private Stack<String> expressionList = new Stack<String>();
+	private Stack<String> inFixNotationList = new Stack<String>();
 	
 	private String userInput = "";
 
@@ -30,19 +32,21 @@ public class CalcModel
 	
 	public void pushNumber(BigDecimal number) {
 		numbers.push(number);
-	}
 
+	}
+	public void pushExpression(String valueIn) {
+		expressionList.push(valueIn);
+	}
 
 	/**
 	 * Clears the user values and the calculated value.
 	 */
 	public void clear()
 	{
-		while (history.empty() != true && numbers.empty() != true)
-		{
-			history.pop();
-			numbers.pop();
-		}
+		history.clear();
+		numbers.clear();		
+		expressionList.clear();
+		
 		calcValue = calcValue.ZERO;	
 	}
 
@@ -59,6 +63,24 @@ public class CalcModel
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.add(num1);
+		
+		if(expressionList.size() == 0)
+		{
+			
+			Stack temporary = new Stack();
+			
+			while(inFixNotationList.size() > 0)
+			{
+				temporary.push(inFixNotationList.pop());
+			}
+			
+			inFixNotationList.push("(" + temporary.pop() + ")" + "+" + "(" + temporary.pop() + ")");
+		}
+		else
+		{
+			inFixNotationList.push(expressionList.pop() + "+" + expressionList.pop());	
+		}
+
 		
 		numbers.push(calcValue);
 	}
@@ -77,6 +99,23 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.subtract(num1);
 		
+		if(expressionList.size() == 0)
+		{
+			
+			Stack temporary = new Stack();
+			
+			while(inFixNotationList.size() > 0)
+			{
+				temporary.push(inFixNotationList.pop());
+			}
+			
+			inFixNotationList.push("(" + temporary.pop() + ")" + "-" + "(" + temporary.pop() + ")");
+		}
+		else
+		{
+			inFixNotationList.push(expressionList.pop() + "-" + expressionList.pop());	
+		}
+		
 		numbers.push(calcValue);
 	}
 	
@@ -93,6 +132,23 @@ public class CalcModel
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
+		
+		if(expressionList.size() == 0)
+		{
+			
+			Stack temporary = new Stack();
+			
+			while(inFixNotationList.size() > 0)
+			{
+				temporary.push(inFixNotationList.pop());
+			}
+			
+			inFixNotationList.push("(" + temporary.pop() + ")" + "x" + "(" + temporary.pop() + ")");
+		}
+		else
+		{
+			inFixNotationList.push(expressionList.pop() + "x" + expressionList.pop());	
+		}
 		
 		numbers.push(calcValue);
 	}
@@ -162,6 +218,23 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.divide(num1);
 		
+		if(expressionList.size() == 0)
+		{
+			
+			Stack temporary = new Stack();
+			
+			while(inFixNotationList.size() > 0)
+			{
+				temporary.push(inFixNotationList.pop());
+			}
+			
+			inFixNotationList.push("(" + temporary.pop() + ")" + "÷" + "(" + temporary.pop() + ")");
+		}
+		else
+		{
+			inFixNotationList.push(expressionList.pop() + "÷" + expressionList.pop());	
+		}
+		
 		numbers.push(calcValue);
 	}
 	
@@ -179,10 +252,37 @@ public class CalcModel
 		return (BigDecimal) numbers.peek();
 	}
 	
+	public String getExpressionValue()
+	{
+		
+		//System.out.println("expression list: " + expressionList.peek());
+		System.out.println("infix notation list: " + inFixNotationList.peek());
+		
+		Stack temporary = new Stack();
+		String returnValue = "";
+		
+		temporary = (Stack) inFixNotationList.clone();
+		
+		while(temporary.size() > 0){
+			
+			if(temporary.size() == 1){
+				returnValue = returnValue + temporary.pop() + "=";	
+			}else{
+				returnValue = returnValue + temporary.pop() + ",";
+			}
+				
+		}
+		
+
+
+		return returnValue;
+	}
+	
 	public String updateUserInput(String value){
 		
 		userInput = userInput + value;
 		return userInput;
 		
 	}
+	
 }
