@@ -205,11 +205,17 @@ public class CalcModel
 				temporary.push(inFixNotationList.pop());
 			}
 			
-			inFixNotationList.push("(" + temporary.pop() + ")" + sign + "(" + temporary.pop() + ")");
+			String number1 = (String) temporary.pop();
+			String number2 = (String) temporary.pop();
+			
+			inFixNotationList.push("(" + number2 + ")" + sign + "(" + number1 + ")");
 		}
 		else
 		{
-			inFixNotationList.push(expressionList.pop() + sign + expressionList.pop());	
+			String number1 = (String) expressionList.pop();
+			String number2 = (String) expressionList.pop();
+			
+			inFixNotationList.push(number2 + sign + number1);	
 		}
 		
 	}
