@@ -64,22 +64,7 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.add(num1);
 		
-		if(expressionList.size() == 0)
-		{
-			
-			Stack temporary = new Stack();
-			
-			while(inFixNotationList.size() > 0)
-			{
-				temporary.push(inFixNotationList.pop());
-			}
-			
-			inFixNotationList.push("(" + temporary.pop() + ")" + "+" + "(" + temporary.pop() + ")");
-		}
-		else
-		{
-			inFixNotationList.push(expressionList.pop() + "+" + expressionList.pop());	
-		}
+		addToInfix("+");
 
 		
 		numbers.push(calcValue);
@@ -99,22 +84,7 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.subtract(num1);
 		
-		if(expressionList.size() == 0)
-		{
-			
-			Stack temporary = new Stack();
-			
-			while(inFixNotationList.size() > 0)
-			{
-				temporary.push(inFixNotationList.pop());
-			}
-			
-			inFixNotationList.push("(" + temporary.pop() + ")" + "-" + "(" + temporary.pop() + ")");
-		}
-		else
-		{
-			inFixNotationList.push(expressionList.pop() + "-" + expressionList.pop());	
-		}
+		addToInfix("-");
 		
 		numbers.push(calcValue);
 	}
@@ -133,22 +103,7 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
 		
-		if(expressionList.size() == 0)
-		{
-			
-			Stack temporary = new Stack();
-			
-			while(inFixNotationList.size() > 0)
-			{
-				temporary.push(inFixNotationList.pop());
-			}
-			
-			inFixNotationList.push("(" + temporary.pop() + ")" + "x" + "(" + temporary.pop() + ")");
-		}
-		else
-		{
-			inFixNotationList.push(expressionList.pop() + "x" + expressionList.pop());	
-		}
+		addToInfix("x");
 		
 		numbers.push(calcValue);
 	}
@@ -218,23 +173,8 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.divide(num1);
 		
-		if(expressionList.size() == 0)
-		{
-			
-			Stack temporary = new Stack();
-			
-			while(inFixNotationList.size() > 0)
-			{
-				temporary.push(inFixNotationList.pop());
-			}
-			
-			inFixNotationList.push("(" + temporary.pop() + ")" + "÷" + "(" + temporary.pop() + ")");
-		}
-		else
-		{
-			inFixNotationList.push(expressionList.pop() + "÷" + expressionList.pop());	
-		}
-		
+		addToInfix("Ã·");
+				
 		numbers.push(calcValue);
 	}
 	
@@ -252,6 +192,28 @@ public class CalcModel
 		return (BigDecimal) numbers.peek();
 	}
 	
+	public void addToInfix(String sign)
+	{
+		
+		if(expressionList.size() == 0)
+		{
+			
+			Stack temporary = new Stack();
+			
+			while(inFixNotationList.size() > 0)
+			{
+				temporary.push(inFixNotationList.pop());
+			}
+			
+			inFixNotationList.push("(" + temporary.pop() + ")" + sign + "(" + temporary.pop() + ")");
+		}
+		else
+		{
+			inFixNotationList.push(expressionList.pop() + sign + expressionList.pop());	
+		}
+		
+	}
+	
 	public String getExpressionValue()
 	{
 		
@@ -263,6 +225,7 @@ public class CalcModel
 		
 		temporary = (Stack) inFixNotationList.clone();
 		
+		//Make sure we add the equals sign at the end of the expression, otherwise separate with commas.
 		while(temporary.size() > 0){
 			
 			if(temporary.size() == 1){
