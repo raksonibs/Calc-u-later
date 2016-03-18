@@ -9,6 +9,10 @@ public class CalcModel
 	private BigDecimal calcValue;
 	private Stack history;
 	private Stack numbers;
+	private Stack<String> expressionList = new Stack<String>();
+	private Stack<String> inFixNotationList = new Stack<String>();
+	
+	private String userInput = "";
 
 	/**
 	 * Creates a model with no user values and a calculated
@@ -28,19 +32,21 @@ public class CalcModel
 	
 	public void pushNumber(BigDecimal number) {
 		numbers.push(number);
-	}
 
+	}
+	public void pushExpression(String valueIn) {
+		expressionList.push(valueIn);
+	}
 
 	/**
 	 * Clears the user values and the calculated value.
 	 */
 	public void clear()
 	{
-		while (history.empty() != true && numbers.empty() != true)
-		{
-			history.pop();
-			numbers.pop();
-		}
+		history.clear();
+		numbers.clear();		
+		expressionList.clear();
+		
 		calcValue = calcValue.ZERO;	
 	}
 
@@ -57,6 +63,9 @@ public class CalcModel
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.add(num1);
+		
+		addToInfix("+");
+
 		
 		numbers.push(calcValue);
 	}
@@ -75,6 +84,8 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.subtract(num1);
 		
+		addToInfix("-");
+		
 		numbers.push(calcValue);
 	}
 	
@@ -91,6 +102,8 @@ public class CalcModel
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
+		
+		addToInfix("x");
 		
 		numbers.push(calcValue);
 	}
@@ -160,6 +173,8 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.divide(num1);
 		
+		addToInfix("÷");
+				
 		numbers.push(calcValue);
 	}
 	
@@ -176,4 +191,67 @@ public class CalcModel
 	{
 		return (BigDecimal) numbers.peek();
 	}
+	
+	public void addToInfix(String sign)
+	{
+		
+		if(expressionList.size() == 0)
+		{
+			
+			Stack temporary = new Stack();
+			
+			while(inFixNotationList.size() > 0)
+			{
+				temporary.push(inFixNotationList.pop());
+			}
+			
+			String number1 = (String) temporary.pop();
+			String number2 = (String) temporary.pop();
+			
+			inFixNotationList.push("(" + number2 + ")" + sign + "(" + number1 + ")");
+		}
+		else
+		{
+			String number1 = (String) expressionList.pop();
+			String number2 = (String) expressionList.pop();
+			
+			inFixNotationList.push(number2 + sign + number1);	
+		}
+		
+	}
+	
+	public String getExpressionValue()
+	{
+		
+		//System.out.println("expression list: " + expressionList.peek());
+		System.out.println("infix notation list: " + inFixNotationList.peek());
+		
+		Stack temporary = new Stack();
+		String returnValue = "";
+		
+		temporary = (Stack) inFixNotationList.clone();
+		
+		//Make sure we add the equals sign at the end of the expression, otherwise separate with commas.
+		while(temporary.size() > 0){
+			
+			if(temporary.size() == 1){
+				returnValue = returnValue + temporary.pop() + "=";	
+			}else{
+				returnValue = returnValue + temporary.pop() + ",";
+			}
+				
+		}
+		
+
+
+		return returnValue;
+	}
+	
+	public String updateUserInput(String value){
+		
+		userInput = userInput + value;
+		return userInput;
+		
+	}
+	
 }

@@ -30,6 +30,7 @@ public class CalcView extends JFrame
 	private static JTextField userValueText;
 	private static JTextField calcText;
 	private static JTextField history;
+	private static JTextField expressionList;
 	private static Stack<BigDecimal> numbers;
 	private static Stack<String> userHistory;
 	private static Stack<String> resHistory;
@@ -53,6 +54,7 @@ public class CalcView extends JFrame
 
 	}
 
+	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane, final CalcController theController) {
 		if (RIGHT_TO_LEFT) {
 			pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -72,6 +74,9 @@ public class CalcView extends JFrame
 		history = new JTextField(20);
 		history.setEditable(false);
 		history.setText("Start a new calculation");
+		expressionList = new JTextField(20);
+		expressionList.setEditable(false);
+				
 		
 		if (shouldWeightX) {
 			c.weightx = 0.5;
@@ -105,13 +110,26 @@ public class CalcView extends JFrame
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 4;
-		pane.add(userValueText, c);
+		pane.add(expressionList, c);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridy = 2;
 		c.gridwidth = 2;
+		pane.add(new JLabel("Expression"), c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 4;
+		pane.add(userValueText, c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 4;
+		c.gridy = 3;
+		c.gridwidth = 2;
 		pane.add(new JLabel("Input"), c);
+		
 		
 		int x = 0;
 		int y = 3;
@@ -127,7 +145,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button0, c);
 
 		JButton button1 = new ButtonAdapter(""+1) {
@@ -139,7 +157,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button1, c);
 
 		JButton button2 = new ButtonAdapter(""+2) {
@@ -151,7 +169,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button2, c);
 
 		JButton button3 = new ButtonAdapter(""+3) {
@@ -163,7 +181,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button3, c);
 
 		JButton button4 = new ButtonAdapter(""+4) {
@@ -175,7 +193,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button4, c);
 
 		JButton button5 = new ButtonAdapter(""+5) {
@@ -187,7 +205,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button5, c);
 
 		JButton button6 = new ButtonAdapter(""+6) {
@@ -199,7 +217,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button6, c);
 
 		JButton button7 = new ButtonAdapter(""+7) {
@@ -211,7 +229,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button7, c);
 
 		JButton button8 = new ButtonAdapter(""+8) {
@@ -223,7 +241,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button8, c);
 
 		JButton button9 = new ButtonAdapter(""+9) {
@@ -235,7 +253,7 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button9, c);
 		
 		button =  new ButtonAdapter("UNDO") {
@@ -245,7 +263,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("+") {
@@ -255,7 +273,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("-") {
@@ -265,7 +283,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("*") {
@@ -275,7 +293,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("/") {
@@ -285,7 +303,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 4;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
 
 		button =  new ButtonAdapter("+/-") {
@@ -295,7 +313,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter(".") {
@@ -305,7 +323,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("π") {
@@ -315,7 +333,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("sin") {
@@ -325,7 +343,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
 
 		button =  new ButtonAdapter("cos") {
@@ -335,7 +353,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 4;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
 
 		button = new ButtonAdapter("!"){
@@ -345,7 +363,7 @@ public class CalcView extends JFrame
 		};
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 7;
+		c.gridy = 8;
 		pane.add(button, c);
 		
 		y += 1;
@@ -358,7 +376,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 1;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 8;       //third row
+		c.gridy = 9;       //third row
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
@@ -369,7 +387,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 3;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 8;       //third row
+		c.gridy = 9;       //third row
 		pane.add(button, c);
 	}
 
@@ -385,7 +403,6 @@ public class CalcView extends JFrame
 	
 	public static void registerButton(String button, CalcController theController) {		
 		String his = history.getText();
-		String pervious;
 		// right now this method is big, so when we refactor it we will put each button into its own controller method
 		// furthermore, we will make the stack and history be part of the model
 		if (!button.equals("+/-") && !button.equals(".")) {
@@ -395,7 +412,6 @@ public class CalcView extends JFrame
 				history.setText(removeEquals);
 			}
 		}
-		
 		
 		if (button.equals("+")) {
 		//should call controller method addition
@@ -492,19 +508,10 @@ public class CalcView extends JFrame
 	
 	//method for factorial button
 	
-	
-	//Added to handle doubles such as pi
-	public static void changeInputButton(double buttonInput) {
-		
-		//Arbitrary Choice to round to 5 digits
-		//This doesn't seem to affect other decimal numbers, however I am not
-		//completely confident in my logic for it...
-		//I think the only reason this works is because of the way decimals are handled earlier
-		
-		//Made the inputs look like ints
-		int forText = (int) buttonInput;
+	//This method to handle integers
+	public static void changeInputButton(int buttonInput) {
 
-		String value = String.valueOf(forText);
+		String value = String.valueOf(buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
@@ -518,6 +525,27 @@ public class CalcView extends JFrame
 			String removeEquals = his.substring(0, his.length() - 1);
 			history.setText(removeEquals);
 		}
+	}
+	
+	//Added to handle doubles such as pi
+	public static void changeInputButton(double buttonInput) {
+
+		//Round to 5 digits
+		String value = String.format("%.5f", buttonInput);
+		value = userValueText.getText() + value;
+		userValueText.setText(value);
+		String his = history.getText();
+		
+		if (history.getText().equals("Start a new calculation")) {
+			history.setText("");
+		}
+		
+		char lastChar = his.charAt(his.length() - 1);
+		if (lastChar == '=') {
+			String removeEquals = his.substring(0, his.length() - 1);
+			history.setText(removeEquals);
+		}
+
 
 	}
 	
@@ -534,6 +562,7 @@ public class CalcView extends JFrame
 		BigDecimal allValue = new BigDecimal(val);
 		numbers.push(allValue);
 		theController.addValue(allValue);
+		theController.addExpression(allValue.toPlainString());
 		System.out.println(numbers.get(numbers.size() -1));
 		
 		System.out.println("over here");
@@ -587,6 +616,10 @@ public class CalcView extends JFrame
 //			value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
 //		}
 		calcText.setText(value);
+	}
+	
+	public static void setExpressionValue(String value){
+		expressionList.setText(value);
 	}
 
 	public void clearUserValue()
