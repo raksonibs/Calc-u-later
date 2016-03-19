@@ -1,8 +1,11 @@
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.Vector;
 
 public class CalcModel
 {
@@ -10,9 +13,9 @@ public class CalcModel
 	private Stack history;
 	private Stack numbers;
 	private Stack<String> expressionList = new Stack<String>();
-	private Stack<String> inFixNotationList = new Stack<String>();
-	
-	private String userInput = "";
+
+	//Amount to round to
+	private MathContext roundingAmount = new MathContext(5);
 
 	/**
 	 * Creates a model with no user values and a calculated
@@ -59,15 +62,19 @@ public class CalcModel
 	 */
 	public void sum()
 	{
+		System.out.println("numbers size: " + numbers.size());
+		System.out.println("expression list size: " + expressionList.size());
+
+		checkIfEnoughDigitsAvaliable(0);
+		
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.add(num1);
 		
-		addToInfix("+");
+		addToExpressionList("+");
 
-		
 		numbers.push(calcValue);
 	}
 	
@@ -79,13 +86,15 @@ public class CalcModel
 	 */
 	public void subtract()
 	{
+		checkIfEnoughDigitsAvaliable(0);
+		
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.subtract(num1);
 		
-		addToInfix("-");
+		addToExpressionList("-");
 		
 		numbers.push(calcValue);
 	}
@@ -98,15 +107,57 @@ public class CalcModel
 	 */
 	public void multiply()
 	{
+		checkIfEnoughDigitsAvaliable(1);
+		
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
 		
-		addToInfix("x");
+		addToExpressionList("x");
 		
 		numbers.push(calcValue);
+	}
+	
+	/**
+	 * Divides the calculated value by a user value.
+	 * 
+	 * @param userValue
+	 *            The value to multiply the current calculated value by.
+	 * @pre. userValue is not equivalent to zero.
+	 */
+	public void divide()
+	{
+		//The number of digits we want to round divisons to
+
+		checkIfEnoughDigitsAvaliable(1);
+		
+		BigDecimal num1 = (BigDecimal) numbers.pop();
+		System.out.println(num1);
+		BigDecimal num2 = (BigDecimal) numbers.pop();
+		System.out.println(num2);
+		calcValue = num2.divide(num1, roundingAmount);
+		
+		//System.out.println("Division Value is: " + calcValue.toPlainString());
+		
+		addToExpressionList("÷");
+				
+		numbers.push(calcValue);
+	}
+	
+	public void pi()
+	{
+
+		Double pi = Math.PI;
+		BigDecimal num1 = BigDecimal.valueOf(pi);
+		
+		num1 = num1.round(roundingAmount);
+		
+		//System.out.println("num1 " + num1.toPlainString());
+
+		addToExpressionList("π");
+
 	}
 	
 	public void sin() {
@@ -115,8 +166,12 @@ public class CalcModel
 		num1 = Math.sin(num1);
 		System.out.println(num1);
 		
-		BigDecimal b = BigDecimal.valueOf(num1);
+		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
+		//b = b.round(roundingAmount);
 		
+		System.out.println("b is: " + b.toString());
+		
+		addToExpressionList("sin");
 		numbers.push(b);
 	}
 	
@@ -125,7 +180,7 @@ public class CalcModel
 		System.out.println(num1);
 		num1 = Math.cos(num1);
 		System.out.println(num1);
-		
+		addToExpressionList("cos");
 		BigDecimal b = BigDecimal.valueOf(num1);
 		
 		numbers.push(b);
@@ -136,7 +191,7 @@ public class CalcModel
 		System.out.println(num1);
 		num1 = fact(num1);
 		System.out.println(num1);
-		
+	
 		BigDecimal b = BigDecimal.valueOf(num1);
 		
 		numbers.push(b);
@@ -144,6 +199,9 @@ public class CalcModel
 	
 	public void undo() {
 		numbers.pop();
+		expressionList.pop();
+		//history.pop();
+		
 	}
 	
 	public static double fact(double b)
@@ -159,26 +217,7 @@ public class CalcModel
 		return r;
 	}
 	
-	/**
-	 * Divides the calculated value by a user value.
-	 * 
-	 * @param userValue
-	 *            The value to multiply the current calculated value by.
-	 * @pre. userValue is not equivalent to zero.
-	 */
-	public void divide()
-	{
-		BigDecimal num1 = (BigDecimal) numbers.pop();
-		System.out.println(num1);
-		BigDecimal num2 = (BigDecimal) numbers.pop();
-		System.out.println(num2);
-		calcValue = num2.divide(num1);
-		
-		addToInfix("÷");
-				
-		numbers.push(calcValue);
-	}
-	
+
 	public BigDecimal lastValue(){
 		return (BigDecimal) numbers.peek();
 	}
@@ -192,31 +231,45 @@ public class CalcModel
 	{
 		return (BigDecimal) numbers.peek();
 	}
+
+	public void addToExpressionList(String sign){
+		expressionList.push(sign);
+	}
 	
-	public void addToInfix(String sign)
-	{
-		
-		if(expressionList.size() == 0)
+	public void checkIfEnoughDigitsAvaliable(int number){
+		//Way to handle situations such as the user entering 1,+;
+		//Will automatically enter an appropriate value in place
+		//so for example 1,+ becomes (1+0)
+		if(numbers.size() == 1)
 		{
-			
-			Stack temporary = new Stack();
-			
-			while(inFixNotationList.size() > 0)
-			{
-				temporary.push(inFixNotationList.pop());
-			}
-			
-			String number1 = (String) temporary.pop();
-			String number2 = (String) temporary.pop();
-			
-			inFixNotationList.push("(" + number2 + ")" + sign + "(" + number1 + ")");
+			numbers.push(BigDecimal.valueOf(number));
+			history.push(String.valueOf(number));
+			expressionList.push(String.valueOf(number));
+		}
+	}
+	
+	public Boolean isOperator(String value){
+		
+		//Check to see if a string is an operator
+		if(value == "+" || value == "-" || value == "x"|| value == "÷"){
+			return true;
 		}
 		else
 		{
-			String number1 = (String) expressionList.pop();
-			String number2 = (String) expressionList.pop();
-			
-			inFixNotationList.push(number2 + sign + number1);	
+			return false;
+		}
+		
+	}
+	
+	public Boolean isTrignometric(String value){
+		
+		//Check to see if a string is a trig function
+		if(value == "sin" || value == "cos"){
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 		
 	}
@@ -224,35 +277,60 @@ public class CalcModel
 	public String getExpressionValue()
 	{
 		
-		//System.out.println("expression list: " + expressionList.peek());
+		System.out.println("expression list top: " + expressionList.peek());
 		//System.out.println("infix notation list: " + inFixNotationList.peek());
 		
-		Stack temporary = new Stack();
 		String returnValue = "";
+	
+		//Create a clone of the expression list so we can pop things without disturbing the list
+		Stack s = new Stack();
+		s = (Stack) expressionList.clone();
 		
-		temporary = (Stack) inFixNotationList.clone();
+		//System.out.println("numbers size: " + numbers.size());
+		//System.out.println("expression list size: " + expressionList.size());
 		
-		//Make sure we add the equals sign at the end of the expression, otherwise separate with commas.
-		while(temporary.size() > 0){
+		for(int i = 0; i < expressionList.size(); i++){
+			String expressionValue = expressionList.get(i);
+			//If we reach an operator in the stack then we pop the two previous numbers and insert the 
+			//operator in between them, as well as add brackets around the equation.
 			
-			if(temporary.size() == 1){
-				returnValue = returnValue + temporary.pop() + "=";	
-			}else{
-				returnValue = returnValue + temporary.pop() + ",";
-			}
+			if(isOperator(expressionValue)){
+				String number2 = s.pop().toString();
+				String number1 = s.pop().toString();
 				
+				s.push("(" + number1 + expressionValue + number2 + ")");
+			}
+			//If we reach a trignometric operation we only want to pop one number and add brackets
+			else if(isTrignometric(expressionValue))
+			{
+				String number1 = s.pop().toString();
+				s.push("(" + expressionValue + "(" + number1 + "))");
+				
+			}
+			else
+			{
+				s.push(""+expressionValue);
+			}
 		}
 		
-
-
-		return returnValue;
+		String expression = s.pop().toString();
+		
+		//Shave off the brackets on the end and add an equals sign
+		expression = expression.substring(1, expression.length()-1) + "=";
+		
+		return expression;
+		
 	}
 	
-	public String updateUserInput(String value){
-		
-		userInput = userInput + value;
-		return userInput;
-		
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

@@ -329,6 +329,7 @@ public class CalcView extends JFrame
 		button =  new ButtonAdapter("π") {
 			public void pressed(){
 				changeInputButton(Math.PI);
+				
 			}
 		};
 		c.gridx = 2;
@@ -424,17 +425,16 @@ public class CalcView extends JFrame
 			System.out.println("subtract");			
 			theController.subtract();			
 			userValueText.setText("");
+
 		} else if (button.equals("*")) {
 			System.out.println("multiplty");			
 			theController.multiply();			
 			userValueText.setText("");
-
 		} else if (button.equals("/")) {
-			System.out.println("multiplty");			
+			System.out.println("divide");			
 			theController.divide();			
 			userValueText.setText("");
-
-		}	
+		}
 		// fixed negate button
 		else if (button.equals("+/-")) {
 			
@@ -508,6 +508,7 @@ public class CalcView extends JFrame
 	
 	//method for factorial button
 	
+	
 	//This method to handle integers
 	public static void changeInputButton(int buttonInput) {
 
@@ -554,7 +555,7 @@ public class CalcView extends JFrame
 		String value = history.getText();
 		
 		findRoundingValue(userValueText.getText());
-		
+				
 		double val = Double.parseDouble(userValueText.getText());
 		
 		System.out.println(""+val);
