@@ -83,6 +83,11 @@ public class CalcController
 		}
 		showValue();
 	}
+	
+	public void pi() {
+		model.pi();
+		showValue();
+	}
 
 	public void cos() {
 		model.cos();
@@ -115,10 +120,10 @@ public class CalcController
 		BigDecimal calcValue = model.getCalcValue();
 		String expressionValue = model.getExpressionValue();
 		
-		System.out.println("Current value is: " + calcValue.toString());
+		System.out.println("Current value is: " + calcValue.toPlainString());
 		System.out.println("Expression is: " + expressionValue);
 		
-		view.setCalcValue(view.findRoundingValue(calcValue.toString()));
+		view.setCalcValue(view.findRoundingValue(calcValue.toPlainString()));
 		view.setExpressionValue(expressionValue);
 		//view.setCalcValue(calcValue.toString());
 		
@@ -129,24 +134,25 @@ public class CalcController
 		System.out.println("clearing...");
 		view.setCalcValue("");
 		view.clearUserValue();
+		model.clear();
 	}
 	
 	public void undo() {
 		model.undo();
+		showValue();
+		
 	}
 	
 	//When ENTER is pushed
 	public void addValue(BigDecimal value) {
 		model.pushNumber(value);
 	}
+
 	
 	public void addExpression(String valueIn) 
 	{
 		model.pushExpression(valueIn);
 	}
 	
-	public void updateInput(String value){
-		
-		view.setUserValue(model.updateUserInput(value));
-	}
+
 }
