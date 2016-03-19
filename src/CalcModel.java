@@ -1,8 +1,11 @@
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.Vector;
 
 public class CalcModel
 {
@@ -64,9 +67,8 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.add(num1);
 		
-		addToInfix("+");
+		addToExpressionList("+");
 
-		
 		numbers.push(calcValue);
 	}
 	
@@ -84,7 +86,7 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.subtract(num1);
 		
-		addToInfix("-");
+		addToExpressionList("-");
 		
 		numbers.push(calcValue);
 	}
@@ -103,7 +105,7 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
 		
-		addToInfix("x");
+		addToExpressionList("x");
 		
 		numbers.push(calcValue);
 	}
@@ -167,13 +169,18 @@ public class CalcModel
 	 */
 	public void divide()
 	{
+		//The number of digits we want to round divisons to
+		MathContext roundingAmount = new MathContext(5);
+		
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
-		calcValue = num2.divide(num1);
+		calcValue = num2.divide(num1, roundingAmount);
 		
-		addToInfix("÷");
+		//System.out.println("Division Value is: " + calcValue.toPlainString());
+		
+		addToExpressionList("÷");
 				
 		numbers.push(calcValue);
 	}
@@ -192,30 +199,20 @@ public class CalcModel
 		return (BigDecimal) numbers.peek();
 	}
 	
-	public void addToInfix(String sign)
-	{
+	
+	public void addToExpressionList(String sign){
+		expressionList.push(sign);
+	}
+	
+	public Boolean isOperator(String value){
 		
-		if(expressionList.size() == 0)
-		{
-			
-			Stack temporary = new Stack();
-			
-			while(inFixNotationList.size() > 0)
-			{
-				temporary.push(inFixNotationList.pop());
-			}
-			
-			String number1 = (String) temporary.pop();
-			String number2 = (String) temporary.pop();
-			
-			inFixNotationList.push("(" + number2 + ")" + sign + "(" + number1 + ")");
+		
+		if(value == "+" || value == "-" || value == "x"|| value == "÷"){
+			return true;
 		}
 		else
 		{
-			String number1 = (String) expressionList.pop();
-			String number2 = (String) expressionList.pop();
-			
-			inFixNotationList.push(number2 + sign + number1);	
+			return false;
 		}
 		
 	}
@@ -223,35 +220,45 @@ public class CalcModel
 	public String getExpressionValue()
 	{
 		
-		//System.out.println("expression list: " + expressionList.peek());
-		System.out.println("infix notation list: " + inFixNotationList.peek());
+		System.out.println("expression list: " + expressionList.peek());
+		//System.out.println("infix notation list: " + inFixNotationList.peek());
 		
-		Stack temporary = new Stack();
 		String returnValue = "";
+	
+		Stack s = new Stack();
+		s = (Stack) expressionList.clone();
 		
-		temporary = (Stack) inFixNotationList.clone();
-		
-		//Make sure we add the equals sign at the end of the expression, otherwise separate with commas.
-		while(temporary.size() > 0){
-			
-			if(temporary.size() == 1){
-				returnValue = returnValue + temporary.pop() + "=";	
-			}else{
-				returnValue = returnValue + temporary.pop() + ",";
-			}
+		for(int i = 0; i < expressionList.size(); i++){
+			String expressionValue = expressionList.get(i);
+			if(isOperator(expressionValue)){
+				String number2 = s.pop().toString();
+				String number1 = s.pop().toString();
 				
+				s.push("(" + number1 + expressionValue + number2 + ")");
+			}
+			else
+			{
+				s.push(""+expressionValue);
+			}
 		}
 		
-
-
-		return returnValue;
+		String expression = s.pop().toString();
+		
+		expression = expression.substring(1, expression.length()-1) + "=";
+		
+		return expression;
+		
 	}
 	
-	public String updateUserInput(String value){
-		
-		userInput = userInput + value;
-		return userInput;
-		
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
