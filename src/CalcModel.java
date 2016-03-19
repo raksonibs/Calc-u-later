@@ -49,7 +49,7 @@ public class CalcModel
 		history.clear();
 		numbers.clear();		
 		expressionList.clear();
-		inFixNotationList.clear();
+		// inFixNotationList.clear();
 
 		calcValue = calcValue.ZERO;	
 	}
@@ -191,7 +191,7 @@ public class CalcModel
 		System.out.println(num1);
 		num1 = fact(num1);
 		System.out.println(num1);
-	
+		addToExpressionList("!");
 		BigDecimal b = BigDecimal.valueOf(num1);
 		
 		numbers.push(b);
@@ -273,6 +273,8 @@ public class CalcModel
 		}
 		
 	}
+
+	public Boolean isFactorial(String v){if (v.equals("!")) return true; else return false;}
 	
 	public String getExpressionValue()
 	{
@@ -306,6 +308,11 @@ public class CalcModel
 				String number1 = s.pop().toString();
 				s.push("(" + expressionValue + "(" + number1 + "))");
 				
+			}
+			else if (isFactorial(expressionValue))
+			{
+				String number1 = s.pop().toString();
+				s.push("("+number1 + expressionValue+")");
 			}
 			else
 			{
