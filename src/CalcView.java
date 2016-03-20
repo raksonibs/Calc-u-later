@@ -417,7 +417,23 @@ public class CalcView extends JFrame
 		String his = history.getText();
 		// right now this method is big, so when we refactor it we will put each button into its own controller method
 		// furthermore, we will make the stack and history be part of the model
-		if (!button.equals("+/-") && !button.equals(".")) {
+		
+		if (button.equals("UNDO")){			
+			System.out.println("UNDO");
+			if(userValueText.getText().equals(""))
+			{
+				theController.undo();
+			}
+			else
+			{
+				String text = userValueText.getText();
+				int length = userValueText.getText().length();
+				text = text.substring(0, length-1);
+				userValueText.setText(text);
+			}
+		}
+		
+		else if (!button.equals("+/-") && !button.equals(".")) {
 			char lastChar = his.charAt(his.length() - 1);
 			if (lastChar == '=') {
 				String removeEquals = his.substring(0, his.length() - 1);
@@ -513,13 +529,6 @@ public class CalcView extends JFrame
 
 		}
 
-		
-		else if (button.equals("UNDO")){			
-			
-			System.out.println("UNDO");
-			theController.undo();
-
-		}
 	}
 	
 	//method for factorial button

@@ -225,10 +225,7 @@ public class CalcModel
 		numbers = (Stack) inputValues.clone();	
 		//System.out.println("-------AFTER---------");
 		//printAllStacks();
-		
-			
 
-			
 	}
 	
 	public static double fact(double b)
@@ -331,74 +328,86 @@ public class CalcModel
 		
 	}
 	
-	public String getExpressionValue()
-	{
-		
-		//System.out.println("expression list top: " + expressionList.peek());
-		//System.out.println("infix notation list: " + inFixNotationList.peek());
-		
-		String returnValue = "";
+	public String getExpressionValue(){
+	
 		String expression = "";
+		
 		//Create a clone of the expression list so we can pop things without disturbing the list
-		Stack s = new Stack();
-		s = (Stack) expressionList.clone();
+		/* 
+		 * This is how this works....
+		 * 
+		 * We get the expressionList stack which could look like this:
+		 * (Read the stacks right>left = top>bottom)
+		 * 1,2,3,+,+
+		 * We reverse it
+		 * +,+,3,2,1 
+		 * 
+		 * We keep popping from this stack and putting the numbers into the container stack
+		 * until we reach an operator like +,-,x,/
+		 * Then we take the top two numbers from the container and put the operator 
+		 * in between the two numbers and put it back into the container stack.
+		 * We do this until we reach the end of the stack, then we reverse the
+		 * container stack and print it out to a String.
+		 */
+		Stack cloneExpressionList = new Stack();
+		Stack reverse = new Stack();
+		Stack container = new Stack();
+
+		cloneExpressionList = (Stack) expressionList.clone();
 		
-		//System.out.println("numbers size: " + numbers.size());
-		//System.out.println("expression list size: " + expressionList.size());
-		
-		if(stackContains(s,"+") || stackContains(s,"-" ) || stackContains(s,"÷") || stackContains(s,"x")){
-		
-			for(int i = 0; i < expressionList.size(); i++)
-			{
-				String expressionValue = expressionList.get(i);
-				//If we reach an operator in the stack then we pop the two previous numbers and insert the 
-				//operator in between them, as well as add brackets around the equation.
-				
-				if(isOperator(expressionValue)){
-					String number2 = s.pop().toString();
-					String number1 = s.pop().toString();
-					
-					s.push("(" + number1 + expressionValue + number2 + ")");
-				}
-				//If we reach a trignometric operation we only want to pop one number and add brackets
-				else if(isTrignometric(expressionValue))
-				{
-					String number1 = s.pop().toString();
-					s.push("(" + expressionValue + "(" + number1 + "))");
-					
-				}
-				else
-				{
-					s.push(""+expressionValue);
-				}
-		
-			}
-			
-			expression = s.pop().toString();
-			//Shave off the brackets on the end and add an equals sign
-			if(expression.length() > 1){
-			expression = expression.substring(1, expression.length()-1) + "=";
-			}
-			
-			return expression;
+		while(cloneExpressionList.size() > 0){
+			reverse.push(cloneExpressionList.pop());
 		}
-		else
-		{
+		
+		while(reverse.size()>0){
 			
-			Stack reverse = new Stack();
+			String value = reverse.pop().toString();
 			
-			while(s.size() > 0){
-				reverse.push(s.pop());
+			//Check is +,-,/,x
+			if(isOperator(value)){
+				
+				String number2 = container.pop().toString();
+				String number1 = container.pop().toString();
+				
+				container.push("(" + number1 + value + number2 + ")");
+				
 			}
-			
-			while(reverse.size()>0){
-				returnValue = returnValue + reverse.pop() + ",";
+			//Check if sin or cos
+			else if(isTrignometric(value))
+			{
+				String number1 = container.pop().toString();
+				
+				container.push("(" + value + "(" + number1 + "))");
 			}
-			
-			return returnValue.substring(0,returnValue.length()-1);
+			else
+			{
+				container.push(value);
+			}
+
+		}
+		
+		//System.out.println("Container stack: ");
+		//printStackToConsole(container);
+		
+		//Reverse the container stack
+		while(container.size() > 0){
+			reverse.push(container.pop());
 		}
 
+		//System.out.println("Container stack: ");
+		//printStackToConsole(reverse);
+		
+		//Add everything in the container to a String seperated by commas
+		while(reverse.size()>0){
+			expression = expression + "," + reverse.pop();
+		}
+		
+		//Shave off the excess comma at the begining
+		expression = expression.substring(1, expression.length());
+		
+		return expression;
 	}
+	
 	
 	public String getHistory(){
 		
