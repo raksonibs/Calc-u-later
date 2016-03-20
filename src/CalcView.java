@@ -362,6 +362,17 @@ public class CalcView extends JFrame
 				registerButton("!", theController);
 			}
 		};
+		
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("TEST"){
+			public void pressed(){
+				registerButton("TEST", theController);
+			}
+		};
 		c.gridx = 0;
 		c.gridwidth = 1;
 		c.gridy = 8;
@@ -435,6 +446,11 @@ public class CalcView extends JFrame
 			theController.divide();			
 			userValueText.setText("");
 		}
+	     else if (button.equals("TEST")) {
+		System.out.println("");			
+		theController.printInfoToConsole();			
+		//userValueText.setText("");
+	    }	
 		// fixed negate button
 		else if (button.equals("+/-")) {
 			
@@ -550,6 +566,12 @@ public class CalcView extends JFrame
 
 	}
 	
+	public static void addInput(CalcController theController){
+		
+		theController.addValue(BigDecimal.valueOf(Double.parseDouble(userValueText.getText())));
+		
+	}
+	
 
 	public static void addToHistory(CalcController theController) {
 		String value = history.getText();
@@ -563,7 +585,6 @@ public class CalcView extends JFrame
 		BigDecimal allValue = new BigDecimal(val);
 		numbers.push(allValue);
 		theController.addValue(allValue);
-		theController.addExpression(allValue.toPlainString());
 		System.out.println(numbers.get(numbers.size() -1));
 		
 		System.out.println("over here");

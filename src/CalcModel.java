@@ -10,12 +10,14 @@ import java.util.Vector;
 public class CalcModel
 {
 	private BigDecimal calcValue;
+	private Stack calculatedValues = new Stack();
+	private Stack inputValues = new Stack();
 	private Stack history;
 	private Stack numbers;
 	private Stack<String> expressionList = new Stack<String>();
 
 	//Amount to round to
-	private MathContext roundingAmount = new MathContext(5);
+	private MathContext roundingAmount = new MathContext(10);
 
 	/**
 	 * Creates a model with no user values and a calculated
@@ -32,13 +34,16 @@ public class CalcModel
 	public void setValue() {
 		
 	}
-	
+	/**
+	 * Pushes the number entered from View into the stacks in model
+	 * @param number
+	 */
 	public void pushNumber(BigDecimal number) {
+		
+		number = number.round(roundingAmount);
+		expressionList.push(number.round(roundingAmount).toPlainString());
 		numbers.push(number);
-
-	}
-	public void pushExpression(String valueIn) {
-		expressionList.push(valueIn);
+		inputValues.push(number);
 	}
 
 	/**
@@ -49,6 +54,7 @@ public class CalcModel
 		history.clear();
 		numbers.clear();		
 		expressionList.clear();
+		calculatedValues.clear();
 		
 		calcValue = calcValue.ZERO;	
 	}
@@ -61,6 +67,7 @@ public class CalcModel
 	 */
 	public void sum()
 	{
+		
 		System.out.println("numbers size: " + numbers.size());
 		System.out.println("expression list size: " + expressionList.size());
 
@@ -75,6 +82,8 @@ public class CalcModel
 		addToExpressionList("+");
 
 		numbers.push(calcValue);
+		calculatedValues.push(calcValue);
+
 	}
 	
 	/**
@@ -96,6 +105,7 @@ public class CalcModel
 		addToExpressionList("-");
 		
 		numbers.push(calcValue);
+		calculatedValues.push(calcValue);
 	}
 	
 	/**
@@ -117,6 +127,7 @@ public class CalcModel
 		addToExpressionList("x");
 		
 		numbers.push(calcValue);
+		calculatedValues.push(calcValue);
 	}
 	
 	/**
@@ -143,19 +154,20 @@ public class CalcModel
 		addToExpressionList("÷");
 				
 		numbers.push(calcValue);
+		calculatedValues.push(calcValue);
 	}
 	
 	public void pi()
 	{
 
-		Double pi = Math.PI;
-		BigDecimal num1 = BigDecimal.valueOf(pi);
+		//Double pi = Math.PI;
+		//BigDecimal num1 = BigDecimal.valueOf(pi);
 		
-		num1 = num1.round(roundingAmount);
+		//num1 = num1.round(roundingAmount);
 		
 		//System.out.println("num1 " + num1.toPlainString());
 
-		addToExpressionList("π");
+		//addToExpressionList("π");
 
 	}
 	
@@ -197,10 +209,26 @@ public class CalcModel
 	}
 	
 	public void undo() {
-		numbers.pop();
-		expressionList.pop();
-		//history.pop();
 		
+		//System.out.println("-------BEFORE---------");
+		//printAllStacks();
+
+		if(isOperator(expressionList.peek())){
+			expressionList.pop();
+			calculatedValues.pop();
+		}
+		else
+		{
+			expressionList.pop();
+			inputValues.pop();
+		}
+		numbers = (Stack) inputValues.clone();	
+		//System.out.println("-------AFTER---------");
+		//printAllStacks();
+		
+			
+
+			
 	}
 	
 	public static double fact(double b)
@@ -230,6 +258,16 @@ public class CalcModel
 	{
 		return (BigDecimal) numbers.peek();
 	}
+	
+	public BigDecimal getCalculatedValue(){
+		if(calculatedValues.size()>0){
+		return (BigDecimal) calculatedValues.peek();
+		}
+		else
+		{
+			return BigDecimal.valueOf(0);
+		}
+	}
 
 	public void addToExpressionList(String sign){
 		expressionList.push(sign);
@@ -250,7 +288,7 @@ public class CalcModel
 	public Boolean isOperator(String value){
 		
 		//Check to see if a string is an operator
-		if(value == "+" || value == "-" || value == "x"|| value == "÷"){
+		if(value == "+" || value == "-" || value == "x"|| value == "÷"|| value == "="){
 			return true;
 		}
 		else
@@ -273,14 +311,34 @@ public class CalcModel
 		
 	}
 	
+	public boolean stackContains(Stack stackIn,String value){
+				
+		Stack s = new Stack();
+		s = (Stack) stackIn.clone();
+		
+		while(s.size() > 0){
+			if(s.peek().toString() == value){
+				return true;
+			}
+			else
+			{
+				s.pop();
+			}
+	
+		}
+
+		return false;
+		
+	}
+	
 	public String getExpressionValue()
 	{
 		
-		System.out.println("expression list top: " + expressionList.peek());
+		//System.out.println("expression list top: " + expressionList.peek());
 		//System.out.println("infix notation list: " + inFixNotationList.peek());
 		
 		String returnValue = "";
-	
+		String expression = "";
 		//Create a clone of the expression list so we can pop things without disturbing the list
 		Stack s = new Stack();
 		s = (Stack) expressionList.clone();
@@ -288,40 +346,107 @@ public class CalcModel
 		//System.out.println("numbers size: " + numbers.size());
 		//System.out.println("expression list size: " + expressionList.size());
 		
-		for(int i = 0; i < expressionList.size(); i++){
-			String expressionValue = expressionList.get(i);
-			//If we reach an operator in the stack then we pop the two previous numbers and insert the 
-			//operator in between them, as well as add brackets around the equation.
+		if(stackContains(s,"+") || stackContains(s,"-" ) || stackContains(s,"÷") || stackContains(s,"x")){
+		
+			for(int i = 0; i < expressionList.size(); i++)
+			{
+				String expressionValue = expressionList.get(i);
+				//If we reach an operator in the stack then we pop the two previous numbers and insert the 
+				//operator in between them, as well as add brackets around the equation.
+				
+				if(isOperator(expressionValue)){
+					String number2 = s.pop().toString();
+					String number1 = s.pop().toString();
+					
+					s.push("(" + number1 + expressionValue + number2 + ")");
+				}
+				//If we reach a trignometric operation we only want to pop one number and add brackets
+				else if(isTrignometric(expressionValue))
+				{
+					String number1 = s.pop().toString();
+					s.push("(" + expressionValue + "(" + number1 + "))");
+					
+				}
+				else
+				{
+					s.push(""+expressionValue);
+				}
+		
+			}
 			
-			if(isOperator(expressionValue)){
-				String number2 = s.pop().toString();
-				String number1 = s.pop().toString();
-				
-				s.push("(" + number1 + expressionValue + number2 + ")");
+			expression = s.pop().toString();
+			//Shave off the brackets on the end and add an equals sign
+			if(expression.length() > 1){
+			expression = expression.substring(1, expression.length()-1) + "=";
 			}
-			//If we reach a trignometric operation we only want to pop one number and add brackets
-			else if(isTrignometric(expressionValue))
-			{
-				String number1 = s.pop().toString();
-				s.push("(" + expressionValue + "(" + number1 + "))");
-				
+			
+			return expression;
+		}
+		else
+		{
+			
+			Stack reverse = new Stack();
+			
+			while(s.size() > 0){
+				reverse.push(s.pop());
 			}
-			else
+			
+			while(reverse.size()>0){
+				returnValue = returnValue + reverse.pop() + ",";
+			}
+			
+			return returnValue.substring(0,returnValue.length()-1);
+		}
+
+	}
+	
+	public String getHistory(){
+		
+		String returnValue = "";
+		
+		//System.out.println("numbers size: " + numbers.size());
+		//System.out.println("expression list size: " + expressionList.size());
+		
+		for(int i = 0; i < expressionList.size(); i++)
+		{
+			String expressionValue = expressionList.get(i);
+			if(!isOperator(expressionValue) && !isTrignometric(expressionValue))
 			{
-				s.push(""+expressionValue);
+				returnValue = returnValue  + expressionValue.toString()+ ",";
 			}
 		}
 		
-		String expression = s.pop().toString();
+		returnValue = returnValue.substring(0, returnValue.length()-1);
+		System.out.println("History: " + returnValue);
 		
-		//Shave off the brackets on the end and add an equals sign
-		expression = expression.substring(1, expression.length()-1) + "=";
+		return returnValue;
+	}
+	
+	public void printStackToConsole(Stack stackToPrint){
 		
-		return expression;
+		Stack clone = new Stack();
+		
+		clone = (Stack) stackToPrint.clone();
+		
+		while(clone.size() > 0)
+		{
+			System.out.println(clone.pop().toString());
+		}
 		
 	}
 	
-	
+	public void printAllStacks(){
+		System.out.println("-----------------");
+		System.out.println("Expression List Stack: ");
+		printStackToConsole(expressionList);
+		System.out.println("Input Values Stack: ");
+		printStackToConsole(inputValues);
+		System.out.println("Numbers Stack: ");
+		printStackToConsole(numbers);
+		System.out.println("Calculated Values Stack: ");
+		printStackToConsole(calculatedValues);
+		System.out.println("-----------------");
+	}
 	
 	
 	
