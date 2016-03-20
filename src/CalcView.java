@@ -363,9 +363,9 @@ public class CalcView extends JFrame
 			}
 		};
 		
-		c.gridx = 4;
+		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 7;
+		c.gridy = 8;
 		pane.add(button, c);
 
 		button = new ButtonAdapter("TEST"){
@@ -373,7 +373,7 @@ public class CalcView extends JFrame
 				registerButton("TEST", theController);
 			}
 		};
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
@@ -584,32 +584,16 @@ public class CalcView extends JFrame
 
 	public static void addToHistory(CalcController theController) {
 		String value = history.getText();
-		
-		findRoundingValue(userValueText.getText());
 				
 		double val = Double.parseDouble(userValueText.getText());
 		
 		System.out.println(""+val);
 		
 		BigDecimal allValue = new BigDecimal(val);
-		numbers.push(allValue);
 		theController.addValue(allValue);
-		System.out.println(numbers.get(numbers.size() -1));
-		
-		System.out.println("over here");
-		
-		if (buttonClicked == 0) {
-			buttonClicked += 1;
-		} else {
-			buttonClicked += 1;
-			value += ",";
-		}
-		
-		value += userValueText.getText();		
-		
-		history.setText(value);
-		
+	
 		userValueText.setText("");
+		
 	}
 	
 	public static void setButtonClicked() {
@@ -627,6 +611,10 @@ public class CalcView extends JFrame
 		userValueText.setText(value);
 	}
 	
+	/**
+	 * Set the history text field to a given String
+	 * @param String to set text field to
+	 */
 	public static void setHistory(String value) {
 		history.setText(value);
 	}

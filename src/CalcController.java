@@ -150,6 +150,7 @@ public class CalcController
 	//When ENTER is pushed
 	public void addValue(BigDecimal value) {
 		model.pushNumber(value);
+		System.out.println("Controller print history:" + model.getHistory());
 		view.setHistory(model.getHistory());
 	}
 	
