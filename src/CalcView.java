@@ -362,6 +362,17 @@ public class CalcView extends JFrame
 				registerButton("!", theController);
 			}
 		};
+		
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("TEST"){
+			public void pressed(){
+				registerButton("TEST", theController);
+			}
+		};
 		c.gridx = 0;
 		c.gridwidth = 1;
 		c.gridy = 8;
@@ -406,7 +417,23 @@ public class CalcView extends JFrame
 		String his = history.getText();
 		// right now this method is big, so when we refactor it we will put each button into its own controller method
 		// furthermore, we will make the stack and history be part of the model
-		if (!button.equals("+/-") && !button.equals(".")) {
+		
+		if (button.equals("UNDO")){			
+			System.out.println("UNDO");
+			if(userValueText.getText().equals(""))
+			{
+				theController.undo();
+			}
+			else
+			{
+				String text = userValueText.getText();
+				int length = userValueText.getText().length();
+				text = text.substring(0, length-1);
+				userValueText.setText(text);
+			}
+		}
+		
+		else if (!button.equals("+/-") && !button.equals(".")) {
 			char lastChar = his.charAt(his.length() - 1);
 			if (lastChar == '=') {
 				String removeEquals = his.substring(0, his.length() - 1);
@@ -435,6 +462,11 @@ public class CalcView extends JFrame
 			theController.divide();			
 			userValueText.setText("");
 		}
+	     else if (button.equals("TEST")) {
+		System.out.println("");			
+		theController.printInfoToConsole();			
+		//userValueText.setText("");
+	    }	
 		// fixed negate button
 		else if (button.equals("+/-")) {
 			
@@ -497,13 +529,6 @@ public class CalcView extends JFrame
 
 		}
 
-		
-		else if (button.equals("UNDO")){			
-			
-			System.out.println("UNDO");
-			theController.undo();
-
-		}
 	}
 	
 	//method for factorial button
@@ -550,6 +575,12 @@ public class CalcView extends JFrame
 
 	}
 	
+	public static void addInput(CalcController theController){
+		
+		theController.addValue(BigDecimal.valueOf(Double.parseDouble(userValueText.getText())));
+		
+	}
+	
 
 	public static void addToHistory(CalcController theController) {
 		String value = history.getText();
@@ -563,7 +594,6 @@ public class CalcView extends JFrame
 		BigDecimal allValue = new BigDecimal(val);
 		numbers.push(allValue);
 		theController.addValue(allValue);
-		theController.addExpression(allValue.toPlainString());
 		System.out.println(numbers.get(numbers.size() -1));
 		
 		System.out.println("over here");
