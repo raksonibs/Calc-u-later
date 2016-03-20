@@ -286,9 +286,9 @@ public class CalcView extends JFrame
 		c.gridy = 6;
 		pane.add(button, c);
 		
-		button =  new ButtonAdapter("*") {
+		button =  new ButtonAdapter("x") {
 			public void pressed(){
-				registerButton("*", theController);
+				registerButton("x", theController);
 			}
 		};
 		c.gridx = 3;
@@ -296,9 +296,9 @@ public class CalcView extends JFrame
 		c.gridy = 6;
 		pane.add(button, c);
 		
-		button =  new ButtonAdapter("/") {
+		button =  new ButtonAdapter("÷") {
 			public void pressed(){
-				registerButton("/", theController);
+				registerButton("÷", theController);
 			}
 		};
 		c.gridx = 4;
@@ -453,11 +453,11 @@ public class CalcView extends JFrame
 			theController.subtract();			
 			userValueText.setText("");
 
-		} else if (button.equals("*")) {
+		} else if (button.equals("x")) {
 			System.out.println("multiplty");			
 			theController.multiply();			
 			userValueText.setText("");
-		} else if (button.equals("/")) {
+		} else if (button.equals("÷")) {
 			System.out.println("divide");			
 			theController.divide();			
 			userValueText.setText("");
@@ -474,16 +474,14 @@ public class CalcView extends JFrame
 			char changeSign = userVal.charAt(0);
 			
 			if (changeSign == '-') {
-				userVal = userVal.replace('-', '\0');
+				userVal = userVal.substring(1, userVal.length());
 				userValueText.setText(userVal);
 			}else
 			{
 				userVal = '-'+userVal;
 				userValueText.setText(userVal);
 			}
-			
-			
-			
+
 		} else if (button.equals(".")) {
 			
 			String userVal = userValueText.getText();
