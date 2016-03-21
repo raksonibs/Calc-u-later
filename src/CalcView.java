@@ -588,7 +588,9 @@ public class CalcView extends JFrame
 		System.out.println(""+val);
 		
 		BigDecimal allValue = new BigDecimal(val);
+		theController.addToRounding(userValueText.getText());
 		theController.addValue(allValue);
+
 	
 		userValueText.setText("");
 		
@@ -671,10 +673,10 @@ public class CalcView extends JFrame
 			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
 				// roundingLengthBeforeDecimal = leftDecimal.length();
 				//System.out.println("Digits to the left " + leftDecimal.length());
-			if (uV.substring(1, uV.length()).length() > 6)
-			{	
-				uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length() - 2).length();
-			}
+				if (uV.substring(1, uV.length()).length() > 6)
+				{	
+					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length() - 2).length();
+				}
 		 		System.out.println("it knows");
 			}		
 		}

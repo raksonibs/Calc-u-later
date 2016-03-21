@@ -142,15 +142,18 @@ public class CalcController
 		showValue();
 		
 	}
-	
-	public void updateTextFields(){
-		
-	}
-	
+
 	//When ENTER is pushed
 	public void addValue(BigDecimal value) {
+	
 		model.pushNumber(value);
 		view.setHistory(model.getHistory());
+	}
+	
+	public void addToRounding(String value){
+		
+		model.updateRounding(value);
+		
 	}
 	
 	public void printInfoToConsole(){
