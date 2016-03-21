@@ -674,12 +674,18 @@ public class CalcView extends JFrame
 			setCalcValue(b.toPlainString());
 			userValueText.setText("");*/
 			//if(userValueText.)
-			
-			numbers.pop();
-			
-			String newText = history.getText();
-			newText = newText.substring(0, newText.length()-2);
-			history.setText(newText);
+			System.out.println("undo test");
+			if(userValueText.getText().isEmpty()){
+			System.out.println("text is not empty");
+
+				userValueText.setText("");
+			}
+				
+//			numbers.pop();
+//			
+//			String newText = history.getText();
+//			newText = newText.substring(0, newText.length()-2);
+//			history.setText(newText);
 
 		}
 	}
