@@ -527,7 +527,6 @@ public class CalcView extends JFrame
 
 		}
 
-<<<<<<< HEAD
 		
 		else if (button.equals("UNDO")){
 
@@ -561,8 +560,7 @@ public class CalcView extends JFrame
 //			history.setText(newText);
 
 		}
-=======
->>>>>>> e033db39e23514b9d8769762b55a6417b195ce94
+
 	}
 	
 	//method for factorial button
