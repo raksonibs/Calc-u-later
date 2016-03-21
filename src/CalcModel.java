@@ -17,7 +17,8 @@ public class CalcModel
 	private Stack<String> expressionList = new Stack<String>();
 
 	//Amount to round to
-	private MathContext roundingAmount = new MathContext(10);
+	private MathContext roundingAmount = new MathContext(1);
+	
 
 	/**
 	 * Creates a model with no user values and a calculated
@@ -40,10 +41,13 @@ public class CalcModel
 	 */
 	public void pushNumber(BigDecimal number) {
 		
+
 		number = number.round(roundingAmount);
 		expressionList.push(number.round(roundingAmount).toPlainString());
 		numbers.push(number);
 		inputValues.push(number);
+		
+		
 	}
 
 	/**
@@ -510,6 +514,21 @@ public class CalcModel
 		//System.out.println("History: " + returnValue);
 		
 		return returnValue;
+	}
+	
+	
+	public void updateRounding(String value){
+		
+		if(value.contains(".")){
+			String digitsAfterDecimal = value.substring(value.indexOf("."), value.length());
+			int precision = digitsAfterDecimal.length();
+			//System.out.println("Digits After Decimal: " + precision);
+			if(precision > roundingAmount.getPrecision()){
+			roundingAmount = new MathContext(digitsAfterDecimal.length());
+			System.out.println("Now rounding to " + roundingAmount.getPrecision() + " decimal places");
+			}
+		}
+		
 	}
 	
 	/**
