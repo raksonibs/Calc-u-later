@@ -1,11 +1,15 @@
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.GridBagLayout;
@@ -13,6 +17,7 @@ import java.awt.Container;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.image.BufferedImage;
 import java.util.Stack;
 
 import javax.swing.*;
@@ -35,7 +40,11 @@ public class CalcView extends JFrame
 	private static Stack<String> userHistory;
 	private static Stack<String> resHistory;
 	private static Stack<String> expression; 
-
+	
+	private static JFrame graph = new JFrame();
+	
+	
+	
 	private static int roundingLengthAfterDecimal = 5;
 	private static int roundingLengthBeforeDecimal = 6;
 	
@@ -378,6 +387,19 @@ public class CalcView extends JFrame
 		c.gridy = 8;
 		pane.add(button, c);
 		
+		button = new ButtonAdapter("Graph"){
+			public void pressed(){
+				registerButton("Graph", theController);
+			}
+		};
+		c.gridx = 2;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
+		graph.setSize(350, 350); 
+		graph.setVisible(true);
+		
 		y += 1;
 
 		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
@@ -466,7 +488,7 @@ public class CalcView extends JFrame
 		System.out.println("");			
 		theController.printInfoToConsole();			
 		//userValueText.setText("");
-	    }	
+	    }		
 		// fixed negate button
 		else if (button.equals("+/-")) {
 			
