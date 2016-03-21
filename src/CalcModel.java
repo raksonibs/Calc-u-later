@@ -206,7 +206,7 @@ public class CalcModel
 		num1 = fact(num1);
 		System.out.println(num1);
 
-		// addToExpressionList("!");
+		addToExpressionList("!");
 
 	
 		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
@@ -421,10 +421,11 @@ public class CalcModel
 				
 				container.push("(" + value + "(" + number1 + "))");
 			}
-			else if (isFactorial(expressionValue))
+			else if (isFactorial(value))
 			{
-				String number1 = s.pop().toString();
-				s.push("("+number1 + expressionValue+")");
+				System.out.println("trying");
+				String number1 = container.pop().toString();
+				container.push("("+number1 + value+")");
 			}
 			else
 			{

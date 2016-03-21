@@ -121,7 +121,7 @@ public class CalcController
 		//System.out.println("Current value is: " + calcValue.toPlainString());
 		//System.out.println("Expression is: " + expressionValue);
 		
-		view.setCalcValue(model.getCalculatedValue().toPlainString());
+		view.setCalcValue(view.findRoundingValue(model.getCalculatedValue().toPlainString()));
 		view.setExpressionValue(model.getExpressionValue());
 		view.setHistory(model.getHistory());
 		
