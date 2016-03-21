@@ -55,6 +55,7 @@ public class CalcModel
 		numbers.clear();		
 		expressionList.clear();
 		calculatedValues.clear();
+		inputValues.clear();
 		
 		calcValue = calcValue.ZERO;	
 	}
@@ -68,8 +69,8 @@ public class CalcModel
 	public void sum()
 	{
 		
-		System.out.println("numbers size: " + numbers.size());
-		System.out.println("expression list size: " + expressionList.size());
+		//System.out.println("numbers size: " + numbers.size());
+		//System.out.println("expression list size: " + expressionList.size());
 
 		checkIfEnoughDigitsAvaliable(0);
 		
@@ -184,6 +185,7 @@ public class CalcModel
 		
 		addToExpressionList("sin");
 		numbers.push(b);
+		calculatedValues.push(b);
 	}
 	
 	public void cos() {
@@ -195,6 +197,7 @@ public class CalcModel
 		BigDecimal b = BigDecimal.valueOf(num1);
 		
 		numbers.push(b);
+		calculatedValues.push(b);
 	}
 	
 	public void factorial() {
@@ -202,10 +205,15 @@ public class CalcModel
 		System.out.println(num1);
 		num1 = fact(num1);
 		System.out.println(num1);
-		addToExpressionList("!");
-		BigDecimal b = BigDecimal.valueOf(num1);
+
+		// addToExpressionList("!");
+
+	
+		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
+
 		
 		numbers.push(b);
+		calculatedValues.push(b);
 	}
 	
 	public void undo() {
@@ -213,7 +221,7 @@ public class CalcModel
 		//System.out.println("-------BEFORE---------");
 		//printAllStacks();
 
-		if(isOperator(expressionList.peek())){
+		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())){
 			expressionList.pop();
 			calculatedValues.pop();
 		}
@@ -256,6 +264,10 @@ public class CalcModel
 		return (BigDecimal) numbers.peek();
 	}
 	
+	/**
+	 * Get last calculated Value, if there isnt one return 0
+	 * @return Last calculated value
+	 */
 	public BigDecimal getCalculatedValue(){
 		if(calculatedValues.size()>0){
 		return (BigDecimal) calculatedValues.peek();
@@ -266,10 +278,19 @@ public class CalcModel
 		}
 	}
 
+	/**
+	 * Push operator sign such as +,-,sin, etc. to expressionList stack.
+	 * @param sign
+	 */
 	public void addToExpressionList(String sign){
 		expressionList.push(sign);
 	}
 	
+	/**
+	 * Check if theres enough digits to do a calculation, if not input a filler number.
+	 * For example (1,+) would give (1+0)
+	 * @param number
+	 */
 	public void checkIfEnoughDigitsAvaliable(int number){
 		//Way to handle situations such as the user entering 1,+;
 		//Will automatically enter an appropriate value in place
@@ -279,9 +300,15 @@ public class CalcModel
 			numbers.push(BigDecimal.valueOf(number));
 			history.push(String.valueOf(number));
 			expressionList.push(String.valueOf(number));
+			inputValues.push(number);
 		}
 	}
 	
+	/**
+	 * Check if a String is one of the following: +,-,x,÷,=.
+	 * @param The String to check
+	 * @return True or False
+	 */
 	public Boolean isOperator(String value){
 		
 		//Check to see if a string is an operator
@@ -294,7 +321,11 @@ public class CalcModel
 		}
 		
 	}
-	
+	/**
+	 * Check if a String is one of the following: sin, cos.
+	 * @param The String to check
+	 * @return True or False
+	 */
 	public Boolean isTrignometric(String value){
 		
 		//Check to see if a string is a trig function
@@ -310,6 +341,12 @@ public class CalcModel
 
 	public Boolean isFactorial(String v){if (v.equals("!")) return true; else return false;}
 	
+	/**
+	 * Check if a given stack contains a String
+	 * @param The stack to check in
+	 * @param The String to search for
+	 * @return True if the String is in the stack, false otherwise.
+	 */
 	public boolean stackContains(Stack stackIn,String value){
 				
 		Stack s = new Stack();
@@ -329,7 +366,10 @@ public class CalcModel
 		return false;
 		
 	}
-	
+	/**
+	 * Convert postFix stack to inFix
+	 * @return Converted String
+	 */
 	public String getExpressionValue(){
 	
 		String expression = "";
@@ -404,19 +444,24 @@ public class CalcModel
 		//System.out.println("Container stack: ");
 		//printStackToConsole(reverse);
 		
-		//Add everything in the container to a String seperated by commas
+		//Add everything in the container to a String separated by commas
 		while(reverse.size()>0){
 			expression = expression + "," + reverse.pop();
 		}
 		
 		//Shave off the excess comma at the begining
+		if(expression.length() > 0)
+		{
 		expression = expression.substring(1, expression.length());
-		
+		}
 		return expression;
 	}
 	
-	
-	public String getHistory(){
+	/**
+	 * Get the history of inputed numbers, seperated by commas
+	 * @return A string of numbers inputed
+	 */
+	public String getNumberHistory(){
 		
 		String returnValue = "";
 		
@@ -432,12 +477,45 @@ public class CalcModel
 			}
 		}
 		
+		if(returnValue.length() > 0)
+		{
 		returnValue = returnValue.substring(0, returnValue.length()-1);
-		System.out.println("History: " + returnValue);
+		}
+		
+		//System.out.println("History: " + returnValue);
 		
 		return returnValue;
 	}
 	
+	public String getHistory(){
+		
+		String returnValue = "";
+		
+		//System.out.println("numbers size: " + numbers.size());
+		//System.out.println("expression list size: " + expressionList.size());
+		
+		for(int i = 0; i < expressionList.size(); i++)
+		{
+			String expressionValue = expressionList.get(i);
+
+				returnValue = returnValue  + expressionValue.toString()+ ",";
+			
+		}
+		
+		if(returnValue.length() > 0)
+		{
+		returnValue = returnValue.substring(0, returnValue.length()-1);
+		}
+		
+		//System.out.println("History: " + returnValue);
+		
+		return returnValue;
+	}
+	
+	/**
+	 * Print a stack to console from top to bottom.
+	 * @param The stack to print
+	 */
 	public void printStackToConsole(Stack stackToPrint){
 		
 		Stack clone = new Stack();
@@ -451,6 +529,9 @@ public class CalcModel
 		
 	}
 	
+	/**
+	 * Prints all stacks in model to console.
+	 */
 	public void printAllStacks(){
 		System.out.println("-----------------");
 		System.out.println("Expression List Stack: ");

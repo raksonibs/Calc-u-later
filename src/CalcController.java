@@ -118,14 +118,12 @@ public class CalcController
 
 	private void showValue() 
 	{
-		BigDecimal calcValue = model.getCalculatedValue();
-		String expressionValue = model.getExpressionValue();
+		//System.out.println("Current value is: " + calcValue.toPlainString());
+		//System.out.println("Expression is: " + expressionValue);
 		
-		System.out.println("Current value is: " + calcValue.toPlainString());
-		System.out.println("Expression is: " + expressionValue);
-		
-		view.setCalcValue(view.findRoundingValue(calcValue.toPlainString()));
-		view.setExpressionValue(expressionValue);
+		view.setCalcValue(model.getCalculatedValue().toPlainString());
+		view.setExpressionValue(model.getExpressionValue());
+		view.setHistory(model.getHistory());
 		
 	}
 
@@ -141,9 +139,11 @@ public class CalcController
 		model.undo();
 		String expressionValue = model.getExpressionValue();
 		
-		view.setCalcValue(model.getCalculatedValue().toPlainString());
-		view.setExpressionValue(expressionValue);
-		view.setHistory(model.getHistory());
+		showValue();
+		
+	}
+	
+	public void updateTextFields(){
 		
 	}
 	
