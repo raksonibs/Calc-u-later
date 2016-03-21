@@ -296,6 +296,7 @@ public class CalcModel
 			numbers.push(BigDecimal.valueOf(number));
 			history.push(String.valueOf(number));
 			expressionList.push(String.valueOf(number));
+			inputValues.push(number);
 		}
 	}
 	
