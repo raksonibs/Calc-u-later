@@ -588,7 +588,9 @@ public class CalcView extends JFrame
 		System.out.println(""+val);
 		
 		BigDecimal allValue = new BigDecimal(val);
+		theController.addToRounding(userValueText.getText());
 		theController.addValue(allValue);
+
 	
 		userValueText.setText("");
 		
