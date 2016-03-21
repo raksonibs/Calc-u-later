@@ -69,8 +69,8 @@ public class CalcModel
 	public void sum()
 	{
 		
-		System.out.println("numbers size: " + numbers.size());
-		System.out.println("expression list size: " + expressionList.size());
+		//System.out.println("numbers size: " + numbers.size());
+		//System.out.println("expression list size: " + expressionList.size());
 
 		checkIfEnoughDigitsAvaliable(0);
 		
@@ -450,12 +450,12 @@ public class CalcModel
 	 * Get the history of inputed numbers, seperated by commas
 	 * @return A string of numbers inputed
 	 */
-	public String getHistory(){
+	public String getNumberHistory(){
 		
 		String returnValue = "";
 		
 		//System.out.println("numbers size: " + numbers.size());
-		System.out.println("expression list size: " + expressionList.size());
+		//System.out.println("expression list size: " + expressionList.size());
 		
 		for(int i = 0; i < expressionList.size(); i++)
 		{
@@ -471,7 +471,32 @@ public class CalcModel
 		returnValue = returnValue.substring(0, returnValue.length()-1);
 		}
 		
-		System.out.println("History: " + returnValue);
+		//System.out.println("History: " + returnValue);
+		
+		return returnValue;
+	}
+	
+	public String getHistory(){
+		
+		String returnValue = "";
+		
+		//System.out.println("numbers size: " + numbers.size());
+		//System.out.println("expression list size: " + expressionList.size());
+		
+		for(int i = 0; i < expressionList.size(); i++)
+		{
+			String expressionValue = expressionList.get(i);
+
+				returnValue = returnValue  + expressionValue.toString()+ ",";
+			
+		}
+		
+		if(returnValue.length() > 0)
+		{
+		returnValue = returnValue.substring(0, returnValue.length()-1);
+		}
+		
+		//System.out.println("History: " + returnValue);
 		
 		return returnValue;
 	}
