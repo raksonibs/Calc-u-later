@@ -10,7 +10,7 @@ import java.util.Vector;
 public class CalcModel
 {
 	private BigDecimal calcValue;
-	private Stack calculatedValues = new Stack();
+	private Stack<BigDecimal> calculatedValues = new Stack<BigDecimal>();
 	private Stack inputValues = new Stack();
 	private Stack history;
 	private Stack numbers;
@@ -18,7 +18,7 @@ public class CalcModel
 
 	//Amount to round to
 	private MathContext roundingAmount = new MathContext(1);
-	
+	private MathContext roundingAmountResult = new MathContext(1);
 
 	/**
 	 * Creates a model with no user values and a calculated
@@ -60,6 +60,9 @@ public class CalcModel
 		expressionList.clear();
 		calculatedValues.clear();
 		inputValues.clear();
+		
+		roundingAmount = new MathContext(0);
+		roundingAmountResult = new MathContext(0);
 		
 		calcValue = calcValue.ZERO;	
 	}
@@ -265,12 +268,12 @@ public class CalcModel
 	}
 	
 	/**
-	 * Get last calculated Value, if there isnt one return 0
+	 * Get last calculated Value, if there isn't one return 0
 	 * @return Last calculated value
 	 */
 	public BigDecimal getCalculatedValue(){
 		if(calculatedValues.size()>0){
-		return (BigDecimal) calculatedValues.peek();
+		return (BigDecimal) calculatedValues.peek().round(roundingAmountResult);
 		}
 		else
 		{
@@ -508,14 +511,19 @@ public class CalcModel
 	
 	public void updateRounding(String value){
 		
+		int precision = value.length();
+
 		if(value.contains(".")){
-			String digitsAfterDecimal = value.substring(value.indexOf("."), value.length());
-			int precision = digitsAfterDecimal.length();
-			//System.out.println("Digits After Decimal: " + precision);
-			if(precision > roundingAmount.getPrecision()){
-			roundingAmount = new MathContext(digitsAfterDecimal.length());
-			System.out.println("Now rounding to " + roundingAmount.getPrecision() + " decimal places");
-			}
+			
+			precision-=1;
+		}
+		
+		roundingAmount = new MathContext(precision);
+		System.out.println("Rounding input to " + roundingAmount.getPrecision() + " decimal places");
+		
+		if(precision > roundingAmountResult.getPrecision()){
+			roundingAmountResult = new MathContext(precision + 1);
+			System.out.println("Now rounding final result to " + roundingAmount.getPrecision() + " decimal places");
 		}
 		
 	}

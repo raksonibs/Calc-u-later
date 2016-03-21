@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class CalcController
 	public static final String CLEAR = "CLEAR";
 	
 	private CalcModel model;
+	private GraphModel graphModel;
 	private CalcView view;
 
 	/**
@@ -47,14 +49,16 @@ public class CalcController
 	public CalcController()
 	{
 		model = new CalcModel();
+		graphModel = new GraphModel(null);
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
 	}
 	
-	public CalcController(CalcModel modelIn){
+	public CalcController(CalcModel modelIn, GraphModel graphModelIn){
 		
 		model = modelIn;
+		graphModel = graphModelIn;
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
