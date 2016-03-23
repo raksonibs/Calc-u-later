@@ -214,7 +214,8 @@ public class CalcModel
 		System.out.println(num1);
 
 		addToExpressionList("!");
-	
+		updateRounding(num1.toString());
+		
 		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
 
 		
@@ -227,7 +228,7 @@ public class CalcModel
 		//System.out.println("-------BEFORE---------");
 		//printAllStacks();
 
-		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())){
+		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())|| isFactorial(expressionList.peek())){
 			expressionList.pop();
 			calculatedValues.pop();
 		}
@@ -345,7 +346,19 @@ public class CalcModel
 		
 	}
 
-	public Boolean isFactorial(String v){if (v.equals("!")) return true; else return false;}
+	public Boolean isFactorial(String value){
+		
+		//Check to see if a string is a trig function
+		if(value == "!" ){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+
 	
 	/**
 	 * Check if a given stack contains a String
@@ -427,10 +440,13 @@ public class CalcModel
 				
 				container.push("(" + value + "(" + number1 + "))");
 			}
-			else if (isFactorial(value))
+
+			else if(isFactorial(value))
 			{
 				String number1 = container.pop().toString();
-				container.push("("+number1 + value+")");
+				
+				container.push("(" + number1 + value + ")");
+
 			}
 			else
 			{
@@ -535,6 +551,8 @@ public class CalcModel
 			roundingAmountResult = new MathContext(precision + 1);
 			System.out.println("Now rounding final result to " + roundingAmount.getPrecision() + " decimal places");
 		}
+		
+		roundingAmountResult = new MathContext(10);
 		
 	}
 	
