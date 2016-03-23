@@ -15,7 +15,7 @@ public class GraphModel extends ApplicationFrame {
 		  super(title);
 		  
 	        final XYSeries series = new XYSeries("Sin(x)");
-	       
+	        
 	        //This graph basically just samples the equation, creates a bunch of data points
 	        //and then connects the data points to one another
 	        //Uses JFreeChart

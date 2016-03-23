@@ -131,9 +131,8 @@ public class CalcModel
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
-		
 		addToExpressionList("x");
-		
+		updateRounding(calcValue.toString());
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
 	}
@@ -156,10 +155,8 @@ public class CalcModel
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.divide(num1, roundingAmount);
-		
-		//System.out.println("Division Value is: " + calcValue.toPlainString());
-		
 		addToExpressionList("÷");
+		updateRounding(calcValue.toString());
 				
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
@@ -215,7 +212,7 @@ public class CalcModel
 		addToExpressionList("!");
 		updateRounding(num1.toString());
 		
-		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
+		BigDecimal b = BigDecimal.valueOf(num1);
 		
 		numbers.push(b);
 		calculatedValues.push(b);
@@ -546,7 +543,7 @@ public class CalcModel
 			System.out.println("Now rounding final result to " + roundingAmount.getPrecision() + " decimal places");
 		}
 		
-		roundingAmountResult = new MathContext(10);
+		//roundingAmountResult = new MathContext(10);
 		
 	}
 	
