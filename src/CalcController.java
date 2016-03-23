@@ -67,21 +67,25 @@ public class CalcController
 //	  NTD: should be bigint array
 	public void sum() {
 		
+		pushUserText();
 		model.sum();
 		showValue();
 	}
 	
 	public void subtract() {
+		pushUserText();
 		model.subtract();
 		showValue();
 	}
 
 	public void multiply() {
+		pushUserText();
 		model.multiply();
 		showValue();
 	}
 
 	public void divide() {
+		pushUserText();
 		if(!model.lastValue().equals(BigDecimal.ZERO)) {
 			model.divide();
 		}
@@ -93,21 +97,25 @@ public class CalcController
 		showValue();
 	}
 
-	public void cos() {
-		model.cos();
-		showValue();
-	}
 
 	public void factorial() {
+		pushUserText();
 		model.factorial();
 		showValue();
 	}
 
 	public void sin() {
+		pushUserText();
 		model.sin();
 		showValue();
 	}
 
+	public void cos() {
+		pushUserText();
+		model.cos();
+		showValue();
+	}
+	
 	public void clear() {
 		model.clear();
 		empty();
@@ -165,7 +173,22 @@ public class CalcController
 		model.printAllStacks();
 	}
 
-
 	
+	/**
+	 * If the user has entered a value into the text field without pushing enter, this will
+	 * push the value into the stacks
+	 * As per requirements document
+	 */
+	public void pushUserText()
+	{
+		
+		if(view.containsUserValue() == true){
+			String userText = view.getUserValue();
+			BigDecimal value = new BigDecimal(userText);
+			addValue(value);
+			view.clearUserValue();
+		}
+
+	}
 
 }

@@ -390,6 +390,7 @@ public class CalcView extends JFrame
 		button = new ButtonAdapter("Graph"){
 			public void pressed(){
 				registerButton("Graph", theController);
+				
 			}
 		};
 		c.gridx = 2;
@@ -430,9 +431,22 @@ public class CalcView extends JFrame
 	 * 
 	 * @return The string in the user input text field.
 	 */
-	public static BigInteger getUserValue()
+	public static String getUserValue()
 	{
-		return new BigInteger(userValueText.getText());
+		String userValue = userValueText.getText();
+		System.out.println("User Value is: " + userValue);
+		return userValue;
+		
+	}
+	
+	public boolean containsUserValue(){
+		if(userValueText.getText().equals("")){
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 	public static void registerButton(String button, CalcController theController) {		
@@ -456,11 +470,11 @@ public class CalcView extends JFrame
 		}
 		
 		else if (!button.equals("+/-") && !button.equals(".")) {
-			char lastChar = his.charAt(his.length() - 1);
+			/*char lastChar = his.charAt(his.length() - 1);
 			if (lastChar == '=') {
 				String removeEquals = his.substring(0, his.length() - 1);
 				history.setText(removeEquals);
-			}
+			}*/
 		}
 		
 		if (button.equals("+")) {
@@ -566,11 +580,7 @@ public class CalcView extends JFrame
 			history.setText("");
 		}
 		
-		char lastChar = his.charAt(his.length() - 1);
-		if (lastChar == '=') {
-			String removeEquals = his.substring(0, his.length() - 1);
-			history.setText(removeEquals);
-		}
+		
 	}
 	
 	//Added to handle doubles such as pi
@@ -586,13 +596,6 @@ public class CalcView extends JFrame
 			history.setText("");
 		}
 		
-		char lastChar = his.charAt(his.length() - 1);
-		if (lastChar == '=') {
-			String removeEquals = his.substring(0, his.length() - 1);
-			history.setText(removeEquals);
-		}
-
-
 	}
 	
 	public static void addInput(CalcController theController){
@@ -663,7 +666,7 @@ public class CalcView extends JFrame
 		expressionList.setText(value);
 	}
 
-	public void clearUserValue()
+	public static void clearUserValue()
 	{
 		if (userValueText.getText() != "")
 		{
