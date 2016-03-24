@@ -29,9 +29,15 @@ public class GraphModel {
     double xRight = 10; //The far right of x axis
 
    //Enters the values
+    double yValue;
     for (double i = xLeft; i < xRight; i = i + precision){
-
-    	double yValue = Math.sin(i);	//This is where we would use the function
+    	
+    	if (expression == "cos") {
+    		yValue = Math.cos(i);
+    	} else {
+    		yValue = Math.sin(i);
+    	}
+    	
     	this.series.add(i, yValue);
 
     }
@@ -39,6 +45,11 @@ public class GraphModel {
     System.out.println("Draw finished");
     
   }
+	
+	public void clear() {
+		this.series =  new XYSeries("Graph(x)");
+		this.data = new XYSeriesCollection(series);
+	}
 
   public XYSeries getSeries() {
   	return series;

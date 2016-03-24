@@ -490,6 +490,27 @@ public class CalcView extends JFrame
 		
 	}
 	
+	public void clearGraph() {
+		final XYSeries series = new XYSeries("Graph(x)");
+
+		final XYSeriesCollection data = new XYSeriesCollection(series);
+		
+		this.chart = ChartFactory.createXYLineChart(
+			"Graph",
+    	            "X", //X-axis Name
+    	            "Y", //Y-axis Name
+    	            data,	//Dataset
+    	            PlotOrientation.VERTICAL,	//This will always be vertical for our purposes
+    	            true,	//Legend
+    	            true,	//Tool tips
+    	            false	//URLS, (don't need this)
+    	            );
+
+		
+		
+		chartPanel.setChart(chart);
+	}
+	
 	/**
 	 * Check to see if the user has entered a value into the text field
 	 * @return false if the text field is empty

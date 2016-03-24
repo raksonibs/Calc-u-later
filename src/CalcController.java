@@ -79,6 +79,7 @@ public class CalcController
 	
 	public void graphStuff() {
 		System.out.println("INside controller");
+		graphModel.clear();
 		graphModel.draw(model);
 		view.resetGraph(graphModel);
 	}
@@ -149,6 +150,8 @@ public class CalcController
 		System.out.println("clearing...");
 		view.setCalcValue("");
 		view.clearUserValue();
+		view.clearGraph();
+		graphModel.clear();
 		model.clear();
 	}
 	
