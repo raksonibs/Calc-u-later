@@ -49,7 +49,7 @@ public class CalcController
 	public CalcController()
 	{
 		model = new CalcModel();
-		graphModel = new GraphModel(null);
+//		graphModel = new GraphModel(null);
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -79,7 +79,7 @@ public class CalcController
 	}
 	
 	public void graphStuff() {
-		graphModel.draw();
+		graphModel.draw(model);
 	}
 
 	public void multiply() {

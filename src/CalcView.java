@@ -24,6 +24,15 @@ import java.util.Stack;
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -45,33 +54,46 @@ public class CalcView extends JFrame
 	public CalcView(final CalcController theController)
 	{
 		super("Simple Calculator");
-		
+		System.out.println("Test");
 		addComponentsToPane(this, theController);
 		
-//		JTabbedPane tabbedPane = new JTabbedPane();
-//		ImageIcon icon = createImageIcon("images/calculator-icon.png");
-//
-//		JComponent panel1 = makeTextPanel("Panel #1");
-//		tabbedPane.addTab("Tab 1", icon, panel1,
-//		                  "Does nothing");
-//		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-//
-//		JComponent panel2 = makeTextPanel("Panel #2");
-//		tabbedPane.addTab("Tab 2", icon, panel2,
-//		                  "Does twice as much nothing");
-//		tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-//
-//		JComponent panel3 = makeTextPanel("Panel #3");
-//		tabbedPane.addTab("Tab 3", icon, panel3,
-//		                  "Still does nothing");
-//		tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-//
-//		JComponent panel4 = makeTextPanel(
-//		        "Panel #4 (has a preferred size of 410 x 50).");
-//		panel4.setPreferredSize(new Dimension(410, 50));
-//		tabbedPane.addTab("Tab 4", icon, panel4,
-//		                      "Does nothing at all");
-//		tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
+		System.out.println("Drawing?");
+		final XYSeries series = new XYSeries("Sin(x)");
+		
+        //This graph basically just samples the equation, creates a bunch of data points
+        //and then connects the data points to one another
+        //Uses JFreeChart
+        //API is here
+        //http://www.jfree.org/jfreechart/api/javadoc/
+	
+//        double precision = 0.01; //This will affect how smooth the graph is, but also the performance
+//        double xLeft = -10;	//The far left of the x axis
+//        double xRight = 10; //The far right of x axis
+//        
+//        //Enters the values
+//        for(double i = xLeft; i < xRight; i = i + precision){
+//        	
+//        	double yValue = Math.sin(i);	//This is where we would use the function
+//        	series.add(i, yValue);
+//        	
+//        }
+
+        final XYSeriesCollection data = new XYSeriesCollection(series);
+        final JFreeChart chart = ChartFactory.createXYLineChart(
+        	"Graph",
+            "X", //X-axis Name
+            "Y", //Y-axis Name
+            data,	//Dataset
+            PlotOrientation.VERTICAL,	//This will always be vertical for our purposes
+            true,	//Legend
+            true,	//Tool tips
+            false	//URLS, (don't need this)
+        );
+
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+        
+        this.add(chartPanel);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
@@ -553,7 +575,7 @@ public class CalcView extends JFrame
 
 		else if (button.equals("Graph")) {
 			System.out.println("Printing GRAPH");			
-			theController.graphStuff();
+//			theController.graphStuff();
 			System.out.println("Graphed?");
 		}	
 		// fixed negate button
