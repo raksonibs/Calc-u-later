@@ -11,10 +11,12 @@ public class CalcModel
 {
 	private BigDecimal calcValue;
 	private Stack<BigDecimal> calculatedValues = new Stack<BigDecimal>();
-	private Stack inputValues = new Stack();
+	private Stack<BigDecimal>inputValues = new Stack();
 	private Stack history;
-	private Stack numbers;
+	private Stack<BigDecimal>numbers;
 	private Stack<String> expressionList = new Stack<String>();
+	
+	private Boolean containsVariable = false;
 
 	//Amount to round to
 	private MathContext roundingAmount = new MathContext(1);
@@ -81,8 +83,14 @@ public class CalcModel
 
 		checkIfEnoughDigitsAvaliable(0);
 		
+		if(isVariable(numbers.peek().toString())){
+			numbers.push(BigDecimal.valueOf(0));
+		}
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
+		if(isVariable(numbers.peek().toString())){
+			numbers.push(BigDecimal.valueOf(0));
+		}
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.add(num1);
@@ -131,7 +139,7 @@ public class CalcModel
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
-		addToExpressionList("x");
+		addToExpressionList("×");	//This is × for multiply, not x as in the letter!
 		updateRounding(calcValue.toString());
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
@@ -218,6 +226,12 @@ public class CalcModel
 		calculatedValues.push(b);
 	}
 	
+	public void variable(){
+	
+		
+		
+	}
+	
 	public void undo() {
 		
 		//System.out.println("-------BEFORE---------");
@@ -302,7 +316,7 @@ public class CalcModel
 			numbers.push(BigDecimal.valueOf(number));
 			history.push(String.valueOf(number));
 			expressionList.push(String.valueOf(number));
-			inputValues.push(number);
+			inputValues.push(new BigDecimal(String.valueOf(number)));
 		}
 	}
 	
@@ -314,7 +328,8 @@ public class CalcModel
 	public Boolean isOperator(String value){
 		
 		//Check to see if a string is an operator
-		if(value.equals("+") || value.equals("-")  || value.equals("x")|| value.equals("÷")|| value.equals("=")){
+		//Note that × is for multiply, not x as in the letter!
+		if(value.equals("+") || value.equals("-")  || value.equals("×")|| value.equals("÷")|| value.equals("=")){	
 			return true;
 		}
 		else
@@ -342,7 +357,7 @@ public class CalcModel
 	}
 	public Boolean isFactorial(String value){
 		
-		//Check to see if a string is a trig function
+		//Check to see if a string is a factorial
 		if(value == "!" ){
 			return true;
 		}
@@ -353,6 +368,18 @@ public class CalcModel
 		
 	}
 	
+	public Boolean isVariable(String value){
+		
+		//Check to see if a string is a variable
+		if(value == "X" ){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
 	/**
 	 * Check if a given stack contains a String
 	 * @param The stack to check in
@@ -439,6 +466,12 @@ public class CalcModel
 				
 				container.push("(" + number1 + value + ")");
 			}
+			else if(isVariable(value))
+			{
+				//String number1 = container.pop().toString();
+				
+				container.push("(" + value + ")");
+			}
 			else
 			{
 				container.push(value);
@@ -500,6 +533,10 @@ public class CalcModel
 		return returnValue;
 	}
 	
+	/**
+	 * Get all inputs seperated by commas as a String
+	 * @return String History of all inputs
+	 */
 	public String getHistory(){
 		
 		String returnValue = "";
@@ -525,7 +562,10 @@ public class CalcModel
 		return returnValue;
 	}
 	
-	
+	/**
+	 * Analyzes a string to determine how many decimal places to round to
+	 * @param String number as a string to analyze
+	 */
 	public void updateRounding(String value){
 		
 		int precision = value.length();
@@ -631,7 +671,7 @@ public class CalcModel
 		//Add test case in infix notation
 		//You can use the INFO Button to generate this list easily
 		//and just copy and paste from console to here.
-		String[] expressionArray = { "21", "35", "x", "101", "4", "x", "+"};
+		String[] expressionArray = { "21", "35", "×", "101", "4", "×", "+"};
 		String[] inputValuesArray = { "21", "35", "101", "4"};
 		String[] numbersArray = { "1139"};
 		String[] calculatedValuesArray = { "735", "404", "1139"};

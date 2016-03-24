@@ -49,7 +49,6 @@ public class CalcController
 	public CalcController()
 	{
 		model = new CalcModel();
-		graphModel = new GraphModel(null);
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -114,6 +113,13 @@ public class CalcController
 		pushUserText();
 		model.cos();
 		showValue();
+	}
+	
+	public void variable(){
+		pushUserText();
+		model.variable();
+		showValue();
+		
 	}
 	
 	public void clear() {

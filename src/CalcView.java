@@ -1,27 +1,16 @@
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import java.math.BigDecimal;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import java.io.IOException;
-import java.math.BigInteger;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.GridBagLayout;
 import java.awt.Container;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import java.util.Stack;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+
 
 public class CalcView extends JFrame
 {
@@ -282,9 +271,9 @@ public class CalcView extends JFrame
 		c.gridy = 6;
 		pane.add(button, c);
 		
-		button =  new ButtonAdapter("x") {
+		button =  new ButtonAdapter("×") {
 			public void pressed(){
-				registerButton("x", theController);
+				registerButton("×", theController);
 			}
 		};
 		c.gridx = 3;
@@ -363,13 +352,23 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
-
+		
+		button = new ButtonAdapter("X"){
+			public void pressed(){
+				registerButton("X", theController);
+			}
+		};
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+		
 		button = new ButtonAdapter("TEST"){
 			public void pressed(){
 				registerButton("TEST", theController);
 			}
 		};
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
@@ -380,7 +379,7 @@ public class CalcView extends JFrame
 				
 			}
 		};
-		c.gridx = 2;
+		c.gridx = 3;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
@@ -390,10 +389,12 @@ public class CalcView extends JFrame
 				registerButton("INFO", theController);
 			}
 		};
-		c.gridx = 3;
+		c.gridx = 4;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
+		
+		
 		
 		y += 1;
 
@@ -483,7 +484,7 @@ public class CalcView extends JFrame
 			theController.subtract();			
 			userValueText.setText("");
 
-		} else if (button.equals("x")) {
+		} else if (button.equals("×")) {
 			System.out.println("multiplty");			
 			theController.multiply();			
 			userValueText.setText("");
@@ -561,6 +562,13 @@ public class CalcView extends JFrame
 			userValueText.setText("");
 
 		}
+		else if (button.equals("X")){
+
+			System.out.println("variable");
+			theController.variable();
+			userValueText.setText("");
+
+		}
 
 	}
 
@@ -616,7 +624,6 @@ public class CalcView extends JFrame
 		BigDecimal allValue = new BigDecimal(val);
 		theController.addToRounding(userValueText.getText());
 		theController.addValue(allValue);
-
 
 		userValueText.setText("");
 		
