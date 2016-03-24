@@ -502,9 +502,10 @@ public class CalcView extends JFrame
 			theController.printInfoToConsole();			
 		}	
 
-		else if (button.equals("GRAPH")) {
+		else if (button.equals("Graph")) {
 			System.out.println("Printing GRAPH");			
-		// theController.printInfoToConsole();			
+			theController.graphStuff();
+			System.out.println("Graphed?");
 		}	
 		// fixed negate button
 		else if (button.equals("+/-")) {

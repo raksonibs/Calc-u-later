@@ -77,6 +77,10 @@ public class CalcController
 		model.subtract();
 		showValue();
 	}
+	
+	public void graphStuff() {
+		graphModel.draw();
+	}
 
 	public void multiply() {
 		pushUserText();
