@@ -49,6 +49,10 @@ public class CalcModel
 		
 		
 	}
+	
+	public String getLastExpression() {
+		return expressionList.peek();
+	}
 
 	/**
 	 * Clears the user values and the calculated value.

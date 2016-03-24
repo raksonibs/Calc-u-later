@@ -49,6 +49,8 @@ public class CalcView extends JFrame
 	private static JTextField calcText;
 	private static JTextField history;
 	private static JTextField expressionList;
+	private static JFreeChart chart;
+	private static ChartPanel chartPanel;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -58,28 +60,10 @@ public class CalcView extends JFrame
 		addComponentsToPane(this, theController);
 		
 		System.out.println("Drawing?");
-		final XYSeries series = new XYSeries("Sin(x)");
-		
-        //This graph basically just samples the equation, creates a bunch of data points
-        //and then connects the data points to one another
-        //Uses JFreeChart
-        //API is here
-        //http://www.jfree.org/jfreechart/api/javadoc/
-	
-//        double precision = 0.01; //This will affect how smooth the graph is, but also the performance
-//        double xLeft = -10;	//The far left of the x axis
-//        double xRight = 10; //The far right of x axis
-//        
-//        //Enters the values
-//        for(double i = xLeft; i < xRight; i = i + precision){
-//        	
-//        	double yValue = Math.sin(i);	//This is where we would use the function
-//        	series.add(i, yValue);
-//        	
-//        }
+		final XYSeries series = new XYSeries("Graph(x)");
 
         final XYSeriesCollection data = new XYSeriesCollection(series);
-        final JFreeChart chart = ChartFactory.createXYLineChart(
+        this.chart = ChartFactory.createXYLineChart(
         	"Graph",
             "X", //X-axis Name
             "Y", //Y-axis Name
@@ -90,7 +74,7 @@ public class CalcView extends JFrame
             false	//URLS, (don't need this)
         );
 
-        final ChartPanel chartPanel = new ChartPanel(chart);
+        this.chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
         
         this.add(chartPanel);
@@ -119,6 +103,28 @@ public class CalcView extends JFrame
             System.err.println("Couldn't find file: " + path);
             return null;
         }
+    }
+    
+    public void resetGraph(GraphModel graphModel) {
+    	System.out.println("Graphin in View now");
+    	 XYSeries series = graphModel.getSeries();
+    	 XYSeriesCollection data = graphModel.getSeriesCollection();
+    	 
+    	 this.chart = ChartFactory.createXYLineChart(
+    	        	"Graph",
+    	            "X", //X-axis Name
+    	            "Y", //Y-axis Name
+    	            data,	//Dataset
+    	            PlotOrientation.VERTICAL,	//This will always be vertical for our purposes
+    	            true,	//Legend
+    	            true,	//Tool tips
+    	            false	//URLS, (don't need this)
+    	        );
+
+    	        
+    	        
+    	        chartPanel.setChart(chart);
+    	        System.out.println("Reset Chart in View now");
     }
 
 	@SuppressWarnings("serial")
@@ -575,7 +581,7 @@ public class CalcView extends JFrame
 
 		else if (button.equals("Graph")) {
 			System.out.println("Printing GRAPH");			
-//			theController.graphStuff();
+			theController.graphStuff();
 			System.out.println("Graphed?");
 		}	
 		// fixed negate button

@@ -49,7 +49,7 @@ public class CalcController
 	public CalcController()
 	{
 		model = new CalcModel();
-//		graphModel = new GraphModel(null);
+		graphModel = new GraphModel();
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -64,9 +64,8 @@ public class CalcController
 		model.clear();
 		
 	}
-//	  NTD: should be bigint array
+
 	public void sum() {
-		
 		pushUserText();
 		model.sum();
 		showValue();
@@ -79,7 +78,9 @@ public class CalcController
 	}
 	
 	public void graphStuff() {
+		System.out.println("INside controller");
 		graphModel.draw(model);
+		view.resetGraph(graphModel);
 	}
 
 	public void multiply() {
