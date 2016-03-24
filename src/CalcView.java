@@ -722,7 +722,7 @@ public class CalcView extends JFrame
 		if(uV.contains("."))
 		{			
 			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
-			
+			int roundingLengthAfterDecimal = rightDecimal.length();
 			if(rightDecimal.length() > roundingLengthAfterDecimal){
 				//STILL NEED TO IMPLEMENT ROUNDING
 				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 5);
@@ -730,7 +730,7 @@ public class CalcView extends JFrame
 			}
 
 			String leftOfDecimal = uV.substring(0, placeholder);
-			
+			int roundingLengthBeforeDecimal = leftOfDecimal.length();
 			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
 				// roundingLengthBeforeDecimal = leftDecimal.length();
 				//System.out.println("Digits to the left " + leftDecimal.length());
@@ -741,7 +741,11 @@ public class CalcView extends JFrame
 		 		System.out.println("it knows");
 			}		
 		}
+		
+		return uV;
 	}
+	
+	
 	
 
 
