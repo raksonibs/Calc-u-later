@@ -36,17 +36,6 @@ public class CalcView extends JFrame
 	private static JTextField calcText;
 	private static JTextField history;
 	private static JTextField expressionList;
-	private static Stack<BigDecimal> numbers;
-	private static Stack<String> userHistory;
-	private static Stack<String> resHistory;
-	private static Stack<String> expression; 
-	
-	private static JFrame graph = new JFrame();
-	
-	
-	
-	private static int roundingLengthAfterDecimal = 5;
-	private static int roundingLengthBeforeDecimal = 6;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -58,8 +47,6 @@ public class CalcView extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
-		this.numbers = new Stack();
-		this.expression = new Stack();
 
 	}
 
@@ -397,9 +384,16 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
-
-		graph.setSize(350, 350); 
-		graph.setVisible(true);
+		
+		button = new ButtonAdapter("INFO"){
+			public void pressed(){
+				registerButton("INFO", theController);
+			}
+		};
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
 		
 		y += 1;
 
@@ -439,6 +433,10 @@ public class CalcView extends JFrame
 		
 	}
 	
+	/**
+	 * Check to see if the user has entered a value into the text field
+	 * @return false if the text field is empty
+	 */
 	public boolean containsUserValue(){
 		if(userValueText.getText().equals("")){
 			return false;
@@ -468,14 +466,10 @@ public class CalcView extends JFrame
 				userValueText.setText(text);
 			}
 		}
+
 		
-		else if (!button.equals("+/-") && !button.equals(".")) {
-			/*char lastChar = his.charAt(his.length() - 1);
-			if (lastChar == '=') {
-				String removeEquals = his.substring(0, his.length() - 1);
-				history.setText(removeEquals);
-			}*/
-		}
+		//If one of the following operator buttons is pushed, the appropriate
+		//information is sent to the controller
 		
 		if (button.equals("+")) {
 		//should call controller method addition
@@ -499,23 +493,28 @@ public class CalcView extends JFrame
 			userValueText.setText("");
 		}
 	     else if (button.equals("TEST")) {
-		System.out.println("");			
+		System.out.println("Inputting test case");	
+		theController.runTestCase();
+		
+		}
+	    else if (button.equals("INFO")) {
+		//System.out.println("Printing Stack information");			
 		theController.printInfoToConsole();			
-		//userValueText.setText("");
-	    }		
+	   }	
 		// fixed negate button
 		else if (button.equals("+/-")) {
 			
 			String userVal = userValueText.getText();
 			char changeSign = userVal.charAt(0);
-			
-			if (changeSign == '-') {
-				userVal = userVal.substring(1, userVal.length());
-				userValueText.setText(userVal);
-			}else
-			{
-				userVal = '-'+userVal;
-				userValueText.setText(userVal);
+			if(!userVal.equals("0")){
+				if (changeSign == '-') {
+					userVal = userVal.substring(1, userVal.length());
+					userValueText.setText(userVal);
+				}else
+				{
+					userVal = '-'+userVal;
+					userValueText.setText(userVal);
+				}
 			}
 
 		} else if (button.equals(".")) {
@@ -564,11 +563,12 @@ public class CalcView extends JFrame
 		}
 
 	}
-	
-	//method for factorial button
-	
-	
+
 	//This method to handle integers
+	/**
+	 * Enters the value of the button pressed into the text field
+	 * @param buttonInput
+	 */
 	public static void changeInputButton(int buttonInput) {
 
 		String value = String.valueOf(buttonInput);
@@ -584,6 +584,10 @@ public class CalcView extends JFrame
 	}
 	
 	//Added to handle doubles such as pi
+	/**
+	 * Enters the value of the button pressed into the text field
+	 * @param buttonInput
+	 */
 	public static void changeInputButton(double buttonInput) {
 
 		//Round to 5 digits
@@ -597,14 +601,11 @@ public class CalcView extends JFrame
 		}
 		
 	}
-	
-	public static void addInput(CalcController theController){
-		
-		theController.addValue(BigDecimal.valueOf(Double.parseDouble(userValueText.getText())));
-		
-	}
-	
 
+	/**
+	 * Sends the inputed number to the controller
+	 * @param theController
+	 */
 	public static void addToHistory(CalcController theController) {
 		String value = history.getText();
 				
@@ -616,7 +617,7 @@ public class CalcView extends JFrame
 		theController.addToRounding(userValueText.getText());
 		theController.addValue(allValue);
 
-	
+
 		userValueText.setText("");
 		
 	}
@@ -652,20 +653,20 @@ public class CalcView extends JFrame
 	 */
 	public static void setCalcValue(String value)
 	{
-		//Here we see what the largest number of digits before the decimal is
-		//and the largest number of digits after the decimal place is
-		//Combine these two values together to get the total length we want out result to be
-		
-//		if(value.length() >  roundingLengthBeforeDecimal + roundingLengthAfterDecimal){
-//			value = value.substring(0, roundingLengthBeforeDecimal + roundingLengthAfterDecimal);
-//		}
 		calcText.setText(value);
 	}
 	
+	/**
+	 * Set the expression value to specified Strin
+	 * @param value The String to set to
+	 */
 	public static void setExpressionValue(String value){
 		expressionList.setText(value);
 	}
 
+	/**
+	 * Removes text from user input field
+	 */
 	public static void clearUserValue()
 	{
 		if (userValueText.getText() != "")
@@ -673,66 +674,7 @@ public class CalcView extends JFrame
 			userValueText.setText("");
 		}
 	}
-	
-	public static String findRoundingValue(String num)
-	{
-		
-		String uV = num;
-		int placeholder = uV.indexOf(".");
-		
-		//Checking to see how many digits to keep on the left hand side of the result
-		//As well as how many digits on the right side to keep
-		//Some rounding does still occur due to doubles.
-		if(uV.contains("."))
-		{			
-			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
-			
-			if(rightDecimal.length() > roundingLengthAfterDecimal){
-				//STILL NEED TO IMPLEMENT ROUNDING
-				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 5);
-				//System.out.println("Digits to the right " + rightDecimal.length());
-			}
 
-			String leftOfDecimal = uV.substring(0, placeholder);
-			
-			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
-				// roundingLengthBeforeDecimal = leftDecimal.length();
-				//System.out.println("Digits to the left " + leftDecimal.length());
-			if (uV.substring(1, uV.length()).length() > 6)
-			{	
-				uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length()).length();
-			}
-		 		System.out.println("it knows");
-			}		
-		}
-
-		//Tries to put in some scientific notation rounding
-		//DOES WORK BUT IS UGLY
-		else
-		{
-			if(uV.length() > roundingLengthBeforeDecimal){
-				// roundingLengthBeforeDecimal = uV.length();
-				// System.out.println("Digits " + uV.length());
-				System.out.println("it knows");	
-				uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length()).length();
-			}
-		}
-		return uV;
-		//System.out.println("Left = " + roundingLengthBeforeDecimal + " Right = " + roundingLengthAfterDecimal);
-		
-	}
-	
-	public static void findCalculatedRoundingValue(BigDecimal num1, BigDecimal num2)
-	{
-		
-		//Added another rounding method for determining how many digits to maintain for
-		//the shown value. This is for cases such as 10 * 10.1 which produce an extra
-		//digit upon completing a calculation.
-		MathContext roundVal = new MathContext(5);
-		BigDecimal result = num1.multiply(num2, roundVal);
-		findRoundingValue(result.toString());
-		
-	}
 	
 
 

@@ -121,7 +121,7 @@ public class CalcController
 		empty();
 		view.setHistory("Start a new calculation");
 		view.setExpressionValue("");
-		view.setButtonClicked();
+		//view.setButtonClicked();
 	}
 
 	public void setValue(int value) {
@@ -149,17 +149,16 @@ public class CalcController
 	
 	public void undo() {
 		model.undo();
-		String expressionValue = model.getExpressionValue();
-		
 		showValue();
 		
 	}
 
 	//When ENTER is pushed
 	public void addValue(BigDecimal value) {
-	
+		
 		model.pushNumber(value);
 		view.setHistory(model.getHistory());
+		
 	}
 	
 	public void addToRounding(String value){
@@ -167,10 +166,13 @@ public class CalcController
 		model.updateRounding(value);
 		
 	}
-	
+	/**
+	 * Prints stack information from model to the console
+	 */
 	public void printInfoToConsole(){
 		
 		model.printAllStacks();
+		model.printAsTestCase();
 	}
 
 	
@@ -181,14 +183,17 @@ public class CalcController
 	 */
 	public void pushUserText()
 	{
-		
 		if(view.containsUserValue() == true){
 			String userText = view.getUserValue();
 			BigDecimal value = new BigDecimal(userText);
 			addValue(value);
 			view.clearUserValue();
 		}
-
+	}
+	
+	public void runTestCase(){
+		model.getTestCase();
+		showValue();
 	}
 
 }

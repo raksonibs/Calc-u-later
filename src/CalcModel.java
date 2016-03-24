@@ -314,7 +314,7 @@ public class CalcModel
 	public Boolean isOperator(String value){
 		
 		//Check to see if a string is an operator
-		if(value == "+" || value == "-" || value == "x"|| value == "÷"|| value == "="){
+		if(value.equals("+") || value.equals("-")  || value.equals("x")|| value.equals("÷")|| value.equals("=")){
 			return true;
 		}
 		else
@@ -565,7 +565,7 @@ public class CalcModel
 	}
 	
 	/**
-	 * Prints all stacks in model to console.
+	 * Prints all stacks in CalcModel to console.
 	 */
 	public void printAllStacks(){
 		System.out.println("-----------------");
@@ -580,6 +580,104 @@ public class CalcModel
 		System.out.println("-----------------");
 	}
 	
+	/**
+	 * Prints the current input as a test case to console
+	 */
+	public void printAsTestCase(){
+		
+		System.out.println("Printing Test Case Info");
+		
+		String expression = "{";
+		for(int i = 0; i < expressionList.size(); i++){
+			expression = expression + " \"" + expressionList.get(i) + "\"" + ",";
+		}
+		expression = "String[] expressionArray = " + expression.substring(0,expression.length()-1) +"};";
+		System.out.println(expression);
+		
+		String input = "{";
+		for(int i = 0; i < inputValues.size(); i++){
+			input = input + " \"" + inputValues.get(i) + "\"" + ",";
+		}
+		input = "String[] inputValuesArray = " + input.substring(0,input.length()-1) +"};";
+		System.out.println(input);
+		
+		String num = "{";
+		for(int i = 0; i < numbers.size(); i++){
+			num = num + " \"" + numbers.get(i) + "\"" + ",";
+		}
+		num = "String[] numbersArray = " + num.substring(0,num.length()-1) +"};";
+		System.out.println(num);
+		
+		String calcVal = "{";
+		for(int i = 0; i < calculatedValues.size(); i++){
+			calcVal = calcVal + " \"" + calculatedValues.get(i) + "\"" + ",";
+		}
+		calcVal = "String[] calculatedValuesArray = " + calcVal.substring(0,calcVal.length()-1) +"};";
+		System.out.println(calcVal);
+		
+		System.out.println("-----------------");
+		
+	}
+	
+	/**
+	 * Simulates the generated input for specific values
+	 * Use the INFO button to print the test cases for easy testing
+	 */
+	public void getTestCase()
+	{
+
+		clear();
+		
+		//Add test case in infix notation
+		//You can use the INFO Button to generate this list easily
+		//and just copy and paste from console to here.
+		String[] expressionArray = { "21", "35", "x", "101", "4", "x", "+"};
+		String[] inputValuesArray = { "21", "35", "101", "4"};
+		String[] numbersArray = { "1139"};
+		String[] calculatedValuesArray = { "735", "404", "1139"};
+		
+		generateTestCase(expressionArray,inputValuesArray,numbersArray,calculatedValuesArray);
+		
+	}
+	
+	/**
+	 * Generates a simulated input for the calculator, for testing purposes
+	 * 
+	 * @param expressionArray
+	 * @param inputValuesArray
+	 * @param numbersArray
+	 * @param calculatedValuesArray
+	 */
+	public void generateTestCase(String[] expressionArray, String[] inputValuesArray, String[] numbersArray, String[] calculatedValuesArray){
+		
+		
+		for(int i = 0; i < expressionArray.length; i++){
+			String index = expressionArray[i];
+			expressionList.push(index);
+		}
+		
+		for(int i = 0; i < inputValuesArray.length; i++){
+			String index = inputValuesArray[i];
+			BigDecimal value = new BigDecimal(index);
+			inputValues.push(value);
+			
+		}
+		
+		for(int i = 0; i < numbersArray.length; i++){
+			String index = numbersArray[i];
+			BigDecimal value = new BigDecimal(index);
+			numbers.push(value);
+			
+		}
+		
+		for(int i = 0; i < calculatedValuesArray.length; i++){
+			String index = calculatedValuesArray[i];
+			BigDecimal value = new BigDecimal(index);
+			calculatedValues.push(value);
+			
+		}
+		
+	}
 	
 	
 	

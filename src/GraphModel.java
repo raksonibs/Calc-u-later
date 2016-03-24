@@ -54,7 +54,7 @@ public class GraphModel extends ApplicationFrame {
 
 	public static void main(String[] args) {
 		//This would be handled by controller and stuff, but for now this makes it easy to test
-		GraphModel demo = new GraphModel("Graph Test");
+		GraphModel demo = new GraphModel("Graph");
 		demo.pack();//Makes it resize-able with the window
 		RefineryUtilities.centerFrameOnScreen(demo);
 		demo.setVisible(true);
