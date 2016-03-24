@@ -29,14 +29,7 @@ import java.util.Stack;
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -59,9 +52,9 @@ public class CalcView extends JPanel implements KeyListener
 	private static JTextField calcText;
 	private static JTextField history;
 	private static JTextField expressionList;
-	private static JFreeChart chart;
+	//private static JFreeChart chart;
 	private static JComboBox<String> box;
-	private static ChartPanel chartPanel;
+	//private static ChartPanel chartPanel;
 
 	 public void keyReleased(KeyEvent e){}
      public void keyTyped(KeyEvent e){}
@@ -583,25 +576,7 @@ public class CalcView extends JPanel implements KeyListener
 
 	}
 
-	public void clearGraph()
-	{
-		final XYSeries series = new XYSeries("Graph(x)");
-
-		final XYSeriesCollection data = new XYSeriesCollection(series);
-
-		this.chart = ChartFactory.createXYLineChart("Graph", "X", // X-axis Name
-				"Y", // Y-axis Name
-				data, // Dataset
-				PlotOrientation.VERTICAL, // This will always be vertical for
-											// our purposes
-				true, // Legend
-				true, // Tool tips
-				false // URLS, (don't need this)
-				);
-
-		chartPanel.setChart(chart);
-	}
-
+	
 	/**
 	 * Check to see if the user has entered a value into the text field
 	 * 
