@@ -8,3 +8,4 @@ app/
 node_modules/
 /.jekyll
 .classpath
+src/JEvalTests.java
