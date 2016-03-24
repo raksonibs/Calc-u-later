@@ -10,17 +10,17 @@ import org.jfree.ui.RefineryUtilities;
 public class GraphModel extends ApplicationFrame {
 
 	public GraphModel(String title) {
-	
-		  super(title);
-		  
-	        final XYSeries series = new XYSeries("Sin(x)");
-	        
+		
+		super(title);
+		
+		final XYSeries series = new XYSeries("Sin(x)");
+		
 	        //This graph basically just samples the equation, creates a bunch of data points
 	        //and then connects the data points to one another
 	        //Uses JFreeChart
 	        //API is here
 	        //http://www.jfree.org/jfreechart/api/javadoc/
-	        
+		
 	        double precision = 0.01; //This will affect how smooth the graph is, but also the performance
 	        double xLeft = -10;	//The far left of the x axis
 	        double xRight = 10; //The far right of x axis
@@ -35,7 +35,7 @@ public class GraphModel extends ApplicationFrame {
 
 	        final XYSeriesCollection data = new XYSeriesCollection(series);
 	        final JFreeChart chart = ChartFactory.createXYLineChart(
-	            "Sin Wave Graph",
+	        	"Sin Wave Graph",
 	            "X", //X-axis Name
 	            "Y", //Y-axis Name
 	            data,	//Dataset
@@ -43,20 +43,20 @@ public class GraphModel extends ApplicationFrame {
 	            true,	//Legend
 	            true,	//Tool tips
 	            false	//URLS, (don't need this)
-	        );
+	            );
 
 	        final ChartPanel chartPanel = new ChartPanel(chart);
 	        chartPanel.setPreferredSize(new java.awt.Dimension(600, 400)); //Set size of window
 	        setContentPane(chartPanel);
 
-	}
+	      }
 
-	public static void main(String[] args) {
+	      public static void main(String[] args) {
 		//This would be handled by controller and stuff, but for now this makes it easy to test
-		GraphModel demo = new GraphModel("Graph");
+	      	GraphModel demo = new GraphModel("Graph");
 		demo.pack();//Makes it resize-able with the window
 		RefineryUtilities.centerFrameOnScreen(demo);
 		demo.setVisible(true);
-		}
+	}
 
 }

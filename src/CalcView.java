@@ -72,7 +72,7 @@ public class CalcView extends JFrame
 		history.setText("Start a new calculation");
 		expressionList = new JTextField(20);
 		expressionList.setEditable(false);
-				
+		
 		
 		if (shouldWeightX) {
 			c.weightx = 0.5;
@@ -492,15 +492,20 @@ public class CalcView extends JFrame
 			theController.divide();			
 			userValueText.setText("");
 		}
-	     else if (button.equals("TEST")) {
-		System.out.println("Inputting test case");	
-		theController.runTestCase();
-		
+		else if (button.equals("TEST")) {
+			System.out.println("Inputting test case");	
+			theController.runTestCase();
+			
 		}
-	    else if (button.equals("INFO")) {
+		else if (button.equals("INFO")) {
 		//System.out.println("Printing Stack information");			
-		theController.printInfoToConsole();			
-	   }	
+			theController.printInfoToConsole();			
+		}	
+
+		else if (button.equals("GRAPH")) {
+			System.out.println("Printing GRAPH");			
+		// theController.printInfoToConsole();			
+		}	
 		// fixed negate button
 		else if (button.equals("+/-")) {
 			
@@ -583,11 +588,11 @@ public class CalcView extends JFrame
 			//if(userValueText.)
 			System.out.println("undo test");
 			if(userValueText.getText().isEmpty()){
-			System.out.println("text is not empty");
+				System.out.println("text is not empty");
 
 				userValueText.setText("");
 			}
-				
+			
 //			numbers.pop();
 //			
 //			String newText = history.getText();
@@ -642,7 +647,7 @@ public class CalcView extends JFrame
 	 */
 	public static void addToHistory(CalcController theController) {
 		String value = history.getText();
-				
+		
 		double val = Double.parseDouble(userValueText.getText());
 		
 		System.out.println(""+val);
@@ -738,7 +743,7 @@ public class CalcView extends JFrame
 				{	
 					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length() - 2).length();
 				}
-		 		System.out.println("it knows");
+				System.out.println("it knows");
 			}		
 		}
 		
