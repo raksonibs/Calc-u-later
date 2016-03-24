@@ -161,7 +161,7 @@ public class CalcModel
 		calcValue = num2.divide(num1, roundingAmount);
 		addToExpressionList("÷");
 		updateRounding(calcValue.toString());
-				
+		
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
 	}
@@ -279,7 +279,7 @@ public class CalcModel
 	 */
 	public BigDecimal getCalculatedValue(){
 		if(calculatedValues.size()>0){
-		return (BigDecimal) calculatedValues.peek().round(roundingAmountResult);
+			return (BigDecimal) calculatedValues.peek().round(roundingAmountResult);
 		}
 		else
 		{
@@ -369,7 +369,7 @@ public class CalcModel
 	 * @return True if the String is in the stack, false otherwise.
 	 */
 	public boolean stackContains(Stack stackIn,String value){
-				
+		
 		Stack s = new Stack();
 		s = (Stack) stackIn.clone();
 		
@@ -381,7 +381,7 @@ public class CalcModel
 			{
 				s.pop();
 			}
-	
+			
 		}
 
 		return false;
@@ -392,7 +392,7 @@ public class CalcModel
 	 * @return Converted String
 	 */
 	public String getExpressionValue(){
-	
+		
 		String expression = "";
 		
 		//Create a clone of the expression list so we can pop things without disturbing the list
@@ -476,7 +476,7 @@ public class CalcModel
 		//Shave off the excess comma at the begining
 		if(expression.length() > 0)
 		{
-		expression = expression.substring(1, expression.length());
+			expression = expression.substring(1, expression.length());
 		}
 		return expression;
 	}
@@ -503,7 +503,7 @@ public class CalcModel
 		
 		if(returnValue.length() > 0)
 		{
-		returnValue = returnValue.substring(0, returnValue.length()-1);
+			returnValue = returnValue.substring(0, returnValue.length()-1);
 		}
 		
 		//System.out.println("History: " + returnValue);
@@ -522,13 +522,13 @@ public class CalcModel
 		{
 			String expressionValue = expressionList.get(i);
 
-				returnValue = returnValue  + expressionValue.toString()+ ",";
+			returnValue = returnValue  + expressionValue.toString()+ ",";
 			
 		}
 		
 		if(returnValue.length() > 0)
 		{
-		returnValue = returnValue.substring(0, returnValue.length()-1);
+			returnValue = returnValue.substring(0, returnValue.length()-1);
 		}
 		
 		//System.out.println("History: " + returnValue);

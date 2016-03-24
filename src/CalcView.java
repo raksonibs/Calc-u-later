@@ -62,9 +62,9 @@ public class CalcView extends JFrame
 		System.out.println("Drawing?");
 		final XYSeries series = new XYSeries("Graph(x)");
 
-        final XYSeriesCollection data = new XYSeriesCollection(series);
-        this.chart = ChartFactory.createXYLineChart(
-        	"Graph",
+		final XYSeriesCollection data = new XYSeriesCollection(series);
+		this.chart = ChartFactory.createXYLineChart(
+			"Graph",
             "X", //X-axis Name
             "Y", //Y-axis Name
             data,	//Dataset
@@ -72,12 +72,12 @@ public class CalcView extends JFrame
             true,	//Legend
             true,	//Tool tips
             false	//URLS, (don't need this)
-        );
+            );
 
-        this.chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
-        
-        this.add(chartPanel);
+		this.chartPanel = new ChartPanel(chart);
+		chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+		
+		this.add(chartPanel);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
@@ -85,33 +85,13 @@ public class CalcView extends JFrame
 
 	}
 	
-	protected JComponent makeTextPanel(String text) {
-        JPanel panel = new JPanel(false);
-        JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridBagLayout());
-        panel.add(filler);
-        return panel;
-    }
-     
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = CalcView.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-    
-    public void resetGraph(GraphModel graphModel) {
-    	System.out.println("Graphin in View now");
-    	 XYSeries series = graphModel.getSeries();
-    	 XYSeriesCollection data = graphModel.getSeriesCollection();
-    	 
-    	 this.chart = ChartFactory.createXYLineChart(
-    	        	"Graph",
+	public void resetGraph(GraphModel graphModel) {
+		System.out.println("Graphin in View now");
+		XYSeries series = graphModel.getSeries();
+		XYSeriesCollection data = graphModel.getSeriesCollection();
+		
+		this.chart = ChartFactory.createXYLineChart(
+			"Graph",
     	            "X", //X-axis Name
     	            "Y", //Y-axis Name
     	            data,	//Dataset
@@ -119,13 +99,13 @@ public class CalcView extends JFrame
     	            true,	//Legend
     	            true,	//Tool tips
     	            false	//URLS, (don't need this)
-    	        );
+    	            );
 
-    	        
-    	        
-    	        chartPanel.setChart(chart);
-    	        System.out.println("Reset Chart in View now");
-    }
+		
+		
+		chartPanel.setChart(chart);
+		System.out.println("Reset Chart in View now");
+	}
 
 	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane, final CalcController theController) {
