@@ -7,6 +7,10 @@ import java.util.Stack;
 
 public class CalcController
 {
+	
+	mainClass test;
+	int width = test.WIDTH;
+	int height = test.HEIGHT;
 	/**
 	 * String for sum command.
 	 */
@@ -33,8 +37,9 @@ public class CalcController
 	public static final String CLEAR = "CLEAR";
 	
 	private CalcModel model;
-	private GraphModel graphModel;
+	private Graph graphModel;
 	private CalcView view;
+	private GraphPanel graph;
 
 	/**
 	 * Creates a controller for the given view and model.
@@ -48,62 +53,41 @@ public class CalcController
 	 */
 	public CalcController()
 	{
+		//test.init();
 		model = new CalcModel();
-		graphModel = new GraphModel();
+		graph = new GraphPanel(width,height);
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
 	}
 	
-	public CalcController(CalcModel modelIn, GraphModel graphModelIn){
+	public CalcController(CalcModel modelIn){
 		
 		model = modelIn;
-		graphModel = graphModelIn;
+		graph = new GraphPanel(width,height);
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
 		
 	}
-
+//	  NTD: should be bigint array
 	public void sum() {
-		pushUserText();
+		
 		model.sum();
 		showValue();
 	}
 	
 	public void subtract() {
-		pushUserText();
 		model.subtract();
 		showValue();
 	}
-	
-	public void graphStuff() {
-		System.out.println("INside controller");
-		graphModel.clear();
-		graphModel.draw(model);
-		view.resetGraph(graphModel);
-	}
-	
-	public void graphSelected(String s)
-	{
-		graphModel.clear();
-		graphModel.draw(s);
-		view.resetGraph(graphModel);
-	}
-	public void graphClear()
-	{
-		graphModel.clear();
-		view.resetGraph(graphModel);
-	}
 
 	public void multiply() {
-		pushUserText();
 		model.multiply();
 		showValue();
 	}
 
 	public void divide() {
-		pushUserText();
 		if(!model.lastValue().equals(BigDecimal.ZERO)) {
 			model.divide();
 		}
@@ -115,31 +99,30 @@ public class CalcController
 		showValue();
 	}
 
+	public void cos() {
+		model.cos();
+		showValue();
+	}
 
 	public void factorial() {
-		pushUserText();
 		model.factorial();
 		showValue();
 	}
 
 	public void sin() {
-		pushUserText();
 		model.sin();
 		showValue();
 	}
 
-	public void cos() {
-		pushUserText();
-		model.cos();
-		showValue();
-	}
-	
 	public void clear() {
 		model.clear();
 		empty();
 		view.setHistory("Start a new calculation");
 		view.setExpressionValue("");
-		//view.setButtonClicked();
+		view.setButtonClicked();
+	}
+	public void Graph(){
+		
 	}
 
 	public void setValue(int value) {
@@ -162,23 +145,22 @@ public class CalcController
 		System.out.println("clearing...");
 		view.setCalcValue("");
 		view.clearUserValue();
-		view.clearGraph();
-		graphModel.clear();
 		model.clear();
 	}
 	
 	public void undo() {
 		model.undo();
+		String expressionValue = model.getExpressionValue();
+		
 		showValue();
 		
 	}
 
 	//When ENTER is pushed
 	public void addValue(BigDecimal value) {
-		
+	
 		model.pushNumber(value);
 		view.setHistory(model.getHistory());
-		
 	}
 	
 	public void addToRounding(String value){
@@ -186,34 +168,13 @@ public class CalcController
 		model.updateRounding(value);
 		
 	}
-	/**
-	 * Prints stack information from model to the console
-	 */
+	
 	public void printInfoToConsole(){
 		
 		model.printAllStacks();
-		model.printAsTestCase();
 	}
 
+
 	
-	/**
-	 * If the user has entered a value into the text field without pushing enter, this will
-	 * push the value into the stacks
-	 * As per requirements document
-	 */
-	public void pushUserText()
-	{
-		if(view.containsUserValue() == true){
-			String userText = view.getUserValue();
-			BigDecimal value = new BigDecimal(userText);
-			addValue(value);
-			view.clearUserValue();
-		}
-	}
-	
-	public void runTestCase(){
-		model.getTestCase();
-		showValue();
-	}
 
 }

@@ -1,3 +1,5 @@
+//import graphCalculator.Graph;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -38,14 +40,19 @@ import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.*;
 
-public class CalcView extends JFrame
+import java.awt.*;
+import java.awt.event.*;
+
+public class CalcView extends JPanel implements KeyListener
 {
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
 	final static boolean RIGHT_TO_LEFT = false;
 	static int buttonClicked = 0;
 
+	public static GraphPanel panel2 = new GraphPanel(400,400);
 	private static final long serialVersionUID = -8730447125113729547L;
 
 	private static JTextField userValueText;
@@ -56,15 +63,22 @@ public class CalcView extends JFrame
 	private static JComboBox<String> box;
 	private static ChartPanel chartPanel;
 
+	 public void keyReleased(KeyEvent e){}
+     public void keyTyped(KeyEvent e){}
+
+      public void keyPressed(KeyEvent e){}
+      Graph temp;
+
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
 	{
-		super("Simple Calculator");
+		//super("Simple Calculator");
 		System.out.println("Test");
 		addComponentsToPane(this, theController);
+	    temp = new Graph();
 
-		System.out.println("Drawing?");
-		final XYSeries series = new XYSeries("Graph(x)");
+		//System.out.println("Drawing?");
+		//final XYSeries series = new XYSeries("Graph(x)");
 
 		// Favourite tab creation
 		/*
@@ -73,60 +87,35 @@ public class CalcView extends JFrame
 		 * setFavourite(). From there, the method will update the graph on that
 		 * specific expression saved in the JComboBox list.
 		 */
-		box = new JComboBox<String>();
-		box.addItemListener(new ItemListener()
-		{
-			public void itemStateChanged(ItemEvent event)
-			{
-				if (event.getStateChange() == ItemEvent.SELECTED)
-				{
-					theController.graphSelected((String) box.getSelectedItem());
-				}
-			}
-		});
-		this.add(box);
+		//box = new JComboBox<String>();
+		
+		//this.add(box);
 
-		final XYSeriesCollection data = new XYSeriesCollection(series);
-		this.chart = ChartFactory.createXYLineChart("Graph", "X", // X-axis Name
-				"Y", // Y-axis Name
-				data, // Dataset
-				PlotOrientation.VERTICAL, // This will always be vertical for
-											// our purposes
-				true, // Legend
-				true, // Tool tips
-				false // URLS, (don't need this)
-				);
+		//final XYSeriesCollection data = new XYSeriesCollection(series);
+//		this.chart = ChartFactory.createXYLineChart("Graph", "X", // X-axis Name
+//				"Y", // Y-axis Name
+//				data, // Dataset
+//				PlotOrientation.VERTICAL, // This will always be vertical for
+//											// our purposes
+//				true, // Legend
+//				true, // Tool tips
+//				false // URLS, (don't need this)
+//				);
+//
+//		this.chartPanel = new ChartPanel(chart);
+//		chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+//
+//		this.add(chartPanel);
 
-		this.chartPanel = new ChartPanel(chart);
-		chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//this.pack();
+	      requestFocus();
 
-		this.add(chartPanel);
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.pack();
 		this.setVisible(true);
 
 	}
 
-	public void resetGraph(GraphModel graphModel)
-	{
-		System.out.println("Graphin in View now");
-		XYSeries series = graphModel.getSeries();
-		XYSeriesCollection data = graphModel.getSeriesCollection();
 
-		this.chart = ChartFactory.createXYLineChart("Graph", "X", // X-axis Name
-				"Y", // Y-axis Name
-				data, // Dataset
-				PlotOrientation.VERTICAL, // This will always be vertical for
-											// our purposes
-				true, // Legend
-				true, // Tool tips
-				false // URLS, (don't need this)
-				);
-
-		chartPanel.setChart(chart);
-		System.out.println("Reset Chart in View now");
-	}
 
 	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane,
@@ -159,6 +148,7 @@ public class CalcView extends JFrame
 		{
 			c.weightx = 0.5;
 		}
+		//pane.add(panel2);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -687,7 +677,7 @@ public class CalcView extends JFrame
 		else if (button.equals("TEST"))
 		{
 			System.out.println("Inputting test case");
-			theController.runTestCase();
+			//theController.runTestCase();
 
 		}
 		else if (button.equals("INFO"))
@@ -699,7 +689,7 @@ public class CalcView extends JFrame
 		else if (button.equals("Graph"))
 		{
 			System.out.println("Printing GRAPH");
-			theController.graphStuff();
+		//	theController.graphStuff();
 			System.out.println("Graphed?");
 		}
 		else if (button.equals("SAVE"))
