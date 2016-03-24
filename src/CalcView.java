@@ -66,13 +66,12 @@ public class CalcView extends JFrame
 		System.out.println("Drawing?");
 		final XYSeries series = new XYSeries("Graph(x)");
 
-		
-		//Favourite tab creation
+		// Favourite tab creation
 		/*
-		 * How it's going to work from the outside:
-		 * Once the user clicks on an item, this constructor will pass that item's
-		 * position and give it to setFavourite(). From there, the method will update
-		 * the graph on that specific expression saved in the JComboBox list.
+		 * How it's going to work from the outside: Once the user clicks on an
+		 * item, this constructor will pass that item's position and give it to
+		 * setFavourite(). From there, the method will update the graph on that
+		 * specific expression saved in the JComboBox list.
 		 */
 		box = new JComboBox<String>();
 		box.addItemListener(new ItemListener()
@@ -81,10 +80,12 @@ public class CalcView extends JFrame
 			{
 				if (event.getStateChange() == ItemEvent.SELECTED)
 				{
-					setfavourite(box.getSelectedIndex());
+					theController.graphSelected((String) box.getSelectedItem());
 				}
 			}
 		});
+		this.add(box);
+
 		final XYSeriesCollection data = new XYSeriesCollection(series);
 		this.chart = ChartFactory.createXYLineChart("Graph", "X", // X-axis Name
 				"Y", // Y-axis Name
@@ -530,6 +531,20 @@ public class CalcView extends JFrame
 
 		y += 1;
 
+		button = new ButtonAdapter("DELETE")
+		{
+			public void pressed()
+			{
+				registerButton("DELETE", theController);
+			}
+		};
+		c.gridx = 5;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
+		y += 1;
+
 		button = new ButtonAdapter("Enter")
 		{
 			public void pressed()
@@ -689,8 +704,13 @@ public class CalcView extends JFrame
 		}
 		else if (button.equals("SAVE"))
 		{
-			System.out.println("SAVING...");
+			System.out.println("SAVING TO LIST..."+ expressionList.getText());
 			saving();
+		}
+		else if (button.equals("SAVE"))
+		{
+			System.out.println("DELETING FROM LIST..." + expressionList.getText());
+			deleting();
 		}
 		// fixed negate button
 		else if (button.equals("+/-"))
@@ -970,31 +990,51 @@ public class CalcView extends JFrame
 
 		return uV;
 	}
-	
-	
-	//Methods related to favourite list
+
+	// Methods related to favourite list
 	/*
-	 * This method would get the selected favouite and set the expression to the selected one.
-	 * This will in turn update the graph. 
-	 * */
-	public void setfavourite(int index)
-	{
-		/*
-		 * Here this method will talk to the Graph and put the saved expression on the graph.
-		 * How it gets the information is done one of 2 ways:
-		 * 	1) Have the graph be able to understand the expression from a String.
-		 * 	2) Somehow store each expression in an Array and re-apply that old expression to the entire calculator
-		 * #1 seems like a better way because it doesn't interfere with any of the stacks/rest of calculator.
-		 */
-	}
+	 * This method would get the selected favouite and set the expression to the
+	 * selected one. This will in turn update the graph.
+	 */
 	
+	//CURRENTLY BYPASSING
+//	public static void setfavourite(int index) 
+//	{
+//		/*
+//		 * Here this method will talk to the Graph and put the saved expression
+//		 * on the graph. How it gets the information is done one of 2 ways: 
+//		 * 	1) Have the graph be able to understand the expression from a String. 
+//		 * 	2) Somehow store each expression in an Array and re-apply that old
+//		 * 	   expression to the entire calculator 
+//		 * #1 seems like a better way because it doesn't interfere with any of 
+//		 * the stacks/rest of calculator. 
+//		 * Going with #1:
+//		 */
+////		expressionList.setText((String) box.getSelectedItem());
+////		CalcController theController = new CalcController();
+////		theController.graphSelected((String) box.getSelectedItem());
+//		
+//	} CURRENTLY BYPASSING
+
 	/*
-	 * This method would save the current expression that the user has finished inputting.
-	 * */
-	private static void saving()
+	 * This method would save the current expression that the user has finished
+	 * inputting.
+	 */
+	public static void saving()
 	{
 		box.addItem(expressionList.getText());
 	}
 	
+	/*
+	 * Removes what is currently in the expression list from the selected menu.
+	 * This is assuming that adding an expression to the list will set the expressionList 
+	 * field that specific expression.
+	 * I.e., the user will select from the list what they want to remove, then they will
+	 * press delete and it will be removed. 
+	 * */
+	public static void deleting()
+	{
+		box.removeItem(expressionList.getText());
+	}
 
 }

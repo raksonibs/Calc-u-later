@@ -83,6 +83,18 @@ public class CalcController
 		graphModel.draw(model);
 		view.resetGraph(graphModel);
 	}
+	
+	public void graphSelected(String s)
+	{
+		graphModel.clear();
+		graphModel.draw(s);
+		view.resetGraph(graphModel);
+	}
+	public void graphClear()
+	{
+		graphModel.clear();
+		view.resetGraph(graphModel);
+	}
 
 	public void multiply() {
 		pushUserText();
