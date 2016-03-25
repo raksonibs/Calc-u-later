@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 public class CalcController
 {
 	/**
@@ -49,6 +56,7 @@ public class CalcController
 	public CalcController()
 	{
 		model = new CalcModel();
+		graphModel = new GraphModel(null);
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -76,7 +84,7 @@ public class CalcController
 		model.subtract();
 		showValue();
 	}
-
+	
 	public void multiply() {
 		pushUserText();
 		model.multiply();
@@ -85,9 +93,7 @@ public class CalcController
 
 	public void divide() {
 		pushUserText();
-		if(!model.lastValue().equals(BigDecimal.ZERO)) {
-			model.divide();
-		}
+		model.divide();
 		showValue();
 	}
 	
@@ -115,19 +121,17 @@ public class CalcController
 		showValue();
 	}
 	
-	public void variable(){
-		pushUserText();
-		model.variable();
-		showValue();
-		
-	}
-	
 	public void clear() {
 		model.clear();
 		empty();
 		view.setHistory("Start a new calculation");
 		view.setExpressionValue("");
 		//view.setButtonClicked();
+	}
+	
+	public void variable(){
+		model.variable();
+		showValue();
 	}
 
 	public void setValue(int value) {
@@ -139,7 +143,7 @@ public class CalcController
 		//System.out.println("Current value is: " + calcValue.toPlainString());
 		//System.out.println("Expression is: " + expressionValue);
 		
-		view.setCalcValue(model.getCalculatedValue().toPlainString());
+		view.setCalcValue(view.findRoundingValue(model.getCalculatedValue().toPlainString()));
 		view.setExpressionValue(model.getExpressionValue());
 		view.setHistory(model.getHistory());
 		
@@ -178,7 +182,7 @@ public class CalcController
 	public void printInfoToConsole(){
 		
 		model.printAllStacks();
-		model.printAsTestCase();
+		//model.printAsTestCase();
 	}
 
 	
@@ -201,5 +205,16 @@ public class CalcController
 		model.getTestCase();
 		showValue();
 	}
+	
+	public ChartPanel getChartPanel(){
+		
+		String expression = model.getExpressionValue();
+		graphModel.pushExpression(expression);
+
+		
+		return graphModel.getChartPanel();
+
+	}
+	
 
 }

@@ -1,16 +1,40 @@
-import java.math.BigDecimal;
-
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import java.io.IOException;
+import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.GridBagLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.util.Stack;
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class CalcView extends JFrame
 {
@@ -26,11 +50,14 @@ public class CalcView extends JFrame
 	private static JTextField history;
 	private static JTextField expressionList;
 	
+	public XYSeriesCollection data;
+	 public  JFreeChart chart;
+	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
 	{
 		super("Simple Calculator");
-		
+		System.out.println("Test");
 		addComponentsToPane(this, theController);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,6 +65,26 @@ public class CalcView extends JFrame
 		this.setVisible(true);
 
 	}
+	
+	protected JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridBagLayout());
+        panel.add(filler);
+        return panel;
+    }
+     
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = CalcView.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
 
 	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane, final CalcController theController) {
@@ -61,7 +108,7 @@ public class CalcView extends JFrame
 		history.setText("Start a new calculation");
 		expressionList = new JTextField(20);
 		expressionList.setEditable(false);
-				
+		
 		
 		if (shouldWeightX) {
 			c.weightx = 0.5;
@@ -271,9 +318,9 @@ public class CalcView extends JFrame
 		c.gridy = 6;
 		pane.add(button, c);
 		
-		button =  new ButtonAdapter("×") {
+		button =  new ButtonAdapter("x") {
 			public void pressed(){
-				registerButton("×", theController);
+				registerButton("x", theController);
 			}
 		};
 		c.gridx = 3;
@@ -352,23 +399,13 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
-		
-		button = new ButtonAdapter("X"){
-			public void pressed(){
-				registerButton("X", theController);
-			}
-		};
-		c.gridx = 1;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);
-		
+
 		button = new ButtonAdapter("TEST"){
 			public void pressed(){
 				registerButton("TEST", theController);
 			}
 		};
-		c.gridx = 2;
+		c.gridx = 1;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
@@ -379,7 +416,7 @@ public class CalcView extends JFrame
 				
 			}
 		};
-		c.gridx = 3;
+		c.gridx = 2;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
@@ -389,12 +426,20 @@ public class CalcView extends JFrame
 				registerButton("INFO", theController);
 			}
 		};
-		c.gridx = 4;
+		c.gridx = 3;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
 		
-		
+		button = new ButtonAdapter("X"){
+			public void pressed(){
+				registerButton("X", theController);
+			}
+		};
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
 		
 		y += 1;
 
@@ -484,7 +529,7 @@ public class CalcView extends JFrame
 			theController.subtract();			
 			userValueText.setText("");
 
-		} else if (button.equals("×")) {
+		} else if (button.equals("x")) {
 			System.out.println("multiplty");			
 			theController.multiply();			
 			userValueText.setText("");
@@ -493,15 +538,32 @@ public class CalcView extends JFrame
 			theController.divide();			
 			userValueText.setText("");
 		}
-	     else if (button.equals("TEST")) {
-		System.out.println("Inputting test case");	
-		theController.runTestCase();
-		
+		else if (button.equals("TEST")) {
+			System.out.println("Inputting test case");	
+			theController.runTestCase();
+			
 		}
-	    else if (button.equals("INFO")) {
+		else if (button.equals("INFO")) {
 		//System.out.println("Printing Stack information");			
-		theController.printInfoToConsole();			
-	   }	
+			theController.printInfoToConsole();			
+		}	
+
+		else if (button.equals("Graph")) {
+			System.out.println("Create panel");
+			//ChartPanel chPanel = new ChartPanel(chart); //creating the chart panel, which extends JPanel
+			//chPanel.setPreferredSize(new Dimension(785, 440)); //size according to my window
+			
+			JPanel jPanel = new JPanel();
+			jPanel.add(theController.getChartPanel()); //add the chart viewer to the JPanel
+			//jPanel.setVisible(true);
+			
+			JFrame newWindow = new JFrame();
+			newWindow.setPreferredSize(new Dimension(500,500));
+			newWindow.add(jPanel);
+			
+			newWindow.setVisible(true);
+			newWindow.pack();
+		}	
 		// fixed negate button
 		else if (button.equals("+/-")) {
 			
@@ -564,7 +626,7 @@ public class CalcView extends JFrame
 		}
 		else if (button.equals("X")){
 
-			System.out.println("variable");
+			System.out.println("Inputed variable");
 			theController.variable();
 			userValueText.setText("");
 
@@ -616,7 +678,7 @@ public class CalcView extends JFrame
 	 */
 	public static void addToHistory(CalcController theController) {
 		String value = history.getText();
-				
+		
 		double val = Double.parseDouble(userValueText.getText());
 		
 		System.out.println(""+val);
@@ -624,6 +686,7 @@ public class CalcView extends JFrame
 		BigDecimal allValue = new BigDecimal(val);
 		theController.addToRounding(userValueText.getText());
 		theController.addValue(allValue);
+
 
 		userValueText.setText("");
 		
@@ -682,6 +745,44 @@ public class CalcView extends JFrame
 		}
 	}
 
+	
+	public static String findRoundingValue(String num)
+	{
+		
+		String uV = num;
+		int placeholder = uV.indexOf(".");
+		
+		//Checking to see how many digits to keep on the left hand side of the result
+		//As well as how many digits on the right side to keep
+		//Some rounding does still occur due to doubles.
+		if(uV.contains("."))
+		{			
+			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
+			int roundingLengthAfterDecimal = rightDecimal.length();
+			if(rightDecimal.length() > roundingLengthAfterDecimal){
+				//STILL NEED TO IMPLEMENT ROUNDING
+				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 5);
+				//System.out.println("Digits to the right " + rightDecimal.length());
+			}
+
+			String leftOfDecimal = uV.substring(0, placeholder);
+			int roundingLengthBeforeDecimal = leftOfDecimal.length();
+			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
+				// roundingLengthBeforeDecimal = leftDecimal.length();
+				//System.out.println("Digits to the left " + leftDecimal.length());
+				if (uV.substring(1, uV.length()).length() > 6)
+				{	
+					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length() - 2).length();
+				}
+				System.out.println("it knows");
+			}		
+		}
+		
+		return uV;
+	}
+
+	
+	
 	
 
 

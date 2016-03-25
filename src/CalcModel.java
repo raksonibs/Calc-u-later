@@ -10,14 +10,15 @@ import java.util.Vector;
 public class CalcModel
 {
 	private BigDecimal calcValue;
-	private Stack<BigDecimal> calculatedValues = new Stack<BigDecimal>();
-	private Stack<BigDecimal>inputValues = new Stack();
+	private Stack calculatedValues = new Stack<BigDecimal>();
+	private Stack inputValues = new Stack();
+	private Stack variables = new Stack();
 	private Stack history;
-	private Stack<BigDecimal>numbers;
+	private Stack numbers;
 	private Stack<String> expressionList = new Stack<String>();
 	
 	private Boolean containsVariable = false;
-
+ 
 	//Amount to round to
 	private MathContext roundingAmount = new MathContext(1);
 	private MathContext roundingAmountResult = new MathContext(1);
@@ -63,6 +64,8 @@ public class CalcModel
 		calculatedValues.clear();
 		inputValues.clear();
 		
+		containsVariable = false;
+		
 		roundingAmount = new MathContext(0);
 		roundingAmountResult = new MathContext(0);
 		
@@ -77,20 +80,13 @@ public class CalcModel
 	 */
 	public void sum()
 	{
-		
-		//System.out.println("numbers size: " + numbers.size());
-		//System.out.println("expression list size: " + expressionList.size());
 
+		if(!containsVariable)
+		{
 		checkIfEnoughDigitsAvaliable(0);
-		
-		if(isVariable(numbers.peek().toString())){
-			numbers.push(BigDecimal.valueOf(0));
-		}
+
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
-		if(isVariable(numbers.peek().toString())){
-			numbers.push(BigDecimal.valueOf(0));
-		}
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.add(num1);
@@ -99,6 +95,11 @@ public class CalcModel
 
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
+		}
+		else
+		{
+			addToExpressionList("+");
+		}
 
 	}
 	
@@ -110,8 +111,8 @@ public class CalcModel
 	 */
 	public void subtract()
 	{
+		if(!containsVariable){
 		checkIfEnoughDigitsAvaliable(0);
-		
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
@@ -122,6 +123,11 @@ public class CalcModel
 		
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
+		}
+		else
+		{
+			addToExpressionList("-");
+		}
 	}
 	
 	/**
@@ -132,8 +138,8 @@ public class CalcModel
 	 */
 	public void multiply()
 	{
+		if(!containsVariable){
 		checkIfEnoughDigitsAvaliable(1);
-		
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
@@ -143,6 +149,11 @@ public class CalcModel
 		updateRounding(calcValue.toString());
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
+		}
+		else
+		{
+			addToExpressionList("×");	
+		}
 	}
 	
 	/**
@@ -154,10 +165,9 @@ public class CalcModel
 	 */
 	public void divide()
 	{
-		//The number of digits we want to round divisons to
-
-		checkIfEnoughDigitsAvaliable(1);
 		
+		if(!containsVariable && !lastValue().equals(BigDecimal.ZERO)){
+		checkIfEnoughDigitsAvaliable(1);
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
@@ -165,9 +175,13 @@ public class CalcModel
 		calcValue = num2.divide(num1, roundingAmount);
 		addToExpressionList("÷");
 		updateRounding(calcValue.toString());
-				
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
+		}
+		else
+		{
+			addToExpressionList("÷");
+		}
 	}
 	
 	public void pi()
@@ -185,22 +199,31 @@ public class CalcModel
 	}
 	
 	public void sin() {
+		if(!containsVariable)
+		{
 		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
 		System.out.println(num1);
 		num1 = Math.sin(num1);
 		System.out.println(num1);
 		
 		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
-		//b = b.round(roundingAmount);
 		
 		System.out.println("b is: " + b.toString());
 		
 		addToExpressionList("sin");
 		numbers.push(b);
 		calculatedValues.push(b);
+		}
+		else
+		{
+			addToExpressionList("sin");
+		}
+		
 	}
 	
 	public void cos() {
+		if(!containsVariable)
+		{
 		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
 		System.out.println(num1);
 		num1 = Math.cos(num1);
@@ -210,9 +233,16 @@ public class CalcModel
 		
 		numbers.push(b);
 		calculatedValues.push(b);
+		}
+		else
+		{
+			addToExpressionList("cos");
+		}
+		
 	}
 	
 	public void factorial() {
+		if(!containsVariable){
 		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
 		System.out.println(num1);
 		num1 = fact(num1);
@@ -224,11 +254,18 @@ public class CalcModel
 		
 		numbers.push(b);
 		calculatedValues.push(b);
+		}
+		else
+		{
+			addToExpressionList("!");
+		}
 	}
 	
 	public void variable(){
 	
-		
+		containsVariable = true;
+		addToExpressionList("X");
+
 		
 	}
 	
@@ -286,7 +323,7 @@ public class CalcModel
 	 */
 	public BigDecimal getCalculatedValue(){
 		if(calculatedValues.size()>0){
-		return (BigDecimal) calculatedValues.peek().round(roundingAmountResult);
+		return ((BigDecimal) calculatedValues.peek()).round(roundingAmountResult);
 		}
 		else
 		{
@@ -470,7 +507,7 @@ public class CalcModel
 			{
 				//String number1 = container.pop().toString();
 				
-				container.push("(" + value + ")");
+				container.push( value );
 			}
 			else
 			{
