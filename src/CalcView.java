@@ -20,11 +20,24 @@ import java.awt.Dimension;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -47,6 +60,7 @@ public class CalcView extends JPanel implements KeyListener
 	private static JTextField calcText;
 	private static JTextField history;
 	private static JTextField expressionList;
+
 	//private static JFreeChart chart;
 	private static JComboBox<String> box;
 	private static FavouritesPanel f = new FavouritesPanel();
@@ -62,6 +76,17 @@ public class CalcView extends JPanel implements KeyListener
 	public CalcView(final CalcController theController)
 	{		
 	
+
+	
+	public XYSeriesCollection data;
+	 public  JFreeChart chart;
+	
+	@SuppressWarnings("serial")
+	public CalcView(final CalcController theController)
+	{
+		super("Simple Calculator");
+		System.out.println("Test");
+>>>>>>> bradsCode1
 		addComponentsToPane(this, theController);
 	  temp = new Graph();
 		
@@ -70,6 +95,26 @@ public class CalcView extends JPanel implements KeyListener
 		this.setVisible(true);
 
 	}
+	
+	protected JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridBagLayout());
+        panel.add(filler);
+        return panel;
+    }
+     
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = CalcView.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
 
 
 
@@ -99,9 +144,8 @@ public class CalcView extends JPanel implements KeyListener
 		history.setText("Start a new calculation");
 		expressionList = new JTextField(20);
 		expressionList.setEditable(false);
-
-		if (shouldWeightX)
-		{
+		
+		if (shouldWeightX) {
 			c.weightx = 0.5;
 		}
 
@@ -521,6 +565,36 @@ public class CalcView extends JPanel implements KeyListener
 				theController.clear();
 			}
 		};
+
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+		
+		button = new ButtonAdapter("X"){
+			public void pressed(){
+				registerButton("X", theController);
+			}
+		};
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+		
+		y += 1;
+
+		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 0;       //reset to default
+		c.weighty = 1.0;   //request any extra vertical space
+		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
+		c.insets = new Insets(10,0,0,0);  //top padding
+		c.gridx = 1;       //aligned with button 2
+		c.gridwidth = 2;   //2 columns wide
+		c.gridy = 9;       //third row
+		pane.add(button, c);
+		
+		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 0; // reset to default
 		c.weighty = 1.0; // request any extra vertical space
@@ -610,28 +684,34 @@ public class CalcView extends JPanel implements KeyListener
 			theController.divide();
 			userValueText.setText("");
 		}
-		else if (button.equals("TEST"))
-		{
-			System.out.println("Inputting test case");
-			//theController.runTestCase();
 
+		else if (button.equals("TEST")) {
+			System.out.println("Inputting test case");	
+			theController.runTestCase();
+			
 		}
-		else if (button.equals("INFO"))
-		{
-			// System.out.println("Printing Stack information");
-			theController.printInfoToConsole();
-		}
+		else if (button.equals("INFO")) {
+		//System.out.println("Printing Stack information");			
+			theController.printInfoToConsole();			
+		}	
 
-		else if (button.equals("SAVE"))
-		{
-			System.out.println("SAVING TO LIST..."+ expressionList.getText());
-			saving();
-		}
-		else if (button.equals("DELETE"))
-		{
-			System.out.println("DELETING FROM LIST..." + expressionList.getText());
-			deleting();
-		}
+		else if (button.equals("Graph")) {
+			System.out.println("Create panel");
+			//ChartPanel chPanel = new ChartPanel(chart); //creating the chart panel, which extends JPanel
+			//chPanel.setPreferredSize(new Dimension(785, 440)); //size according to my window
+			
+			JPanel jPanel = new JPanel();
+			jPanel.add(theController.getChartPanel()); //add the chart viewer to the JPanel
+			//jPanel.setVisible(true);
+			
+			JFrame newWindow = new JFrame();
+			newWindow.setPreferredSize(new Dimension(500,500));
+			newWindow.add(jPanel);
+			
+			newWindow.setVisible(true);
+			newWindow.pack();
+		}	
+
 		// fixed negate button
 		else if (button.equals("+/-"))
 		{
@@ -703,6 +783,13 @@ public class CalcView extends JPanel implements KeyListener
 
 			System.out.println("factorial");
 			theController.factorial();
+			userValueText.setText("");
+
+		}
+		else if (button.equals("X")){
+
+			System.out.println("Inputed variable");
+			theController.variable();
 			userValueText.setText("");
 
 		}
@@ -897,6 +984,7 @@ public class CalcView extends JPanel implements KeyListener
 	 * selected one. This will in turn update the graph.
 	 */
 	
+
 	//CURRENTLY BYPASSING
 //	public static void setfavourite(int index) 
 //	{
@@ -920,6 +1008,41 @@ public class CalcView extends JPanel implements KeyListener
 	 * This method would save the current expression that the user has finished
 	 * inputting.
 	 */
+
+	public static String findRoundingValue(String num)
+	{
+		
+		String uV = num;
+		int placeholder = uV.indexOf(".");
+		
+		//Checking to see how many digits to keep on the left hand side of the result
+		//As well as how many digits on the right side to keep
+		//Some rounding does still occur due to doubles.
+		if(uV.contains("."))
+		{			
+			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
+			int roundingLengthAfterDecimal = rightDecimal.length();
+			if(rightDecimal.length() > roundingLengthAfterDecimal){
+				//STILL NEED TO IMPLEMENT ROUNDING
+				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 5);
+				//System.out.println("Digits to the right " + rightDecimal.length());
+			}
+
+			String leftOfDecimal = uV.substring(0, placeholder);
+			int roundingLengthBeforeDecimal = leftOfDecimal.length();
+			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
+				// roundingLengthBeforeDecimal = leftDecimal.length();
+				//System.out.println("Digits to the left " + leftDecimal.length());
+				if (uV.substring(1, uV.length()).length() > 6)
+				{	
+					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length() - 2).length();
+				}
+				System.out.println("it knows");
+			}		
+		}
+		
+		return uV;
+	}
 
 	public static void saving()
 	{
