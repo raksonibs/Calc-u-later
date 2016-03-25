@@ -30,15 +30,6 @@ import java.util.Stack;
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
@@ -63,7 +54,7 @@ public class CalcView extends JPanel implements KeyListener
 
 	//private static JFreeChart chart;
 	private static JComboBox<String> box;
-	private static FavouritesPanel f = new FavouritesPanel();
+	private static FavouritesPanel f = new FavouritesPanel(800, 400);
 	//private static ChartPanel chartPanel;
 
 	 public void keyReleased(KeyEvent e){}
@@ -72,21 +63,13 @@ public class CalcView extends JPanel implements KeyListener
       public void keyPressed(KeyEvent e){}
       Graph temp;
 
-	@SuppressWarnings("serial")
-	public CalcView(final CalcController theController)
-	{		
-	
-
-	
-	public XYSeriesCollection data;
-	 public  JFreeChart chart;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
 	{
-		super("Simple Calculator");
+		super();
 		System.out.println("Test");
->>>>>>> bradsCode1
+
 		addComponentsToPane(this, theController);
 	  temp = new Graph();
 		
@@ -701,7 +684,7 @@ public class CalcView extends JPanel implements KeyListener
 			//chPanel.setPreferredSize(new Dimension(785, 440)); //size according to my window
 			
 			JPanel jPanel = new JPanel();
-			jPanel.add(theController.getChartPanel()); //add the chart viewer to the JPanel
+//			jPanel.add(theController.getChartPanel()); //add the chart viewer to the JPanel
 			//jPanel.setVisible(true);
 			
 			JFrame newWindow = new JFrame();
@@ -936,48 +919,6 @@ public class CalcView extends JPanel implements KeyListener
 		}
 	}
 
-	public static String findRoundingValue(String num)
-	{
-
-		String uV = num;
-		int placeholder = uV.indexOf(".");
-
-		// Checking to see how many digits to keep on the left hand side of the
-		// result
-		// As well as how many digits on the right side to keep
-		// Some rounding does still occur due to doubles.
-		if (uV.contains("."))
-		{
-			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
-			int roundingLengthAfterDecimal = rightDecimal.length();
-			if (rightDecimal.length() > roundingLengthAfterDecimal)
-			{
-				// STILL NEED TO IMPLEMENT ROUNDING
-				uV = uV.substring(0, placeholder)
-						+ uV.substring(placeholder, placeholder + 5);
-				// System.out.println("Digits to the right " +
-				// rightDecimal.length());
-			}
-
-			String leftOfDecimal = uV.substring(0, placeholder);
-			int roundingLengthBeforeDecimal = leftOfDecimal.length();
-			if (leftOfDecimal.length() > roundingLengthBeforeDecimal)
-			{
-				// roundingLengthBeforeDecimal = leftDecimal.length();
-				// System.out.println("Digits to the left " +
-				// leftDecimal.length());
-				if (uV.substring(1, uV.length()).length() > 6)
-				{
-					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E"
-							+ uV.substring(1, uV.length() - 2).length();
-				}
-				System.out.println("it knows");
-			}
-		}
-
-		return uV;
-	}
-
 	// Methods related to favourite list
 	/*
 	 * This method would get the selected favouite and set the expression to the
@@ -1046,7 +987,7 @@ public class CalcView extends JPanel implements KeyListener
 
 	public static void saving()
 	{
-		f.addToFavourites(expressionList.getText());
+//		f.addToFavourites(expressionList.getText());
 	}
 	
 	/*

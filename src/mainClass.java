@@ -18,7 +18,7 @@ public void init()
 	System.out.println("mainClass");
 
     GraphPanel panel = new GraphPanel(WIDTH,HEIGHT);
-    FavouritesPanel panel2 = new FavouritesPanel();
+    FavouritesPanel panel2 = new FavouritesPanel(WIDTH, HEIGHT);
     CalcView panel3 = new CalcView(control);
     
 

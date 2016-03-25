@@ -11,6 +11,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
 
 public class CalcController
 {
@@ -64,7 +66,7 @@ public class CalcController
 		//test.init();
 		model = new CalcModel();
 		graph = new GraphPanel(width,height);
-		f = new FavouritesPanel();
+		f = new FavouritesPanel(width, height);
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -215,11 +217,12 @@ public class CalcController
 	
 	public ChartPanel getChartPanel(){
 		
-		String expression = model.getExpressionValue();
-		graphModel.pushExpression(expression);
-
-		
-		return graphModel.getChartPanel();
+//		String expression = model.getExpressionValue();
+//		graphModel.pushExpression(expression);
+//
+//		
+//		return graphModel.getChartPanel();
+		return null;
 
 	}
 	
