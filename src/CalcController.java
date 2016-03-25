@@ -40,6 +40,7 @@ public class CalcController
 	private Graph graphModel;
 	private CalcView view;
 	private GraphPanel graph;
+	private FavouritesPanel f;
 
 	/**
 	 * Creates a controller for the given view and model.
@@ -56,6 +57,7 @@ public class CalcController
 		//test.init();
 		model = new CalcModel();
 		graph = new GraphPanel(width,height);
+		f = new FavouritesPanel();
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();

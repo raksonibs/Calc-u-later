@@ -26,11 +26,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
 
-import javax.swing.JTabbedPane;
-import javax.swing.ImageIcon;
-
-
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
@@ -54,6 +49,7 @@ public class CalcView extends JPanel implements KeyListener
 	private static JTextField expressionList;
 	//private static JFreeChart chart;
 	private static JComboBox<String> box;
+	private static FavouritesPanel f = new FavouritesPanel();
 	//private static ChartPanel chartPanel;
 
 	 public void keyReleased(KeyEvent e){}
@@ -672,7 +668,7 @@ public class CalcView extends JPanel implements KeyListener
 			System.out.println("SAVING TO LIST..."+ expressionList.getText());
 			saving();
 		}
-		else if (button.equals("SAVE"))
+		else if (button.equals("DELETE"))
 		{
 			System.out.println("DELETING FROM LIST..." + expressionList.getText());
 			deleting();
@@ -985,9 +981,10 @@ public class CalcView extends JPanel implements KeyListener
 	 * This method would save the current expression that the user has finished
 	 * inputting.
 	 */
+
 	public static void saving()
 	{
-		box.addItem(expressionList.getText());
+		f.addToFavourites(expressionList.getText());
 	}
 	
 	/*
