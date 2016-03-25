@@ -1,79 +1,154 @@
+//import graphCalculator.Graph;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.GridBagLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.Stack;
+
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
+
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.*;
 
-public class CalcView extends JFrame
+import java.awt.*;
+import java.awt.event.*;
+
+public class CalcView extends JPanel implements KeyListener
 {
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
 	final static boolean RIGHT_TO_LEFT = false;
 	static int buttonClicked = 0;
-	
+
+	public static GraphPanel panel2 = new GraphPanel(400,400);
 	private static final long serialVersionUID = -8730447125113729547L;
-	
+
 	private static JTextField userValueText;
 	private static JTextField calcText;
 	private static JTextField history;
-	private static Stack<BigInteger> numbers;
-	
+	private static JTextField expressionList;
+	//private static JFreeChart chart;
+	private static JComboBox<String> box;
+	//private static ChartPanel chartPanel;
+
+	 public void keyReleased(KeyEvent e){}
+     public void keyTyped(KeyEvent e){}
+
+      public void keyPressed(KeyEvent e){}
+      Graph temp;
+
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
 	{
-		super("Simple Calculator");
-		
+		//super("Simple Calculator");
+		System.out.println("Test");
 		addComponentsToPane(this, theController);
+	    temp = new Graph();
+
+		//System.out.println("Drawing?");
+		//final XYSeries series = new XYSeries("Graph(x)");
+
+		// Favourite tab creation
+		/*
+		 * How it's going to work from the outside: Once the user clicks on an
+		 * item, this constructor will pass that item's position and give it to
+		 * setFavourite(). From there, the method will update the graph on that
+		 * specific expression saved in the JComboBox list.
+		 */
+		//box = new JComboBox<String>();
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.pack();
+		//this.add(box);
+
+		//final XYSeriesCollection data = new XYSeriesCollection(series);
+//		this.chart = ChartFactory.createXYLineChart("Graph", "X", // X-axis Name
+//				"Y", // Y-axis Name
+//				data, // Dataset
+//				PlotOrientation.VERTICAL, // This will always be vertical for
+//											// our purposes
+//				true, // Legend
+//				true, // Tool tips
+//				false // URLS, (don't need this)
+//				);
+//
+//		this.chartPanel = new ChartPanel(chart);
+//		chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+//
+//		this.add(chartPanel);
+
+		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//this.pack();
+	      requestFocus();
+
 		this.setVisible(true);
-		this.numbers = new Stack();
-		
+
 	}
 
-	public static void addComponentsToPane(Container pane, final CalcController theController) {
-		if (RIGHT_TO_LEFT) {
+
+
+	@SuppressWarnings("serial")
+	public static void addComponentsToPane(Container pane,
+			final CalcController theController)
+	{
+		if (RIGHT_TO_LEFT)
+		{
 			pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		}
 
 		JButton button;
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		if (shouldFill) {
-	//natural height, maximum width
+		if (shouldFill)
+		{
+			// natural height, maximum width
 			c.fill = GridBagConstraints.HORIZONTAL;
 		}
-		
+
 		calcText = new JTextField(20);
 		calcText.setEditable(false);
 		userValueText = new JTextField(5);
 		history = new JTextField(20);
 		history.setEditable(false);
 		history.setText("Start a new calculation");
-		
-		if (shouldWeightX) {
+		expressionList = new JTextField(20);
+		expressionList.setEditable(false);
+
+		if (shouldWeightX)
+		{
 			c.weightx = 0.5;
 		}
-		
+		//pane.add(panel2);
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 4;
 		pane.add(calcText, c);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridy = 0;
@@ -85,44 +160,58 @@ public class CalcView extends JFrame
 		c.gridy = 1;
 		c.gridwidth = 4;
 		pane.add(history, c);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridy = 1;
 		c.gridwidth = 2;
 		pane.add(new JLabel("History"), c);
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 4;
-		pane.add(userValueText, c);
-		
+		pane.add(expressionList, c);
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridy = 2;
 		c.gridwidth = 2;
+		pane.add(new JLabel("Expression"), c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 4;
+		pane.add(userValueText, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 4;
+		c.gridy = 3;
+		c.gridwidth = 2;
 		pane.add(new JLabel("Input"), c);
-		
+
 		int x = 0;
 		int y = 3;
 		final int k = 0;
 
-		JButton button0 = new ButtonAdapter(""+0) {
-			public void pressed() 
+		JButton button0 = new ButtonAdapter("" + 0)
+		{
+			public void pressed()
 			{
 				changeInputButton(0);
 			}
 		};
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button0, c);
 
-		JButton button1 = new ButtonAdapter(""+1) {
-			public void pressed() 
+		JButton button1 = new ButtonAdapter("" + 1)
+		{
+			public void pressed()
 			{
 				changeInputButton(1);
 			}
@@ -130,11 +219,12 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button1, c);
 
-		JButton button2 = new ButtonAdapter(""+2) {
-			public void pressed() 
+		JButton button2 = new ButtonAdapter("" + 2)
+		{
+			public void pressed()
 			{
 				changeInputButton(2);
 			}
@@ -142,11 +232,12 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button2, c);
 
-		JButton button3 = new ButtonAdapter(""+3) {
-			public void pressed() 
+		JButton button3 = new ButtonAdapter("" + 3)
+		{
+			public void pressed()
 			{
 				changeInputButton(3);
 			}
@@ -154,11 +245,12 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button3, c);
 
-		JButton button4 = new ButtonAdapter(""+4) {
-			public void pressed() 
+		JButton button4 = new ButtonAdapter("" + 4)
+		{
+			public void pressed()
 			{
 				changeInputButton(4);
 			}
@@ -166,11 +258,12 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridwidth = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		pane.add(button4, c);
 
-		JButton button5 = new ButtonAdapter(""+5) {
-			public void pressed() 
+		JButton button5 = new ButtonAdapter("" + 5)
+		{
+			public void pressed()
 			{
 				changeInputButton(5);
 			}
@@ -178,11 +271,12 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button5, c);
 
-		JButton button6 = new ButtonAdapter(""+6) {
-			public void pressed() 
+		JButton button6 = new ButtonAdapter("" + 6)
+		{
+			public void pressed()
 			{
 				changeInputButton(6);
 			}
@@ -190,11 +284,12 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button6, c);
 
-		JButton button7 = new ButtonAdapter(""+7) {
-			public void pressed() 
+		JButton button7 = new ButtonAdapter("" + 7)
+		{
+			public void pressed()
 			{
 				changeInputButton(7);
 			}
@@ -202,11 +297,12 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button7, c);
 
-		JButton button8 = new ButtonAdapter(""+8) {
-			public void pressed() 
+		JButton button8 = new ButtonAdapter("" + 8)
+		{
+			public void pressed()
 			{
 				changeInputButton(8);
 			}
@@ -214,11 +310,12 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button8, c);
 
-		JButton button9 = new ButtonAdapter(""+9) {
-			public void pressed() 
+		JButton button9 = new ButtonAdapter("" + 9)
+		{
+			public void pressed()
 			{
 				changeInputButton(9);
 			}
@@ -226,400 +323,683 @@ public class CalcView extends JFrame
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		pane.add(button9, c);
-		
-		button = new ButtonAdapter(".") {public void pressed(){ theController.clear();}};
+
+		button = new ButtonAdapter("UNDO")
+		{
+			public void pressed()
+			{
+				registerButton("UNDO", theController);
+			}
+		};
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter("+") {
-			public void pressed(){
+
+		button = new ButtonAdapter("+")
+		{
+			public void pressed()
+			{
 				registerButton("+", theController);
 			}
 		};
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter("-") {
-			public void pressed(){
+
+		button = new ButtonAdapter("-")
+		{
+			public void pressed()
+			{
 				registerButton("-", theController);
 			}
 		};
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter("*") {
-			public void pressed(){
-				registerButton("*", theController);
+
+		button = new ButtonAdapter("x")
+		{
+			public void pressed()
+			{
+				registerButton("x", theController);
 			}
 		};
 		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter("/") {
-			public void pressed(){
-				registerButton("/", theController);
+
+		button = new ButtonAdapter("÷")
+		{
+			public void pressed()
+			{
+				registerButton("÷", theController);
 			}
 		};
 		c.gridx = 4;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		pane.add(button, c);
 
-		button =  new ButtonAdapter("+/-") {
-			public void pressed(){
+		button = new ButtonAdapter("+/-")
+		{
+			public void pressed()
+			{
 				registerButton("+/-", theController);
 			}
 		};
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter(".") {
-			public void pressed(){
+
+		button = new ButtonAdapter(".")
+		{
+			public void pressed()
+			{
 				registerButton(".", theController);
 			}
 		};
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter("π") {
-			public void pressed(){
-				changeInputButton(Math.PI);	//So basically 3?
+
+		button = new ButtonAdapter("π")
+		{
+			public void pressed()
+			{
+				changeInputButton(Math.PI);
+
 			}
 		};
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter("sin") {
-			public void pressed(){
+
+		button = new ButtonAdapter("sin")
+		{
+			public void pressed()
+			{
 				registerButton("sin", theController);
 			}
 		};
 		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
 
-		button =  new ButtonAdapter("cos") {
-			public void pressed(){
+		button = new ButtonAdapter("cos")
+		{
+			public void pressed()
+			{
 				registerButton("cos", theController);
 			}
 		};
 		c.gridx = 4;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		pane.add(button, c);
-		
+
+		button = new ButtonAdapter("!")
+		{
+			public void pressed()
+			{
+				registerButton("!", theController);
+			}
+		};
+
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("TEST")
+		{
+			public void pressed()
+			{
+				registerButton("TEST", theController);
+			}
+		};
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("Graph")
+		{
+			public void pressed()
+			{
+				registerButton("Graph", theController);
+
+			}
+		};
+		c.gridx = 2;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("INFO")
+		{
+			public void pressed()
+			{
+				registerButton("INFO", theController);
+			}
+		};
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
 		y += 1;
 
-		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory();}};
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 0;       //reset to default
-		c.weighty = 1.0;   //request any extra vertical space
-		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
-		c.insets = new Insets(10,0,0,0);  //top padding
-		c.gridx = 1;       //aligned with button 2
-		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 7;       //third row
+		// Adding SAVE and DELETE buttons related to favourites list.
+		button = new ButtonAdapter("SAVE")
+		{
+			public void pressed()
+			{
+				registerButton("SAVE", theController);
+			}
+		};
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 8;
 		pane.add(button, c);
-		
-		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 0;       //reset to default
-		c.weighty = 1.0;   //request any extra vertical space
-		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
-		c.insets = new Insets(10,0,0,0);  //top padding
-		c.gridx = 3;       //aligned with button 2
-		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 7;       //third row
+
+		y += 1;
+
+		button = new ButtonAdapter("DELETE")
+		{
+			public void pressed()
+			{
+				registerButton("DELETE", theController);
+			}
+		};
+		c.gridx = 5;
+		c.gridwidth = 1;
+		c.gridy = 8;
 		pane.add(button, c);
-}
+
+		y += 1;
+
+		button = new ButtonAdapter("Enter")
+		{
+			public void pressed()
+			{
+				addToHistory(theController);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 0; // reset to default
+		c.weighty = 1.0; // request any extra vertical space
+		c.anchor = GridBagConstraints.PAGE_END; // bottom of space
+		c.insets = new Insets(10, 0, 0, 0); // top padding
+		c.gridx = 1; // aligned with button 2
+		c.gridwidth = 2; // 2 columns wide
+		c.gridy = 9; // third row
+		pane.add(button, c);
+
+		button = new ButtonAdapter("Clear")
+		{
+			public void pressed()
+			{
+				theController.clear();
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 0; // reset to default
+		c.weighty = 1.0; // request any extra vertical space
+		c.anchor = GridBagConstraints.PAGE_END; // bottom of space
+		c.insets = new Insets(10, 0, 0, 0); // top padding
+		c.gridx = 3; // aligned with button 2
+		c.gridwidth = 2; // 2 columns wide
+		c.gridy = 9; // third row
+		pane.add(button, c);
+	}
 
 	/**
 	 * Get the string value of the user input text field.
 	 * 
 	 * @return The string in the user input text field.
 	 */
-	public static BigInteger getUserValue()
+	public static String getUserValue()
 	{
-		return new BigInteger(userValueText.getText());
+		String userValue = userValueText.getText();
+		System.out.println("User Value is: " + userValue);
+		return userValue;
+
 	}
+
 	
-	public static void registerButton(String button, CalcController theController) {		
+	/**
+	 * Check to see if the user has entered a value into the text field
+	 * 
+	 * @return false if the text field is empty
+	 */
+	public boolean containsUserValue()
+	{
+		if (userValueText.getText().equals(""))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	public static void registerButton(String button,
+			CalcController theController)
+	{
 		String his = history.getText();
-		// right now this method is big, so when we refactor it we will put each button into its own controller method
+		// right now this method is big, so when we refactor it we will put each
+		// button into its own controller method
 		// furthermore, we will make the stack and history be part of the model
-		if (!button.equals("+/-") && !button.equals(".")) {
-			char lastChar = his.charAt(his.length() - 1);
-			if (lastChar == '=') {
-				String removeEquals = his.substring(0, his.length() - 1);
-				history.setText(removeEquals);
+
+		if (button.equals("UNDO"))
+		{
+			System.out.println("UNDO");
+			if (userValueText.getText().equals(""))
+			{
+				theController.undo();
+			}
+			else
+			{
+				String text = userValueText.getText();
+				int length = userValueText.getText().length();
+				text = text.substring(0, length - 1);
+				userValueText.setText(text);
 			}
 		}
-		
-		
-		if (button.equals("+")) {
+
+		// If one of the following operator buttons is pushed, the appropriate
+		// information is sent to the controller
+
+		if (button.equals("+"))
+		{
+			// should call controller method addition
+			// which calls model method of addition
 			System.out.println("addition");
-			String input = userValueText.getText();
-			
-			
-			if (!userValueText.getText().equals("")) {
-				// push number only if value inputted
-				int val = Integer.parseInt(userValueText.getText());
-				numbers.push(BigInteger.valueOf(val));
-			}
-			history.setText(his+","+input+button+"=");
-			BigInteger num1 = numbers.pop();
-			BigInteger num2 = numbers.pop();
-			BigInteger value = num1.add(num2);
-			numbers.push(value);
-			
-			setCalcValue(value.toString());
-			
-			userValueText.setText("");
-		} else if (button.equals("-")) {
-			System.out.println("subtracting");
-			String input = userValueText.getText();
-			
-			if (!userValueText.getText().equals("")) {
-				// push number only if value inputted
-				int val = Integer.parseInt(userValueText.getText());
-				numbers.push(BigInteger.valueOf(val));
-			}
-			history.setText(his+","+input+button+"=");
-			
-			BigInteger num1 = numbers.pop();
-			System.out.println(num1);
-			BigInteger num2 = numbers.pop();
-			System.out.println(num2);
-			BigInteger value = num2.subtract(num1);
-			System.out.println(value);
-			numbers.push(value);
-			
-			setCalcValue(value.toString());
-			
-			userValueText.setText("");
-		} else if (button.equals("*")) {
-			System.out.println("multiplying");
-			String input = userValueText.getText();
-			System.out.println("blah");
-			System.out.println("blargggg");
-			if (!userValueText.getText().equals("")) {
-				// push number only if value inputted
-				int val = Integer.parseInt(userValueText.getText());
-				numbers.push(BigInteger.valueOf(val));
-			}
-			
-			history.setText(his+","+input+button+"=");
-	
-			BigInteger num1 = numbers.pop();
-			System.out.println(num1);
-			BigInteger num2 = numbers.pop();
-			System.out.println(num2);
-			BigInteger value = num2.multiply(num1);
-			System.out.println(value);
-			numbers.push(value);
-			
-			setCalcValue(value.toString());
-			
+			theController.sum();
 			userValueText.setText("");
 
-		} else if (button.equals("/")) {
-			System.out.println("dividng");
-			String s = userValueText.getText();
-			if (!userValueText.getText().equals("")) {
-				// push number only if value inputted
-				int val = Integer.parseInt(userValueText.getText());
-				numbers.push(BigInteger.valueOf(val));
-			}
-			
-			history.setText(his+","+s+button+"=");
-	
-			Double num1 = Double.valueOf(numbers.pop().toString());
-			System.out.println(num1);
-			Double num2 = Double.valueOf(numbers.pop().toString());
-			System.out.println(num2);
-			Double value1 = num2 / (num1);
-			if (num1 == 0){
-				setCalcValue("YOU JUST DIVIDED BY ZERO");
-				throw new IllegalArgumentException("I can't believe you've done this.");
-			}
-			System.out.println(value1);			
-			BigInteger value2 = new BigDecimal(value1).toBigInteger();
-			numbers.push(value2);
+		}
+		else if (button.equals("-"))
+		{
+			System.out.println("subtract");
+			theController.subtract();
+			userValueText.setText("");
 
-			setCalcValue(value1.toString());
-			}	
+		}
+		else if (button.equals("x"))
+		{
+			System.out.println("multiplty");
+			theController.multiply();
+			userValueText.setText("");
+		}
+		else if (button.equals("÷"))
+		{
+			System.out.println("divide");
+			theController.divide();
+			userValueText.setText("");
+		}
+		else if (button.equals("TEST"))
+		{
+			System.out.println("Inputting test case");
+			//theController.runTestCase();
 
-		else if (button.equals("+/-")) {
-			
+		}
+		else if (button.equals("INFO"))
+		{
+			// System.out.println("Printing Stack information");
+			theController.printInfoToConsole();
+		}
+
+		else if (button.equals("Graph"))
+		{
+			System.out.println("Printing GRAPH");
+		//	theController.graphStuff();
+			System.out.println("Graphed?");
+		}
+		else if (button.equals("SAVE"))
+		{
+			System.out.println("SAVING TO LIST..."+ expressionList.getText());
+			saving();
+		}
+		else if (button.equals("SAVE"))
+		{
+			System.out.println("DELETING FROM LIST..." + expressionList.getText());
+			deleting();
+		}
+		// fixed negate button
+		else if (button.equals("+/-"))
+		{
+
 			String userVal = userValueText.getText();
 			char changeSign = userVal.charAt(0);
-			
-			if (changeSign == '-') {
+			if (!userVal.equals("0"))
+			{
+				if (changeSign == '-')
+				{
+					userVal = userVal.substring(1, userVal.length());
+					userValueText.setText(userVal);
+				}
+				else
+				{
+					userVal = '-' + userVal;
+					userValueText.setText(userVal);
+				}
+			}
+
+		}
+		else if (button.equals("."))
+		{
+
+			String userVal = userValueText.getText();
+
+			if (userVal.length() > 1 && userVal.charAt(1) == '.')
+			{
 				userVal = userVal.substring(1, his.length());
-				userValueText.setText(userVal);
-			} else {
-				userVal = "-"+userVal;
 				userValueText.setText(userVal);
 			}
-			
-			
-		} else if (button.equals(".")) {
-			
-			String userVal = userValueText.getText();
-			
-			
-			if ( userVal.length() > 1 && userVal.charAt(1) == '.' ) {
-				userVal = userVal.substring(1, his.length());
-				userValueText.setText(userVal);
-			} else {
-				
-				if (userVal.length() > 0 ) {
+			else
+			{
+
+				if (userVal.length() > 0)
+				{
 					userVal = userVal + ".";
-				} else {
+				}
+				else
+				{
 					userVal = "0." + userVal;
 				}
 				userValueText.setText(userVal);
 			}
-			
-			
-		} else if (button.equals("sin")) {
-			
-			//THIS WILL ALWAYS BE 0 UNTIL DECIMALS ARE SORTED OUT!
+
+		}
+		else if (button.equals("sin"))
+		{
+
 			System.out.print("Sin of ");
-			String input = userValueText.getText();
 
-			history.setText(his+","+input+button+"=");
-	
-			//Fixed convolution
-			Double num1 = Double.valueOf(numbers.pop().toString());
-			System.out.println(num1);
-			num1 = Math.sin(num1);
-			System.out.println(num1);
-			BigInteger ans = new BigDecimal(num1).toBigInteger();
-			
-			numbers.push(ans);
-			
-			setCalcValue(num1.toString());
-			
-			userValueText.setText("");
-		} 
+			theController.sin();
 
-		else if (button.equals("cos")) {
-			
-			//THIS WILL ALWAYS BE 0 UNTIL DECIMALS ARE SORTED OUT!
-			System.out.print("Cos of ");
-			String input = userValueText.getText();
-
-			history.setText(his+","+input+button+"=");
-	
-			//Fixed convolution
-			Double num1 = Double.valueOf(numbers.pop().toString());
-			System.out.println(num1);
-			num1 = Math.cos(num1);
-			System.out.println(num1);
-			BigInteger ans = new BigDecimal(num1).toBigInteger();
-			
-			numbers.push(ans);
-			
-			setCalcValue(num1.toString());
-			
 			userValueText.setText("");
 		}
 
+		else if (button.equals("cos"))
+		{
+
+			System.out.print("Cos of ");
+
+			theController.cos();
+
+			userValueText.setText("");
+		}
+
+		else if (button.equals("!"))
+		{
+
+			System.out.println("factorial");
+			theController.factorial();
+			userValueText.setText("");
+
+		}
+
+		else if (button.equals("UNDO"))
+		{
+
+			/*
+			 * System.out.println("factorial"); String input =
+			 * userValueText.getText();
+			 * 
+			 * history.setText(his+","+input+button+"=");
+			 * 
+			 * Double num1 = numbers.pop().doubleValue(); Double ans =
+			 * factorial(num1); System.out.println(ans); BigDecimal b =
+			 * BigDecimal.valueOf(ans); numbers.push(b);
+			 * 
+			 * findRoundingValue(b.toPlainString());
+			 * 
+			 * setCalcValue(b.toPlainString()); userValueText.setText("");
+			 */
+			// if(userValueText.)
+			System.out.println("undo test");
+			if (userValueText.getText().isEmpty())
+			{
+				System.out.println("text is not empty");
+
+				userValueText.setText("");
+			}
+
+			// numbers.pop();
+			//
+			// String newText = history.getText();
+			// newText = newText.substring(0, newText.length()-2);
+			// history.setText(newText);
+
+		}
+
 	}
-	
-	public static void changeInputButton(int buttonInput) {
+
+	// This method to handle integers
+	/**
+	 * Enters the value of the button pressed into the text field
+	 * 
+	 * @param buttonInput
+	 */
+	public static void changeInputButton(int buttonInput)
+	{
 
 		String value = String.valueOf(buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
-		
-		if (history.getText().equals("Start a new calculation")) {
+
+		if (history.getText().equals("Start a new calculation"))
+		{
 			history.setText("");
 		}
-		
-		char lastChar = his.charAt(his.length() - 1);
-		if (lastChar == '=') {
-			String removeEquals = his.substring(0, his.length() - 1);
-			history.setText(removeEquals);
-		}
+
 	}
-	
-	//Added to handle doubles such as pi
-	public static void changeInputButton(double buttonInput) {
-		String value = String.valueOf(buttonInput);
+
+	// Added to handle doubles such as pi
+	/**
+	 * Enters the value of the button pressed into the text field
+	 * 
+	 * @param buttonInput
+	 */
+	public static void changeInputButton(double buttonInput)
+	{
+
+		// Round to 5 digits
+		String value = String.format("%.5f", buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
-	}
-	
+		String his = history.getText();
 
-	public static void addToHistory() {
-		String value = history.getText();
-		
-		int val = Integer.parseInt(userValueText.getText());
-		
-		System.out.println(""+val);
-		
-		numbers.push(BigInteger.valueOf(val));
-		
-		System.out.println("over here");
-				
-		if (buttonClicked == 0) {
-			buttonClicked += 1;
-		} else {
-			buttonClicked += 1;
-			value += ",";
+		if (history.getText().equals("Start a new calculation"))
+		{
+			history.setText("");
 		}
-		
-		value += userValueText.getText();		
-		
-		history.setText(value);
-		
-		userValueText.setText("");
+
 	}
-	
+
+	/**
+	 * Sends the inputed number to the controller
+	 * 
+	 * @param theController
+	 */
+	public static void addToHistory(CalcController theController)
+	{
+		String value = history.getText();
+
+		double val = Double.parseDouble(userValueText.getText());
+
+		System.out.println("" + val);
+
+		BigDecimal allValue = new BigDecimal(val);
+		theController.addToRounding(userValueText.getText());
+		theController.addValue(allValue);
+
+		userValueText.setText("");
+
+	}
+
+	public static void setButtonClicked()
+	{
+		buttonClicked = 0;
+	}
+
 	/**
 	 * Set the string for the user input text field.
 	 * 
-	 * @param value The new value for the user input text field.
+	 * @param value
+	 *            The new value for the user input text field.
 	 * @pre. value is not null
 	 */
 	public static void setUserValue(String value)
 	{
 		userValueText.setText(value);
 	}
-	
-	public static void setHistory(String value) {
+
+	/**
+	 * Set the history text field to a given String
+	 * 
+	 * @param String
+	 *            to set text field to
+	 */
+	public static void setHistory(String value)
+	{
 		history.setText(value);
 	}
-	
+
 	/**
 	 * Set the string for the calculated value text field.
 	 * 
-	 * @param value The new value for the calculated value text field.
+	 * @param value
+	 *            The new value for the calculated value text field.
 	 * @pre. value is not null
 	 */
 	public static void setCalcValue(String value)
 	{
 		calcText.setText(value);
+	}
+
+	/**
+	 * Set the expression value to specified Strin
+	 * 
+	 * @param value
+	 *            The String to set to
+	 */
+	public static void setExpressionValue(String value)
+	{
+		expressionList.setText(value);
+	}
+
+	/**
+	 * Removes text from user input field
+	 */
+	public static void clearUserValue()
+	{
+		if (userValueText.getText() != "")
+		{
+			userValueText.setText("");
+		}
+	}
+
+	public static String findRoundingValue(String num)
+	{
+
+		String uV = num;
+		int placeholder = uV.indexOf(".");
+
+		// Checking to see how many digits to keep on the left hand side of the
+		// result
+		// As well as how many digits on the right side to keep
+		// Some rounding does still occur due to doubles.
+		if (uV.contains("."))
+		{
+			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
+			int roundingLengthAfterDecimal = rightDecimal.length();
+			if (rightDecimal.length() > roundingLengthAfterDecimal)
+			{
+				// STILL NEED TO IMPLEMENT ROUNDING
+				uV = uV.substring(0, placeholder)
+						+ uV.substring(placeholder, placeholder + 5);
+				// System.out.println("Digits to the right " +
+				// rightDecimal.length());
+			}
+
+			String leftOfDecimal = uV.substring(0, placeholder);
+			int roundingLengthBeforeDecimal = leftOfDecimal.length();
+			if (leftOfDecimal.length() > roundingLengthBeforeDecimal)
+			{
+				// roundingLengthBeforeDecimal = leftDecimal.length();
+				// System.out.println("Digits to the left " +
+				// leftDecimal.length());
+				if (uV.substring(1, uV.length()).length() > 6)
+				{
+					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E"
+							+ uV.substring(1, uV.length() - 2).length();
+				}
+				System.out.println("it knows");
+			}
+		}
+
+		return uV;
+	}
+
+	// Methods related to favourite list
+	/*
+	 * This method would get the selected favouite and set the expression to the
+	 * selected one. This will in turn update the graph.
+	 */
+	
+	//CURRENTLY BYPASSING
+//	public static void setfavourite(int index) 
+//	{
+//		/*
+//		 * Here this method will talk to the Graph and put the saved expression
+//		 * on the graph. How it gets the information is done one of 2 ways: 
+//		 * 	1) Have the graph be able to understand the expression from a String. 
+//		 * 	2) Somehow store each expression in an Array and re-apply that old
+//		 * 	   expression to the entire calculator 
+//		 * #1 seems like a better way because it doesn't interfere with any of 
+//		 * the stacks/rest of calculator. 
+//		 * Going with #1:
+//		 */
+////		expressionList.setText((String) box.getSelectedItem());
+////		CalcController theController = new CalcController();
+////		theController.graphSelected((String) box.getSelectedItem());
+//		
+//	} CURRENTLY BYPASSING
+
+	/*
+	 * This method would save the current expression that the user has finished
+	 * inputting.
+	 */
+	public static void saving()
+	{
+		box.addItem(expressionList.getText());
+	}
+	
+	/*
+	 * Removes what is currently in the expression list from the selected menu.
+	 * This is assuming that adding an expression to the list will set the expressionList 
+	 * field that specific expression.
+	 * I.e., the user will select from the list what they want to remove, then they will
+	 * press delete and it will be removed. 
+	 * */
+	public static void deleting()
+	{
+		box.removeItem(expressionList.getText());
 	}
 
 }
