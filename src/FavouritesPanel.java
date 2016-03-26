@@ -6,6 +6,7 @@ import java.awt.event.*;
 public class FavouritesPanel extends JPanel
 {
 	private int width, height;
+	private int counter = 0;
 	Graph temp;
 	JComboBox<String> box;
 
@@ -32,8 +33,12 @@ public class FavouritesPanel extends JPanel
 	{
 		System.out.println("in the adding method...");
 		box.addItem(expression);
-		if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK");} 
+		if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK"); counter++;} 
 	}
+	
+	public void clearList(){box.removeAllItems();}
+	
+	public int getCounter(){return counter;}
 
 } // end of ControlPanel class
 

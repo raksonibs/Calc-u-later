@@ -34,9 +34,10 @@ public void init()
             {
             	for (String s: control.a)
             	{
-            		panel2.addToFavourites(s);
+            			panel2.addToFavourites(s);
             	}
             }
+            else if (MAIN.getSelectedIndex() == 0){panel2.clearList();panel2.addToFavourites("Select Favourite...");}
         }
     });
   
