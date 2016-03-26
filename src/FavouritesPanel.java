@@ -7,12 +7,14 @@ public class FavouritesPanel extends JPanel
 {
 	private int width, height;
 	private int counter = 0;
+	private String selected;
+	private FavouritesController favC =  new FavouritesController();
 	Graph temp;
 	JComboBox<String> box;
 
 	public FavouritesPanel()
 	{
-		box = new JComboBox();
+		box = new JComboBox<String>();
 		box.addItem("Select Favourite...");
 		box.addItemListener(new ItemListener()
 		{
@@ -22,16 +24,30 @@ public class FavouritesPanel extends JPanel
 						&& !(box.getSelectedItem()
 								.equals("Select Favourite...")))
 				{
-					temp.Operation(box.getSelectedItem().toString(), 0);
+					selected = box.getSelectedItem().toString();
+					//Give "selected" to the graph here...
 				}
 			}
 		});
+		
+		JButton b = new ButtonAdapter("DELETE")
+		{
+			public void pressed()
+			{
+				System.out.println("DELETING " + selected);
+				box.removeItem(selected);
+				box.setSelectedItem("Select Favourite...");
+				favC.a.remove(selected);
+			}
+		};
+		
+		add(b);
 		add(box);
 	}
 
 	public void addToFavourites(String expression)
 	{
-		System.out.println("in the adding method...");
+		System.out.println("in the adding method with " + expression);
 		box.addItem(expression);
 		if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK"); counter++;} 
 	}

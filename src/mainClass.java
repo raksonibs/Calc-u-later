@@ -12,6 +12,7 @@ private JTabbedPane MAIN = new JTabbedPane();
  CalcModel model;
  CalcController control = new CalcController();
  GraphController graphControl = new GraphController();
+ FavouritesController favC;
  FavouritesPanel panel2;
 
 public void init()
@@ -23,6 +24,9 @@ public void init()
     
     JPanel graphPanel = new JPanel();
     graphPanel.add(graphControl.getChartPanel());
+    favC = new FavouritesController();
+    
+    
     MAIN.addTab("Calculator", panel3);
     MAIN.addTab("Graph",graphPanel);
     MAIN.addTab("Favourites", panel2);
@@ -32,12 +36,13 @@ public void init()
             System.out.println("Tab: " + MAIN.getSelectedIndex());
             if (MAIN.getSelectedIndex() == 2)
             {
-            	for (String s: control.a)
+            	for (String s: favC.a)
             	{
             			panel2.addToFavourites(s);
             	}
             }
-            else if (MAIN.getSelectedIndex() == 0){panel2.clearList();panel2.addToFavourites("Select Favourite...");}
+            else if (MAIN.getSelectedIndex() == 0 || MAIN.getSelectedIndex() == 1)
+            {panel2.clearList();panel2.addToFavourites("Select Favourite...");}
         }
     });
   
