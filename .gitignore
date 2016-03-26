@@ -17,3 +17,7 @@ src/JEvalTests.java
 .classpath
 *.classpath
 
+
+src/GraphModel.java
+
+src/GraphModel.java
