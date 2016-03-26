@@ -61,15 +61,15 @@ public class GraphModel extends ApplicationFrame {
 	            current = result;
 	            difference = Math.abs(current - previous);	//Check the absolute value of the difference between current result and previous result
 	            			
-	            System.out.println(difference);
+	            //System.out.println(difference);
 	            
 	            if(difference < prevDif * tolerance){
-	            	System.out.println("Within Bounds");
+	            	//System.out.println("Within Bounds");
 	                series.add(i, result);
 	            }
 	            else
 	            {
-	            	System.out.println("Out of specified bounds");	//If out of bounds, don't connect the points
+	            	//System.out.println("Out of specified bounds");	//If out of bounds, don't connect the points
 	            	series.add(i,null);
 	            }
             }

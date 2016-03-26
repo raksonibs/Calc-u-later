@@ -584,6 +584,16 @@ public class CalcModel
 		return returnValue;
 	}
 	
+	public String getEquation(){
+		if(containsVariable){
+			return getExpressionValue();
+		}
+		else
+		{
+			return calculatedValues.peek().toString();
+		}
+	}
+	
 	/**
 	 * Get all inputs seperated by commas as a String
 	 * @return String History of all inputs
