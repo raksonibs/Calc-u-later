@@ -7,12 +7,13 @@ public class FavouritesPanel extends JPanel
 {
 	private int width, height;
 	private int counter = 0;
+	private String selected;
 	Graph temp;
 	JComboBox<String> box;
 
 	public FavouritesPanel()
 	{
-		box = new JComboBox();
+		box = new JComboBox<String>();
 		box.addItem("Select Favourite...");
 		box.addItemListener(new ItemListener()
 		{
@@ -22,10 +23,23 @@ public class FavouritesPanel extends JPanel
 						&& !(box.getSelectedItem()
 								.equals("Select Favourite...")))
 				{
-					temp.Operation(box.getSelectedItem().toString(), 0);
+					selected = box.getSelectedItem().toString();
+					//Give "selected" to the graph here...
 				}
 			}
 		});
+		
+		JButton b = new ButtonAdapter("DELETE")
+		{
+			public void pressed()
+			{
+				System.out.println("DELETING " + selected);
+				box.removeItem(selected);
+				box.setSelectedItem("Select Favourite...");
+			}
+		};
+		
+		add(b);
 		add(box);
 	}
 
