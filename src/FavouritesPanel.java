@@ -32,6 +32,7 @@ public class FavouritesPanel extends JPanel
 	{
 		System.out.println("in the adding method...");
 		box.addItem(expression);
+		if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK");} 
 	}
 
 } // end of ControlPanel class

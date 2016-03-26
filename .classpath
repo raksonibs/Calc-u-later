@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/oskarniburski/Downloads/exp4j-0.4.5.jar"/>
-	<classpathentry kind="lib" path="/Users/oskarniburski/Downloads/jfreechart-1.0.19/jfreechart-1.0.19-demo.jar"/>
+	<classpathentry kind="lib" path="/Users/angietong/Downloads/exp4j-0.4.5.jar"/>
+	<classpathentry kind="lib" path="/Users/angietong/Downloads/jfreechart-1.0.19/jfreechart-1.0.19-demo.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
