@@ -53,10 +53,6 @@ public class CalcModel
 		calcValue = calcValue.ZERO;	
 	}
 	
-	public void setValue() {
-		
-	}
-	
 	public Stack getNumbers() {
 		return this.numbers;
 	}
@@ -441,6 +437,10 @@ public class CalcModel
 		}
 		
 	}
+	
+	public Stack<String> getExpressionList() {
+		return expressionList;
+	}
 
 	
 	public Boolean isVariable(String value){
@@ -575,6 +575,10 @@ public class CalcModel
 		expression = expression.substring(1, expression.length());
 		}
 		return expression;
+	}
+	
+	public String getLastExpression() {
+		return expressionList.peek();
 	}
 	
 	/**

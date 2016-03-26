@@ -54,6 +54,7 @@ public class CalcModelTest {
 		c.subtract();
 		double num2 = -3.0;
 		assertEquals(true, c.lastValue().doubleValue() == num2);
+		assertEquals("-", c.getLastExpression());
 		
 	}
 	
@@ -67,6 +68,7 @@ public class CalcModelTest {
 		c.sum();
 		double num2 = 17.0;
 		assertEquals(true, c.lastValue().doubleValue() == num2);
+		assertEquals("+", c.getLastExpression());
 		
 	}
 	
@@ -80,6 +82,7 @@ public class CalcModelTest {
 		c.multiply();
 		double num2 = 70.0;
 		assertEquals(true, c.lastValue().doubleValue() == num2);
+		assertEquals("×", c.getLastExpression());
 		
 	}
 	
@@ -91,11 +94,44 @@ public class CalcModelTest {
 		c.pushNumber(BigDecimal.valueOf(num1));
 		c.divide();
 		double num2 = 1.0;
-		System.out.println(num2);
-		System.out.println(c.lastValue().doubleValue());
-		System.out.println(c.lastValue().doubleValue() == num2);
+
 		assertEquals(true, c.lastValue().doubleValue() == num2);
-		
+		assertEquals("÷", c.getLastExpression());
+	}
+	
+	@Test
+	public void testIsOperator() {
+		assertEquals(true, c.isOperator("+"));
+		assertEquals(false, c.isOperator("cat"));
+	}
+	
+	@Test
+	public void testIsTrig() {
+		assertEquals(true, c.isTrignometric("sin"));
+		assertEquals(false, c.isTrignometric("cat"));
+	}
+	
+	@Test
+	public void testIsFactorial() {
+		assertEquals(true, c.isFactorial("!"));
+		assertEquals(false, c.isFactorial("cat"));
+	}
+	
+	@Test
+	public void testIsVariable() {
+		assertEquals(true, c.isVariable("X"));
+		assertEquals(false, c.isVariable("cat"));
+	}
+	
+	@Test
+	public void testStackContains() {
+		double num = 7.0;
+		c.pushNumber(BigDecimal.valueOf(num));
+		double num1 = 10.0;
+		c.pushNumber(BigDecimal.valueOf(num1));
+		c.sum();
+		assertEquals(true, c.stackContains(c.getExpressionList(), "+"));
+		assertEquals(false, c.stackContains(c.getExpressionList(), "-"));
 	}
 	
 
