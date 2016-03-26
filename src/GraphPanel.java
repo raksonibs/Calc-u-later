@@ -10,6 +10,7 @@ public class GraphPanel extends JPanel implements ActionListener
    Color color;
    JTextField Function;
    Graph temp;
+   
    public GraphPanel(int width1, int height1)
     {
        this.width = width1;
@@ -23,7 +24,6 @@ public class GraphPanel extends JPanel implements ActionListener
        Buttons.add(startR);
        temp = new Graph();
        graph.add(temp);
-
 
       setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
    

@@ -23,32 +23,32 @@ public class GraphModel extends ApplicationFrame {
     double current = 0;
     double difference = 0;
     double prevDif = 0;
-	
-	String expression = "";
-	
-	public GraphModel(String title) {
-		super(title);
-	}
-	
-	public ChartPanel getChartPanel(){
-		
-		XYSeries series = new XYSeries(expression);
+    
+    String expression = "";
+    
+    public GraphModel(String title) {
+      super(title);
+    }
+    
+    public ChartPanel getChartPanel(){
+      
+      XYSeries series = new XYSeries(expression);
         //Enters the values
 
-		
-        for(double i = xLeft; i < xRight; i = i + precision){
+      
+      for(double i = xLeft; i < xRight; i = i + precision){
 
-        	String expressionString = expression;
-        	
+       String expressionString = expression;
+       
         	if(expression.contains("!") && expression.contains("X")){		//Replace variable in factorial with appropriate numbers
         		expressionString = expression.replace("!", fact(i));
         	}
         	
-    		e = new ExpressionBuilder(expressionString)
-            .variables("X", "y")
-            .build()
-            .setVariable("X", i);
-            double result = e.evaluate();
+          e = new ExpressionBuilder(expressionString)
+          .variables("X", "y")
+          .build()
+          .setVariable("X", i);
+          double result = e.evaluate();
 
             if(expression.contains("X"))	//If we're dealing with a variable we have to account for asymptotes
             {
@@ -58,18 +58,20 @@ public class GraphModel extends ApplicationFrame {
             	 * This can cause issues with things like factorial, in which case the
             	 * tolerance needs to be adjusted to compensate.
             	 */
-	            current = result;
+             current = result;
 	            difference = Math.abs(current - previous);	//Check the absolute value of the difference between current result and previous result
+
 	            			
-	            System.out.println(difference);
+	            //System.out.println(difference);
 	            
 	            if(difference < prevDif * tolerance){
-	            	System.out.println("Within Bounds");
+	            	//System.out.println("Within Bounds");
 	                series.add(i, result);
 	            }
 	            else
 	            {
-	            	System.out.println("Out of specified bounds");	//If out of bounds, don't connect the points
+	            	//System.out.println("Out of specified bounds");	//If out of bounds, don't connect the points
+
 	            	series.add(i,null);
 	            }
             }
@@ -81,12 +83,12 @@ public class GraphModel extends ApplicationFrame {
             prevDif = difference;
             previous = current;		
             
-        }
+          }
 
-   
-		
-		XYSeriesCollection data = new XYSeriesCollection(series);
-        JFreeChart chart = ChartFactory.createXYLineChart(
+          
+          
+          XYSeriesCollection data = new XYSeriesCollection(series);
+          JFreeChart chart = ChartFactory.createXYLineChart(
            expression,
            "X", //X-axis Name
            "Y", //Y-axis Name
@@ -95,15 +97,15 @@ public class GraphModel extends ApplicationFrame {
            true,	//Legend
            true,	//Tool tips
            false	//URLS, (don't need this)
-       );
+           );
 
-       ChartPanel chartPanel = new ChartPanel(chart);
-       chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));		
+          ChartPanel chartPanel = new ChartPanel(chart);
+          chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));		
 
-		return chartPanel;
+          return chartPanel;
 
-	}
-	
+        }
+        
 	/**
 	 * Set left bound of graph
 	 * @param value
@@ -125,7 +127,7 @@ public class GraphModel extends ApplicationFrame {
 	 * @param input
 	 */
 	public void pushExpression(String input){
-				
+    
 		expression = clean(input);
 		System.out.println("Graph Model: expression is " + expression);
 		
@@ -184,27 +186,14 @@ public class GraphModel extends ApplicationFrame {
 	     tolerance = 2.5; //How much a point can differ from a previous point before being set to null
 	     xLeft = -5;	//The far left of the x axis
 	     xRight = 5;//The far right of x axis
-	    
+      
 	     previous = 0;
 	     current = 0;
 	     difference = 0;
 	     prevDif = 0;
-		
-		 expression = "";
-		
-	}
-        
-	}
-	
-
-
-
-
-
-
-
-
-
-
-
-
+       
+      expression = "";
+      
+    }
+    
+}

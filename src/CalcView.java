@@ -520,9 +520,9 @@ public class CalcView extends JPanel implements KeyListener
 			}
 		};
 
-		c.gridx = 3;
+		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 9;
+		c.gridy = 11;
 		pane.add(button, c);
 		
 

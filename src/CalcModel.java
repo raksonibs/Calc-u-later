@@ -301,9 +301,14 @@ public class CalcModel
 		//System.out.println("-------BEFORE---------");
 		//printAllStacks();
 
-		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())){
+
+		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())|| isFactorial(expressionList.peek()) || isVariable(expressionList.peek())){
+
 			expressionList.pop();
+			if(calculatedValues.size()>0)
+			{
 			calculatedValues.pop();
+			}
 		}
 		else
 		{
@@ -605,6 +610,22 @@ public class CalcModel
 		//System.out.println("History: " + returnValue);
 		
 		return returnValue;
+	}
+	
+	public String getEquation(){
+		if(containsVariable){
+			return getExpressionValue();
+		}
+		else
+		{
+			if(calculatedValues.size() > 0){
+			return calculatedValues.peek().toString();
+			}
+			else
+			{
+				return "0";
+			}
+		}
 	}
 	
 	/**

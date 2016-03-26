@@ -213,7 +213,7 @@ public class CalcController
 	
 	public ChartPanel getChartPanel(){
 		
-		String expression = model.getExpressionValue();
+		String expression = model.getEquation();
 		graphModel.pushExpression(expression);
 
 		return graphModel.getChartPanel();
