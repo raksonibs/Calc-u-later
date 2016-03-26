@@ -50,6 +50,7 @@ public class CalcController
 	private CalcView view;
 	private GraphPanel graph;
 	private static FavouritesPanel f = new FavouritesPanel();
+	public static ArrayList<String> a = new ArrayList<String>();
 
 	/**
 	 * Creates a controller for the given view and model.
@@ -197,7 +198,7 @@ public class CalcController
 
 	public void saving(String s)
 	{
-		f.addToFavourites(s);
+		a.add(s);
 	}
 	
 	/**

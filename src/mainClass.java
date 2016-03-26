@@ -11,13 +11,14 @@ private JTabbedPane MAIN = new JTabbedPane();
  public static int HEIGHT = 400;
  CalcModel model;
  CalcController control = new CalcController();
+ FavouritesPanel panel2;
 
 public void init()
 {
 	System.out.println("mainClass");
 
     GraphPanel panel = new GraphPanel(WIDTH,HEIGHT);
-    FavouritesPanel panel2 = new FavouritesPanel();
+    panel2 = new FavouritesPanel();
     CalcView panel3 = new CalcView(control);
     
     
@@ -29,9 +30,16 @@ public void init()
     MAIN.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
             System.out.println("Tab: " + MAIN.getSelectedIndex());
+            if (MAIN.getSelectedIndex() == 2)
+            {
+            	for (String s: control.a)
+            	{
+            		panel2.addToFavourites(s);
+            	}
+            }
         }
     });
-
+  
     getContentPane().add(MAIN);
     setSize(WIDTH,HEIGHT);
 }
