@@ -54,7 +54,6 @@ public class CalcView extends JPanel implements KeyListener
 
 	//private static JFreeChart chart;
 	private static JComboBox<String> box;
-	private static FavouritesPanel f = new FavouritesPanel();
 	//private static ChartPanel chartPanel;
 
 	 public void keyReleased(KeyEvent e){}
@@ -694,6 +693,12 @@ public class CalcView extends JPanel implements KeyListener
 			newWindow.pack();
 		}	
 
+		else if (button.equals("SAVE"))
+		{
+			System.out.println("SAVING...");
+			theController.saving(expressionList.getText());
+		}
+		
 		// fixed negate button
 		else if (button.equals("+/-"))
 		{
@@ -982,11 +987,6 @@ public class CalcView extends JPanel implements KeyListener
 		}
 		
 		return uV;
-	}
-
-	public static void saving()
-	{
-//		f.addToFavourites(expressionList.getText());
 	}
 	
 	/*

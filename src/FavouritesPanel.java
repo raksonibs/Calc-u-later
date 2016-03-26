@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -6,7 +7,7 @@ public class FavouritesPanel extends JPanel
 {
 	private int width, height;
 	Graph temp;
-	JComboBox box;
+	JComboBox<String> box;
 
 	public FavouritesPanel()
 	{
@@ -29,6 +30,7 @@ public class FavouritesPanel extends JPanel
 
 	public void addToFavourites(String expression)
 	{
+		System.out.println("in the adding method...");
 		box.addItem(expression);
 	}
 

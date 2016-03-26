@@ -49,7 +49,7 @@ public class CalcController
 	private GraphModel graphModel;
 	private CalcView view;
 	private GraphPanel graph;
-	private FavouritesPanel f;
+	private static FavouritesPanel f = new FavouritesPanel();
 
 	/**
 	 * Creates a controller for the given view and model.
@@ -195,9 +195,11 @@ public class CalcController
 
 	}
 
-
+	public void saving(String s)
+	{
+		f.addToFavourites(s);
+	}
 	
-
 	/**
 	 * If the user has entered a value into the text field without pushing enter, this will
 	 * push the value into the stacks
