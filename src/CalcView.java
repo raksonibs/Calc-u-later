@@ -189,7 +189,7 @@ public class CalcView extends JPanel implements KeyListener
 
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 6;
+		c.gridy = 5;
 		pane.add(button, c);
 
 		button = new ButtonAdapter("π")
@@ -200,10 +200,28 @@ public class CalcView extends JPanel implements KeyListener
 
 			}
 		};
-
-		c.gridx = 2;
+		
+		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 7;
+		c.gridy = 4;
+		pane.add(button, c);
+		
+		button = new ButtonAdapter("!")
+		{
+			public void pressed()
+			{
+				registerButton("!", theController);
+			}
+		};
+
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 4;
+		pane.add(button, c);
+
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 4;
 		pane.add(button, c);
 
 		button = new ButtonAdapter("sin")
@@ -213,9 +231,9 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("sin", theController);
 			}
 		};
-		c.gridx = 3;
+		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 7;
+		c.gridy = 4;
 		pane.add(button, c);
 
 		button = new ButtonAdapter("cos")
@@ -225,34 +243,9 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("cos", theController);
 			}
 		};
-		c.gridx = 4;
+		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 7;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("!")
-		{
-			public void pressed()
-			{
-				registerButton("!", theController);
-			}
-		};
-
-		c.gridx = 0;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("TEST")
-		{
-			public void pressed()
-			{
-				registerButton("TEST", theController);
-			}
-		};
-		c.gridx = 1;
-		c.gridwidth = 1;
-		c.gridy = 8;
+		c.gridy = 4;
 		pane.add(button, c);
 
 		button = new ButtonAdapter("INFO")
@@ -262,9 +255,10 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("INFO", theController);
 			}
 		};
-		c.gridx = 3;
+
+		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 8;
+		c.gridy = 5;
 		pane.add(button, c);		
 
 		// Adding SAVE and DELETE buttons related to favourites list.
@@ -275,22 +269,18 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("SAVE", theController);
 			}
 		};
-		c.gridx = 4;
+
+		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 8;
+		c.gridy = 5;
 		pane.add(button, c);				
 
-		button = new ButtonAdapter("Enter")
-		{
-			public void pressed()
-			{
-				addToHistory(theController);
-			}
-		};
+		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};		
 
-		int x = 0;
-		int y = 3;
-		final int k = 0;
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 5;
+		pane.add(button, c);	
 
 		JButton button0 = new ButtonAdapter("" + 0)
 		{
@@ -304,7 +294,7 @@ public class CalcView extends JPanel implements KeyListener
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 6;
 		pane.add(button0, c);
 
 		JButton button1 = new ButtonAdapter("" + 1)
@@ -319,7 +309,7 @@ public class CalcView extends JPanel implements KeyListener
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 6;
 		pane.add(button1, c);
 
 		JButton button2 = new ButtonAdapter("" + 2)
@@ -334,8 +324,61 @@ public class CalcView extends JPanel implements KeyListener
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 6;
 		pane.add(button2, c);
+
+		button = new ButtonAdapter("+")
+		{
+			public void pressed()
+			{
+				registerButton("+", theController);
+			}
+		};
+
+		button.setBackground(Color.BLUE);
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("-")
+		{
+			public void pressed()
+			{
+				registerButton("-", theController);
+			}
+		};
+
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("x")
+		{
+			public void pressed()
+			{
+				registerButton("x", theController);
+			}
+		};
+
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("÷")
+		{
+			public void pressed()
+			{
+				registerButton("÷", theController);
+			}
+		};
+
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 9;
+		pane.add(button, c);
 
 		JButton button3 = new ButtonAdapter("" + 3)
 		{
@@ -347,9 +390,9 @@ public class CalcView extends JPanel implements KeyListener
 
 		button3.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 3;
+		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 7;
 		pane.add(button3, c);
 
 		JButton button4 = new ButtonAdapter("" + 4)
@@ -363,9 +406,9 @@ public class CalcView extends JPanel implements KeyListener
 		button4.setBackground(Color.BLUE);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 4;
+		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 4;
+		c.gridy = 7;
 		pane.add(button4, c);
 
 		JButton button5 = new ButtonAdapter("" + 5)
@@ -378,9 +421,9 @@ public class CalcView extends JPanel implements KeyListener
 
 		button5.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 7;
 		pane.add(button5, c);
 
 		JButton button6 = new ButtonAdapter("" + 6)
@@ -394,9 +437,9 @@ public class CalcView extends JPanel implements KeyListener
 		button6.setBackground(Color.BLUE);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 8;
 		pane.add(button6, c);
 
 		JButton button7 = new ButtonAdapter("" + 7)
@@ -409,9 +452,9 @@ public class CalcView extends JPanel implements KeyListener
 
 		button7.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
+		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 8;
 		pane.add(button7, c);
 
 		JButton button8 = new ButtonAdapter("" + 8)
@@ -424,9 +467,9 @@ public class CalcView extends JPanel implements KeyListener
 
 		button8.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 3;
+		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 8;
 		pane.add(button8, c);
 
 		JButton button9 = new ButtonAdapter("" + 9)
@@ -439,60 +482,10 @@ public class CalcView extends JPanel implements KeyListener
 
 		button9.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 4;
+		c.gridx = 0;
 		c.gridwidth = 1;
-		c.gridy = 5;
+		c.gridy = 9;
 		pane.add(button9, c);
-
-		button = new ButtonAdapter("+")
-		{
-			public void pressed()
-			{
-				registerButton("+", theController);
-			}
-		};
-
-		button.setBackground(Color.BLUE);
-		c.gridx = 1;
-		c.gridwidth = 1;
-		c.gridy = 6;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("-")
-		{
-			public void pressed()
-			{
-				registerButton("-", theController);
-			}
-		};
-		c.gridx = 2;
-		c.gridwidth = 1;
-		c.gridy = 6;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("x")
-		{
-			public void pressed()
-			{
-				registerButton("x", theController);
-			}
-		};
-		c.gridx = 3;
-		c.gridwidth = 1;
-		c.gridy = 6;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("÷")
-		{
-			public void pressed()
-			{
-				registerButton("÷", theController);
-			}
-		};
-		c.gridx = 4;
-		c.gridwidth = 1;
-		c.gridy = 6;
-		pane.add(button, c);
 
 		button = new ButtonAdapter("+/-")
 		{
@@ -501,9 +494,10 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("+/-", theController);
 			}
 		};
-		c.gridx = 0;
+
+		c.gridx = 1;
 		c.gridwidth = 1;
-		c.gridy = 7;
+		c.gridy = 9;
 		pane.add(button, c);
 
 		button = new ButtonAdapter(".")
@@ -513,22 +507,10 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton(".", theController);
 			}
 		};
-		c.gridx = 1;
-		c.gridwidth = 1;
-		c.gridy = 7;
-		pane.add(button, c);
 
-		button = new ButtonAdapter("Clear")
-		{
-			public void pressed()
-			{
-				theController.clear();
-			}
-		};
-
-		c.gridx = 3;
+		c.gridx = 2;
 		c.gridwidth = 1;
-		c.gridy = 8;
+		c.gridy = 9;
 		pane.add(button, c);
 		
 		button = new ButtonAdapter("X"){
@@ -536,33 +518,19 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("X", theController);
 			}
 		};
-		c.gridx = 2;
+
+		c.gridx = 3;
 		c.gridwidth = 1;
-		c.gridy = 8;
+		c.gridy = 9;
 		pane.add(button, c);
 		
-		y += 1;
 
 		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 0;       //reset to default
-		c.weighty = 1.0;   //request any extra vertical space
-		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
-		c.insets = new Insets(10,0,0,0);  //top padding
-		c.gridx = 1;       //aligned with button 2
-		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 9;       //third row
-		pane.add(button, c);
-		
-		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 0; // reset to default
-		c.weighty = 1.0; // request any extra vertical space
-		c.anchor = GridBagConstraints.PAGE_END; // bottom of space
-		c.insets = new Insets(10, 0, 0, 0); // top padding
-		c.gridx = 3; // aligned with button 2
-		c.gridwidth = 2; // 2 columns wide
-		c.gridy = 9; // third row
+
+		c.gridx = 0;       //aligned with button 2
+		c.gridwidth = 4;   //2 columns wide
+		c.gridy = 10;       //third row
 		pane.add(button, c);
 	}
 
