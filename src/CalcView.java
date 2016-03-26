@@ -278,19 +278,7 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridx = 4;
 		c.gridwidth = 1;
 		c.gridy = 8;
-		pane.add(button, c);		
-
-		button = new ButtonAdapter("DELETE")
-		{
-			public void pressed()
-			{
-				registerButton("DELETE", theController);
-			}
-		};
-		c.gridx = 5;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);		
+		pane.add(button, c);				
 
 		button = new ButtonAdapter("Enter")
 		{
@@ -548,7 +536,7 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("X", theController);
 			}
 		};
-		c.gridx = 4;
+		c.gridx = 2;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
