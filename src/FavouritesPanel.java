@@ -34,10 +34,13 @@ public class FavouritesPanel extends JPanel
 		{
 			public void pressed()
 			{
-				System.out.println("DELETING " + selected);
-				box.removeItem(selected);
-				box.setSelectedItem("Select Favourite...");
-				favC.a.remove(selected);
+				if (!(box.getSelectedItem().equals("Select Favourite...")))
+				{
+					System.out.println("DELETING " + selected);
+					box.removeItem(selected);
+					box.setSelectedItem("Select Favourite...");
+					favC.a.remove(selected);
+				}
 			}
 		};
 		
@@ -49,7 +52,7 @@ public class FavouritesPanel extends JPanel
 	{
 		System.out.println("in the adding method with " + expression);
 		box.addItem(expression);
-		if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK"); counter++;} 
+		//if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK"); counter++;} 
 	}
 	
 	public void clearList(){box.removeAllItems();}
