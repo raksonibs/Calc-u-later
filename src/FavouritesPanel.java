@@ -8,6 +8,7 @@ public class FavouritesPanel extends JPanel
 	private int width, height;
 	private int counter = 0;
 	private String selected;
+	private FavouritesController favC =  new FavouritesController();
 	Graph temp;
 	JComboBox<String> box;
 
@@ -36,6 +37,7 @@ public class FavouritesPanel extends JPanel
 				System.out.println("DELETING " + selected);
 				box.removeItem(selected);
 				box.setSelectedItem("Select Favourite...");
+				favC.a.remove(selected);
 			}
 		};
 		
