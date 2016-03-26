@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
+
 public class CalcController
 {
 	
@@ -57,7 +66,6 @@ public class CalcController
 		//test.init();
 		model = new CalcModel();
 		graph = new GraphPanel(width,height);
-		f = new FavouritesPanel();
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -83,16 +91,17 @@ public class CalcController
 		model.subtract();
 		showValue();
 	}
-
+	
 	public void multiply() {
 		model.multiply();
 		showValue();
 	}
 
 	public void divide() {
-		if(!model.lastValue().equals(BigDecimal.ZERO)) {
-			model.divide();
-		}
+
+		pushUserText();
+		model.divide();
+
 		showValue();
 	}
 	
@@ -125,6 +134,11 @@ public class CalcController
 	}
 	public void Graph(){
 		
+	}
+	
+	public void variable(){
+		model.variable();
+		showValue();
 	}
 
 	public void setValue(int value) {
@@ -174,9 +188,43 @@ public class CalcController
 	public void printInfoToConsole(){
 		
 		model.printAllStacks();
+
 	}
 
 
 	
+
+	/**
+	 * If the user has entered a value into the text field without pushing enter, this will
+	 * push the value into the stacks
+	 * As per requirements document
+	 */
+	public void pushUserText()
+	{
+		if(view.containsUserValue() == true){
+			String userText = view.getUserValue();
+			BigDecimal value = new BigDecimal(userText);
+			addValue(value);
+			view.clearUserValue();
+		}
+	}
+	
+	public void runTestCase(){
+		model.getTestCase();
+		showValue();
+	}
+	
+	public ChartPanel getChartPanel(){
+		
+//		String expression = model.getExpressionValue();
+//		graphModel.pushExpression(expression);
+//
+//		
+//		return graphModel.getChartPanel();
+		return null;
+
+	}
+	
+
 
 }

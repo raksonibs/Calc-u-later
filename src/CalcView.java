@@ -20,11 +20,15 @@ import java.awt.Dimension;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -47,6 +51,7 @@ public class CalcView extends JPanel implements KeyListener
 	private static JTextField calcText;
 	private static JTextField history;
 	private static JTextField expressionList;
+
 	//private static JFreeChart chart;
 	private static JComboBox<String> box;
 	private static FavouritesPanel f = new FavouritesPanel();
@@ -58,51 +63,41 @@ public class CalcView extends JPanel implements KeyListener
       public void keyPressed(KeyEvent e){}
       Graph temp;
 
+	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
 	{
-		//super("Simple Calculator");
+		super();
 		System.out.println("Test");
+
 		addComponentsToPane(this, theController);
-	    temp = new Graph();
-
-		//System.out.println("Drawing?");
-		//final XYSeries series = new XYSeries("Graph(x)");
-
-		// Favourite tab creation
-		/*
-		 * How it's going to work from the outside: Once the user clicks on an
-		 * item, this constructor will pass that item's position and give it to
-		 * setFavourite(). From there, the method will update the graph on that
-		 * specific expression saved in the JComboBox list.
-		 */
-		//box = new JComboBox<String>();
+	  temp = new Graph();
 		
-		//this.add(box);
-
-		//final XYSeriesCollection data = new XYSeriesCollection(series);
-//		this.chart = ChartFactory.createXYLineChart("Graph", "X", // X-axis Name
-//				"Y", // Y-axis Name
-//				data, // Dataset
-//				PlotOrientation.VERTICAL, // This will always be vertical for
-//											// our purposes
-//				true, // Legend
-//				true, // Tool tips
-//				false // URLS, (don't need this)
-//				);
-//
-//		this.chartPanel = new ChartPanel(chart);
-//		chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
-//
-//		this.add(chartPanel);
-
-		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//this.pack();
-	      requestFocus();
+	  requestFocus();
 
 		this.setVisible(true);
 
 	}
+	
+	protected JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridBagLayout());
+        panel.add(filler);
+        return panel;
+    }
+     
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = CalcView.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
 
 
 
@@ -132,12 +127,10 @@ public class CalcView extends JPanel implements KeyListener
 		history.setText("Start a new calculation");
 		expressionList = new JTextField(20);
 		expressionList.setEditable(false);
-
-		if (shouldWeightX)
-		{
+		
+		if (shouldWeightX) {
 			c.weightx = 0.5;
 		}
-		//pane.add(panel2);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -187,6 +180,127 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 2;
 		pane.add(new JLabel("Input"), c);
 
+		button = new ButtonAdapter("UNDO")
+		{
+			public void pressed()
+			{
+				registerButton("UNDO", theController);
+			}
+		};
+
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("π")
+		{
+			public void pressed()
+			{
+				changeInputButton(Math.PI);
+
+			}
+		};
+
+		c.gridx = 2;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("sin")
+		{
+			public void pressed()
+			{
+				registerButton("sin", theController);
+			}
+		};
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("cos")
+		{
+			public void pressed()
+			{
+				registerButton("cos", theController);
+			}
+		};
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("!")
+		{
+			public void pressed()
+			{
+				registerButton("!", theController);
+			}
+		};
+
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("TEST")
+		{
+			public void pressed()
+			{
+				registerButton("TEST", theController);
+			}
+		};
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+
+		button = new ButtonAdapter("INFO")
+		{
+			public void pressed()
+			{
+				registerButton("INFO", theController);
+			}
+		};
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);		
+
+		// Adding SAVE and DELETE buttons related to favourites list.
+		button = new ButtonAdapter("SAVE")
+		{
+			public void pressed()
+			{
+				registerButton("SAVE", theController);
+			}
+		};
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);		
+
+		button = new ButtonAdapter("DELETE")
+		{
+			public void pressed()
+			{
+				registerButton("DELETE", theController);
+			}
+		};
+		c.gridx = 5;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);		
+
+		button = new ButtonAdapter("Enter")
+		{
+			public void pressed()
+			{
+				addToHistory(theController);
+			}
+		};
+
 		int x = 0;
 		int y = 3;
 		final int k = 0;
@@ -199,6 +313,7 @@ public class CalcView extends JPanel implements KeyListener
 			}
 		};
 
+		button0.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridwidth = 1;
@@ -212,6 +327,8 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(1);
 			}
 		};
+
+		button1.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridwidth = 1;
@@ -225,6 +342,8 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(2);
 			}
 		};
+
+		button2.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridwidth = 1;
@@ -238,6 +357,8 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(3);
 			}
 		};
+
+		button3.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridwidth = 1;
@@ -251,6 +372,9 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(4);
 			}
 		};
+
+		button4.setBackground(Color.BLUE);
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridwidth = 1;
@@ -264,6 +388,8 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(5);
 			}
 		};
+
+		button5.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridwidth = 1;
@@ -277,6 +403,9 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(6);
 			}
 		};
+
+		button6.setBackground(Color.BLUE);
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridwidth = 1;
@@ -290,6 +419,8 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(7);
 			}
 		};
+
+		button7.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridwidth = 1;
@@ -303,6 +434,8 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(8);
 			}
 		};
+
+		button8.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 3;
 		c.gridwidth = 1;
@@ -316,23 +449,13 @@ public class CalcView extends JPanel implements KeyListener
 				changeInputButton(9);
 			}
 		};
+
+		button9.setBackground(Color.BLUE);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 4;
 		c.gridwidth = 1;
 		c.gridy = 5;
 		pane.add(button9, c);
-
-		button = new ButtonAdapter("UNDO")
-		{
-			public void pressed()
-			{
-				registerButton("UNDO", theController);
-			}
-		};
-		c.gridx = 0;
-		c.gridwidth = 1;
-		c.gridy = 6;
-		pane.add(button, c);
 
 		button = new ButtonAdapter("+")
 		{
@@ -341,6 +464,8 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("+", theController);
 			}
 		};
+
+		button.setBackground(Color.BLUE);
 		c.gridx = 1;
 		c.gridwidth = 1;
 		c.gridy = 6;
@@ -406,131 +531,6 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridy = 7;
 		pane.add(button, c);
 
-		button = new ButtonAdapter("π")
-		{
-			public void pressed()
-			{
-				changeInputButton(Math.PI);
-
-			}
-		};
-		c.gridx = 2;
-		c.gridwidth = 1;
-		c.gridy = 7;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("sin")
-		{
-			public void pressed()
-			{
-				registerButton("sin", theController);
-			}
-		};
-		c.gridx = 3;
-		c.gridwidth = 1;
-		c.gridy = 7;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("cos")
-		{
-			public void pressed()
-			{
-				registerButton("cos", theController);
-			}
-		};
-		c.gridx = 4;
-		c.gridwidth = 1;
-		c.gridy = 7;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("!")
-		{
-			public void pressed()
-			{
-				registerButton("!", theController);
-			}
-		};
-
-		c.gridx = 0;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("TEST")
-		{
-			public void pressed()
-			{
-				registerButton("TEST", theController);
-			}
-		};
-		c.gridx = 1;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("Graph")
-		{
-			public void pressed()
-			{
-				registerButton("Graph", theController);
-
-			}
-		};
-		c.gridx = 2;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);
-
-		button = new ButtonAdapter("INFO")
-		{
-			public void pressed()
-			{
-				registerButton("INFO", theController);
-			}
-		};
-		c.gridx = 3;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);
-
-		y += 1;
-
-		// Adding SAVE and DELETE buttons related to favourites list.
-		button = new ButtonAdapter("SAVE")
-		{
-			public void pressed()
-			{
-				registerButton("SAVE", theController);
-			}
-		};
-		c.gridx = 4;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);
-
-		y += 1;
-
-		button = new ButtonAdapter("DELETE")
-		{
-			public void pressed()
-			{
-				registerButton("DELETE", theController);
-			}
-		};
-		c.gridx = 5;
-		c.gridwidth = 1;
-		c.gridy = 8;
-		pane.add(button, c);
-
-		y += 1;
-
-		button = new ButtonAdapter("Enter")
-		{
-			public void pressed()
-			{
-				addToHistory(theController);
-			}
-		};
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 0; // reset to default
 		c.weighty = 1.0; // request any extra vertical space
@@ -548,6 +548,36 @@ public class CalcView extends JPanel implements KeyListener
 				theController.clear();
 			}
 		};
+
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+		
+		button = new ButtonAdapter("X"){
+			public void pressed(){
+				registerButton("X", theController);
+			}
+		};
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 8;
+		pane.add(button, c);
+		
+		y += 1;
+
+		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 0;       //reset to default
+		c.weighty = 1.0;   //request any extra vertical space
+		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
+		c.insets = new Insets(10,0,0,0);  //top padding
+		c.gridx = 1;       //aligned with button 2
+		c.gridwidth = 2;   //2 columns wide
+		c.gridy = 9;       //third row
+		pane.add(button, c);
+		
+		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 0; // reset to default
 		c.weighty = 1.0; // request any extra vertical space
@@ -593,10 +623,7 @@ public class CalcView extends JPanel implements KeyListener
 	public static void registerButton(String button,
 			CalcController theController)
 	{
-		String his = history.getText();
-		// right now this method is big, so when we refactor it we will put each
-		// button into its own controller method
-		// furthermore, we will make the stack and history be part of the model
+		String his = history.getText();		
 
 		if (button.equals("UNDO"))
 		{
@@ -614,13 +641,8 @@ public class CalcView extends JPanel implements KeyListener
 			}
 		}
 
-		// If one of the following operator buttons is pushed, the appropriate
-		// information is sent to the controller
-
 		if (button.equals("+"))
-		{
-			// should call controller method addition
-			// which calls model method of addition
+		{			
 			System.out.println("addition");
 			theController.sum();
 			userValueText.setText("");
@@ -645,34 +667,34 @@ public class CalcView extends JPanel implements KeyListener
 			theController.divide();
 			userValueText.setText("");
 		}
-		else if (button.equals("TEST"))
-		{
-			System.out.println("Inputting test case");
-			//theController.runTestCase();
 
+		else if (button.equals("TEST")) {
+			System.out.println("Inputting test case");	
+			theController.runTestCase();
+			
 		}
-		else if (button.equals("INFO"))
-		{
-			// System.out.println("Printing Stack information");
-			theController.printInfoToConsole();
-		}
+		else if (button.equals("INFO")) {
+		//System.out.println("Printing Stack information");			
+			theController.printInfoToConsole();			
+		}	
 
-		else if (button.equals("Graph"))
-		{
-			System.out.println("Printing GRAPH");
-		//	theController.graphStuff();
-			System.out.println("Graphed?");
-		}
-		else if (button.equals("SAVE"))
-		{
-			System.out.println("SAVING TO LIST..."+ expressionList.getText());
-			saving();
-		}
-		else if (button.equals("DELETE"))
-		{
-			System.out.println("DELETING FROM LIST..." + expressionList.getText());
-			deleting();
-		}
+		else if (button.equals("Graph")) {
+			System.out.println("Create panel");
+			//ChartPanel chPanel = new ChartPanel(chart); //creating the chart panel, which extends JPanel
+			//chPanel.setPreferredSize(new Dimension(785, 440)); //size according to my window
+			
+			JPanel jPanel = new JPanel();
+//			jPanel.add(theController.getChartPanel()); //add the chart viewer to the JPanel
+			//jPanel.setVisible(true);
+			
+			JFrame newWindow = new JFrame();
+			newWindow.setPreferredSize(new Dimension(500,500));
+			newWindow.add(jPanel);
+			
+			newWindow.setVisible(true);
+			newWindow.pack();
+		}	
+
 		// fixed negate button
 		else if (button.equals("+/-"))
 		{
@@ -747,24 +769,17 @@ public class CalcView extends JPanel implements KeyListener
 			userValueText.setText("");
 
 		}
+		else if (button.equals("X")){
+
+			System.out.println("Inputed variable");
+			theController.variable();
+			userValueText.setText("");
+
+		}
 
 		else if (button.equals("UNDO"))
 		{
 
-			/*
-			 * System.out.println("factorial"); String input =
-			 * userValueText.getText();
-			 * 
-			 * history.setText(his+","+input+button+"=");
-			 * 
-			 * Double num1 = numbers.pop().doubleValue(); Double ans =
-			 * factorial(num1); System.out.println(ans); BigDecimal b =
-			 * BigDecimal.valueOf(ans); numbers.push(b);
-			 * 
-			 * findRoundingValue(b.toPlainString());
-			 * 
-			 * setCalcValue(b.toPlainString()); userValueText.setText("");
-			 */
 			// if(userValueText.)
 			System.out.println("undo test");
 			if (userValueText.getText().isEmpty())
@@ -773,12 +788,6 @@ public class CalcView extends JPanel implements KeyListener
 
 				userValueText.setText("");
 			}
-
-			// numbers.pop();
-			//
-			// String newText = history.getText();
-			// newText = newText.substring(0, newText.length()-2);
-			// history.setText(newText);
 
 		}
 
@@ -910,54 +919,13 @@ public class CalcView extends JPanel implements KeyListener
 		}
 	}
 
-	public static String findRoundingValue(String num)
-	{
-
-		String uV = num;
-		int placeholder = uV.indexOf(".");
-
-		// Checking to see how many digits to keep on the left hand side of the
-		// result
-		// As well as how many digits on the right side to keep
-		// Some rounding does still occur due to doubles.
-		if (uV.contains("."))
-		{
-			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
-			int roundingLengthAfterDecimal = rightDecimal.length();
-			if (rightDecimal.length() > roundingLengthAfterDecimal)
-			{
-				// STILL NEED TO IMPLEMENT ROUNDING
-				uV = uV.substring(0, placeholder)
-						+ uV.substring(placeholder, placeholder + 5);
-				// System.out.println("Digits to the right " +
-				// rightDecimal.length());
-			}
-
-			String leftOfDecimal = uV.substring(0, placeholder);
-			int roundingLengthBeforeDecimal = leftOfDecimal.length();
-			if (leftOfDecimal.length() > roundingLengthBeforeDecimal)
-			{
-				// roundingLengthBeforeDecimal = leftDecimal.length();
-				// System.out.println("Digits to the left " +
-				// leftDecimal.length());
-				if (uV.substring(1, uV.length()).length() > 6)
-				{
-					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E"
-							+ uV.substring(1, uV.length() - 2).length();
-				}
-				System.out.println("it knows");
-			}
-		}
-
-		return uV;
-	}
-
 	// Methods related to favourite list
 	/*
 	 * This method would get the selected favouite and set the expression to the
 	 * selected one. This will in turn update the graph.
 	 */
 	
+
 	//CURRENTLY BYPASSING
 //	public static void setfavourite(int index) 
 //	{
@@ -982,9 +950,44 @@ public class CalcView extends JPanel implements KeyListener
 	 * inputting.
 	 */
 
+	public static String findRoundingValue(String num)
+	{
+		
+		String uV = num;
+		int placeholder = uV.indexOf(".");
+		
+		//Checking to see how many digits to keep on the left hand side of the result
+		//As well as how many digits on the right side to keep
+		//Some rounding does still occur due to doubles.
+		if(uV.contains("."))
+		{			
+			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
+			int roundingLengthAfterDecimal = rightDecimal.length();
+			if(rightDecimal.length() > roundingLengthAfterDecimal){
+				//STILL NEED TO IMPLEMENT ROUNDING
+				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 5);
+				//System.out.println("Digits to the right " + rightDecimal.length());
+			}
+
+			String leftOfDecimal = uV.substring(0, placeholder);
+			int roundingLengthBeforeDecimal = leftOfDecimal.length();
+			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
+				// roundingLengthBeforeDecimal = leftDecimal.length();
+				//System.out.println("Digits to the left " + leftDecimal.length());
+				if (uV.substring(1, uV.length()).length() > 6)
+				{	
+					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length() - 2).length();
+				}
+				System.out.println("it knows");
+			}		
+		}
+		
+		return uV;
+	}
+
 	public static void saving()
 	{
-		f.addToFavourites(expressionList.getText());
+//		f.addToFavourites(expressionList.getText());
 	}
 	
 	/*
