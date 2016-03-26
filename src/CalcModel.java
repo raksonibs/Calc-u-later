@@ -618,7 +618,13 @@ public class CalcModel
 		}
 		else
 		{
+			if(calculatedValues.size() > 0){
 			return calculatedValues.peek().toString();
+			}
+			else
+			{
+				return "0";
+			}
 		}
 	}
 	
