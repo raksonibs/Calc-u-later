@@ -46,7 +46,7 @@ public class CalcController
 	public static final String CLEAR = "CLEAR";
 	
 	private CalcModel model;
-	private Graph graphModel;
+	private GraphModel graphModel;
 	private CalcView view;
 	private GraphPanel graph;
 	private FavouritesPanel f;
