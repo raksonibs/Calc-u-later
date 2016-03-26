@@ -54,7 +54,6 @@ public class CalcView extends JPanel implements KeyListener
 
 	//private static JFreeChart chart;
 	private static JComboBox<String> box;
-	private static FavouritesPanel f = new FavouritesPanel();
 	//private static ChartPanel chartPanel;
 
 	 public void keyReleased(KeyEvent e){}
@@ -531,16 +530,6 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridy = 7;
 		pane.add(button, c);
 
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 0; // reset to default
-		c.weighty = 1.0; // request any extra vertical space
-		c.anchor = GridBagConstraints.PAGE_END; // bottom of space
-		c.insets = new Insets(10, 0, 0, 0); // top padding
-		c.gridx = 1; // aligned with button 2
-		c.gridwidth = 2; // 2 columns wide
-		c.gridy = 9; // third row
-		pane.add(button, c);
-
 		button = new ButtonAdapter("Clear")
 		{
 			public void pressed()
@@ -694,6 +683,12 @@ public class CalcView extends JPanel implements KeyListener
 			newWindow.pack();
 		}	
 
+		else if (button.equals("SAVE"))
+		{
+			System.out.println("SAVING...");
+			theController.saving(expressionList.getText());
+		}
+		
 		// fixed negate button
 		else if (button.equals("+/-"))
 		{
@@ -982,11 +977,6 @@ public class CalcView extends JPanel implements KeyListener
 		}
 		
 		return uV;
-	}
-
-	public static void saving()
-	{
-//		f.addToFavourites(expressionList.getText());
 	}
 	
 	/*
