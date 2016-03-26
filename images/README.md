@@ -3,5 +3,15 @@
 
 Basic calculator example in Java.
 
+TODO:
 
-- Divide history array into next =, last sign in that is it's sign to do. 
+1. Preliminary Tests
+2. List Favs
+3. Change GUI
+4. Match Reqs
+5. Graph stuff
+6. Docs
+
+STRETCH
+
+1. Servlet

@@ -17,12 +17,15 @@ import java.awt.event.*;
 public class CalcModel 
 {
 	private BigDecimal calcValue;
-	private Stack<BigDecimal> calculatedValues = new Stack<BigDecimal>();
+	private Stack calculatedValues = new Stack<BigDecimal>();
 	private Stack inputValues = new Stack();
+	private Stack variables = new Stack();
 	private Stack history;
 	private Stack numbers;
 	private Stack<String> expressionList = new Stack<String>();
-
+	
+	private Boolean containsVariable = false;
+ 
 	//Amount to round to
 	private MathContext roundingAmount = new MathContext(1);
 	private MathContext roundingAmountResult = new MathContext(1);
@@ -79,6 +82,8 @@ public class CalcModel
 		calculatedValues.clear();
 		inputValues.clear();
 		
+		containsVariable = false;
+		
 		roundingAmount = new MathContext(0);
 		roundingAmountResult = new MathContext(0);
 		
@@ -93,12 +98,11 @@ public class CalcModel
 	 */
 	public void sum()
 	{
-		
-		//System.out.println("numbers size: " + numbers.size());
-		//System.out.println("expression list size: " + expressionList.size());
 
+		if(!containsVariable)
+		{
 		checkIfEnoughDigitsAvaliable(0);
-		
+
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
@@ -109,6 +113,11 @@ public class CalcModel
 
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
+		}
+		else
+		{
+			addToExpressionList("+");
+		}
 
 	}
 	
@@ -120,8 +129,8 @@ public class CalcModel
 	 */
 	public void subtract()
 	{
+		if(!containsVariable){
 		checkIfEnoughDigitsAvaliable(0);
-		
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
@@ -132,6 +141,11 @@ public class CalcModel
 		
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
+		}
+		else
+		{
+			addToExpressionList("-");
+		}
 	}
 	
 	/**
@@ -142,18 +156,24 @@ public class CalcModel
 	 */
 	public void multiply()
 	{
+		if(!containsVariable){
 		checkIfEnoughDigitsAvaliable(1);
-		
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
-		
-		addToExpressionList("x");
-		
+
+		addToExpressionList("×");	//This is × for multiply, not x as in the letter!
+		updateRounding(calcValue.toString());
+
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
+		}
+		else
+		{
+			addToExpressionList("×");	
+		}
 	}
 	
 	/**
@@ -165,22 +185,29 @@ public class CalcModel
 	 */
 	public void divide()
 	{
-		//The number of digits we want to round divisons to
+		
 
-		checkIfEnoughDigitsAvaliable(1);
+			if(!containsVariable){
+				if(!(lastValue().equals(BigDecimal.ZERO)))
+				{
+					checkIfEnoughDigitsAvaliable(1);
+					BigDecimal num1 = (BigDecimal) numbers.pop();
+					System.out.println(num1);
+					BigDecimal num2 = (BigDecimal) numbers.pop();
+					System.out.println(num2);
+					calcValue = num2.divide(num1, roundingAmount);
+					addToExpressionList("÷");
+					updateRounding(calcValue.toString());
+					numbers.push(calcValue);
+					calculatedValues.push(calcValue);
+				}
+			}
+			else
+			{
+				addToExpressionList("÷");
+			}
 		
-		BigDecimal num1 = (BigDecimal) numbers.pop();
-		System.out.println(num1);
-		BigDecimal num2 = (BigDecimal) numbers.pop();
-		System.out.println(num2);
-		calcValue = num2.divide(num1, roundingAmount);
-		
-		//System.out.println("Division Value is: " + calcValue.toPlainString());
-		
-		addToExpressionList("÷");
-				
-		numbers.push(calcValue);
-		calculatedValues.push(calcValue);
+
 	}
 	
 	public void pi()
@@ -198,22 +225,31 @@ public class CalcModel
 	}
 	
 	public void sin() {
+		if(!containsVariable)
+		{
 		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
 		System.out.println(num1);
 		num1 = Math.sin(num1);
 		System.out.println(num1);
 		
 		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
-		//b = b.round(roundingAmount);
 		
 		System.out.println("b is: " + b.toString());
 		
 		addToExpressionList("sin");
 		numbers.push(b);
 		calculatedValues.push(b);
+		}
+		else
+		{
+			addToExpressionList("sin");
+		}
+		
 	}
 	
 	public void cos() {
+		if(!containsVariable)
+		{
 		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
 		System.out.println(num1);
 		num1 = Math.cos(num1);
@@ -223,9 +259,16 @@ public class CalcModel
 		
 		numbers.push(b);
 		calculatedValues.push(b);
+		}
+		else
+		{
+			addToExpressionList("cos");
+		}
+		
 	}
 	
 	public void factorial() {
+		if(!containsVariable){
 		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
 		System.out.println(num1);
 		num1 = fact(num1);
@@ -238,6 +281,19 @@ public class CalcModel
 		
 		numbers.push(b);
 		calculatedValues.push(b);
+		}
+		else
+		{
+			addToExpressionList("!");
+		}
+	}
+	
+	public void variable(){
+	
+		containsVariable = true;
+		addToExpressionList("X");
+
+		
 	}
 	
 	public void undo() {
@@ -275,7 +331,14 @@ public class CalcModel
 	
 
 	public BigDecimal lastValue(){
-		return (BigDecimal) numbers.peek();
+		if(numbers.size() > 0)
+		{
+			return (BigDecimal) numbers.peek();
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	/**
@@ -294,7 +357,7 @@ public class CalcModel
 	 */
 	public BigDecimal getCalculatedValue(){
 		if(calculatedValues.size()>0){
-		return (BigDecimal) calculatedValues.peek().round(roundingAmountResult);
+		return ((BigDecimal) calculatedValues.peek()).round(roundingAmountResult);
 		}
 		else
 		{
@@ -324,7 +387,7 @@ public class CalcModel
 			numbers.push(BigDecimal.valueOf(number));
 			history.push(String.valueOf(number));
 			expressionList.push(String.valueOf(number));
-			inputValues.push(number);
+			inputValues.push(new BigDecimal(String.valueOf(number)));
 		}
 	}
 	
@@ -336,7 +399,10 @@ public class CalcModel
 	public Boolean isOperator(String value){
 		
 		//Check to see if a string is an operator
-		if(value == "+" || value == "-" || value == "x"|| value == "÷"|| value == "="){
+
+		//Note that × is for multiply, not x as in the letter!
+		if(value.equals("+") || value.equals("-")  || value.equals("×")|| value.equals("÷")|| value.equals("=")){	
+
 			return true;
 		}
 		else
@@ -363,8 +429,32 @@ public class CalcModel
 		
 	}
 
-	public Boolean isFactorial(String v){if (v.equals("!")) return true; else return false;}
+	public Boolean isFactorial(String value){
+		
+		//Check to see if a string is a factorial
+		if(value == "!" ){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+
 	
+	public Boolean isVariable(String value){
+		
+		//Check to see if a string is a variable
+		if(value == "X" ){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
 	/**
 	 * Check if a given stack contains a String
 	 * @param The stack to check in
@@ -450,6 +540,12 @@ public class CalcModel
 				String number1 = container.pop().toString();
 				container.push("("+number1 + value+")");
 			}
+			else if(isVariable(value))
+			{
+				//String number1 = container.pop().toString();
+				
+				container.push( value );
+			}
 			else
 			{
 				container.push(value);
@@ -511,6 +607,10 @@ public class CalcModel
 		return returnValue;
 	}
 	
+	/**
+	 * Get all inputs seperated by commas as a String
+	 * @return String History of all inputs
+	 */
 	public String getHistory(){
 		
 		String returnValue = "";
@@ -536,7 +636,10 @@ public class CalcModel
 		return returnValue;
 	}
 	
-	
+	/**
+	 * Analyzes a string to determine how many decimal places to round to
+	 * @param String number as a string to analyze
+	 */
 	public void updateRounding(String value){
 		
 		int precision = value.length();
@@ -588,5 +691,111 @@ public class CalcModel
 		printStackToConsole(calculatedValues);
 		System.out.println("-----------------");
 	}
+	
+
+	/**
+	 * Prints the current input as a test case to console
+	 */
+	public void printAsTestCase(){
+		
+		System.out.println("Printing Test Case Info");
+		
+		String expression = "{";
+		for(int i = 0; i < expressionList.size(); i++){
+			expression = expression + " \"" + expressionList.get(i) + "\"" + ",";
+		}
+		expression = "String[] expressionArray = " + expression.substring(0,expression.length()-1) +"};";
+		System.out.println(expression);
+		
+		String input = "{";
+		for(int i = 0; i < inputValues.size(); i++){
+			input = input + " \"" + inputValues.get(i) + "\"" + ",";
+		}
+		input = "String[] inputValuesArray = " + input.substring(0,input.length()-1) +"};";
+		System.out.println(input);
+		
+		String num = "{";
+		for(int i = 0; i < numbers.size(); i++){
+			num = num + " \"" + numbers.get(i) + "\"" + ",";
+		}
+		num = "String[] numbersArray = " + num.substring(0,num.length()-1) +"};";
+		System.out.println(num);
+		
+		String calcVal = "{";
+		for(int i = 0; i < calculatedValues.size(); i++){
+			calcVal = calcVal + " \"" + calculatedValues.get(i) + "\"" + ",";
+		}
+		calcVal = "String[] calculatedValuesArray = " + calcVal.substring(0,calcVal.length()-1) +"};";
+		System.out.println(calcVal);
+		
+		System.out.println("-----------------");
+		
+	}
+	
+	/**
+	 * Simulates the generated input for specific values
+	 * Use the INFO button to print the test cases for easy testing
+	 */
+	public void getTestCase()
+	{
+
+		clear();
+		
+		//Add test case in infix notation
+		//You can use the INFO Button to generate this list easily
+		//and just copy and paste from console to here.
+		String[] expressionArray = { "21", "35", "×", "101", "4", "×", "+"};
+		String[] inputValuesArray = { "21", "35", "101", "4"};
+		String[] numbersArray = { "1139"};
+		String[] calculatedValuesArray = { "735", "404", "1139"};
+		
+		generateTestCase(expressionArray,inputValuesArray,numbersArray,calculatedValuesArray);
+		
+	}
+	
+	/**
+	 * Generates a simulated input for the calculator, for testing purposes
+	 * 
+	 * @param expressionArray
+	 * @param inputValuesArray
+	 * @param numbersArray
+	 * @param calculatedValuesArray
+	 */
+	public void generateTestCase(String[] expressionArray, String[] inputValuesArray, String[] numbersArray, String[] calculatedValuesArray){
+		
+		
+		for(int i = 0; i < expressionArray.length; i++){
+			String index = expressionArray[i];
+			expressionList.push(index);
+		}
+		
+		for(int i = 0; i < inputValuesArray.length; i++){
+			String index = inputValuesArray[i];
+			BigDecimal value = new BigDecimal(index);
+			inputValues.push(value);
+			
+		}
+		
+		for(int i = 0; i < numbersArray.length; i++){
+			String index = numbersArray[i];
+			BigDecimal value = new BigDecimal(index);
+			numbers.push(value);
+			
+		}
+		
+		for(int i = 0; i < calculatedValuesArray.length; i++){
+			String index = calculatedValuesArray[i];
+			BigDecimal value = new BigDecimal(index);
+			calculatedValues.push(value);
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 }
