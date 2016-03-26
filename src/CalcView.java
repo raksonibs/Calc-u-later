@@ -54,7 +54,7 @@ public class CalcView extends JPanel implements KeyListener
 
 	//private static JFreeChart chart;
 	private static JComboBox<String> box;
-	private static FavouritesPanel f = new FavouritesPanel(800, 400);
+	private static FavouritesPanel f = new FavouritesPanel();
 	//private static ChartPanel chartPanel;
 
 	 public void keyReleased(KeyEvent e){}

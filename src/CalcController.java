@@ -67,7 +67,7 @@ public class CalcController
 		model = new CalcModel();
 		graph = new GraphPanel(width,height);
 
-		f = new FavouritesPanel(width, height);
+		f = new FavouritesPanel();
 
 		view = new CalcView(this);
 		view.setVisible(true);
