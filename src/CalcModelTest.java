@@ -1,9 +1,10 @@
 import static org.junit.Assert.*;
 
-import java.math.BigInteger;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class CalcModelTest {
 
@@ -15,42 +16,85 @@ public class CalcModelTest {
 	public void setUp() throws Exception {
 		c = new CalcModel();
 	}
-
+	
 	@Test
-	public void testClear() {
-		c.clear();
-		assertEquals(b.ZERO,c.getCalcValue());
+	public void testConstructor() {
+		assertEquals(true, c.getHistory().isEmpty());
+		assertEquals(true, c.getNumbers().isEmpty());
+		assertEquals(null, c.lastValue());
 	}
 
 	@Test
-	public void testSum() {
+	public void testClear() {
 		
-		
-		assertEquals(b.TEN, c.getCalcValue());
+		double num = 7;
+		c.pushNumber(BigDecimal.valueOf(num));
+		c.clear();
+		assertEquals(true, c.getHistory().isEmpty());
+		assertEquals(true, c.getNumbers().isEmpty());
+		assertEquals(null, c.lastValue());
+	}
+
+	@Test
+	public void testPush() {
+		double num = 7;
+		c.pushNumber(BigDecimal.valueOf(num));
+		double num2 = 7.0;
+		assertEquals(true, c.lastValue().doubleValue() == num2);
 		
 	}
 	
 	@Test
 	public void testSubtract() {
 		
-		
-		assertEquals(new BigInteger("-2"), c.getCalcValue());
+		double num = 7.0;
+		c.pushNumber(BigDecimal.valueOf(num));
+		double num1 = 10.0;
+		c.pushNumber(BigDecimal.valueOf(num1));
+		c.subtract();
+		double num2 = -3.0;
+		assertEquals(true, c.lastValue().doubleValue() == num2);
 		
 	}
 	
 	@Test
+	public void testSum() {
+		
+		double num = 7.0;
+		c.pushNumber(BigDecimal.valueOf(num));
+		double num1 = 10.0;
+		c.pushNumber(BigDecimal.valueOf(num1));
+		c.sum();
+		double num2 = 17.0;
+		assertEquals(true, c.lastValue().doubleValue() == num2);
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
 	public void testMultiply() {
-		
-		
-		assertEquals(b.ZERO, c.getCalcValue());
+		double num = 7.0;
+		c.pushNumber(BigDecimal.valueOf(num));
+		double num1 = 10.0;
+		c.pushNumber(BigDecimal.valueOf(num1));
+		c.multiply();
+		double num2 = 70.0;
+		assertEquals(true, c.lastValue().doubleValue() == num2);
 		
 	}
 	
 	@Test
 	public void testDivide() {
-		
-		
-		assertEquals(b.ZERO, c.getCalcValue());
+		double num = 14.0;
+		c.pushNumber(BigDecimal.valueOf(num));
+		double num1 = 7.0;
+		c.pushNumber(BigDecimal.valueOf(num1));
+		c.divide();
+		double num2 = 1.0;
+		System.out.println(num2);
+		System.out.println(c.lastValue().doubleValue());
+		System.out.println(c.lastValue().doubleValue() == num2);
+		assertEquals(true, c.lastValue().doubleValue() == num2);
 		
 	}
 	

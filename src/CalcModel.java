@@ -56,6 +56,10 @@ public class CalcModel
 	public void setValue() {
 		
 	}
+	
+	public Stack getNumbers() {
+		return this.numbers;
+	}
 	/**
 	 * Pushes the number entered from View into the stacks in model
 	 * @param number
@@ -212,15 +216,6 @@ public class CalcModel
 	
 	public void pi()
 	{
-
-		//Double pi = Math.PI;
-		//BigDecimal num1 = BigDecimal.valueOf(pi);
-		
-		//num1 = num1.round(roundingAmount);
-		
-		//System.out.println("num1 " + num1.toPlainString());
-
-		//addToExpressionList("π");
 
 	}
 	
