@@ -38,9 +38,14 @@ public void init()
             	{
             			panel2.addToFavourites(s);
             	}
+            	if (panel2.switchToGraph){MAIN.setSelectedIndex(1);}
             }
-            else if (MAIN.getSelectedIndex() == 0 || MAIN.getSelectedIndex() == 1)
-            {panel2.clearList();panel2.addToFavourites("Select Favourite...");}
+            else if (MAIN.getSelectedIndex() != 2)
+            {
+            	panel2.clearList();
+            	panel2.addToFavourites("Select Favourite...");
+            	panel2.switchToGraph = false;
+            }
         }
     });
   

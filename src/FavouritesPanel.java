@@ -9,6 +9,8 @@ public class FavouritesPanel extends JPanel
 	private int counter = 0;
 	private String selected;
 	private FavouritesController favC =  new FavouritesController();
+	private GraphModel graph;
+	public boolean switchToGraph = false;
 	Graph temp;
 	JComboBox<String> box;
 
@@ -26,6 +28,9 @@ public class FavouritesPanel extends JPanel
 				{
 					selected = box.getSelectedItem().toString();
 					//Give "selected" to the graph here...
+					graph = new GraphModel(selected);
+					graph.expression = selected;
+					switchToGraph = true;
 				}
 			}
 		});
