@@ -555,12 +555,9 @@ public class CalcView extends JFrame
 			
 			JPanel jPanel = new JPanel();
 			jPanel.add(theController.getChartPanel()); //add the chart viewer to the JPanel
-			//jPanel.setVisible(true);
-			
 			JFrame newWindow = new JFrame();
 			newWindow.setPreferredSize(new Dimension(500,500));
 			newWindow.add(jPanel);
-			
 			newWindow.setVisible(true);
 			newWindow.pack();
 		}	

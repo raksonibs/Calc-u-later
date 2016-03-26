@@ -10,3 +10,4 @@ node_modules/
 .classpath
 src/JEvalTests.java
 .classpath
+*.classpath
