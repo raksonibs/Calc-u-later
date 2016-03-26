@@ -278,9 +278,12 @@ public class CalcModel
 		//System.out.println("-------BEFORE---------");
 		//printAllStacks();
 
-		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())|| isFactorial(expressionList.peek())){
+		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())|| isFactorial(expressionList.peek()) || isVariable(expressionList.peek())){
 			expressionList.pop();
+			if(calculatedValues.size()>0)
+			{
 			calculatedValues.pop();
+			}
 		}
 		else
 		{
