@@ -8,9 +8,12 @@ app/
 node_modules/
 /.jekyll
 .classpath
-<<<<<<< HEAD
+
 src/JEvalTests.java
-=======
+
 src/JEvalTests.java
 .classpath
->>>>>>> bradsCode1
+
+.classpath
+*.classpath
+

@@ -130,6 +130,7 @@ public class CalcController
 
 	public void clear() {
 		model.clear();
+		graphModel.reset();
 		empty();
 		view.setHistory("Start a new calculation");
 		view.setExpressionValue("");
@@ -219,12 +220,11 @@ public class CalcController
 	
 	public ChartPanel getChartPanel(){
 		
-//		String expression = model.getExpressionValue();
-//		graphModel.pushExpression(expression);
-//
-//		
-//		return graphModel.getChartPanel();
-		return null;
+		String expression = model.getExpressionValue();
+		graphModel.pushExpression(expression);
+
+		return graphModel.getChartPanel();
+
 
 	}
 	

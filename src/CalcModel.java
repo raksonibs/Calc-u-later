@@ -186,27 +186,28 @@ public class CalcModel
 	public void divide()
 	{
 		
-		if(!containsVariable && !lastValue().equals(BigDecimal.ZERO)){
-		checkIfEnoughDigitsAvaliable(1);
-		BigDecimal num1 = (BigDecimal) numbers.pop();
-		System.out.println(num1);
-		BigDecimal num2 = (BigDecimal) numbers.pop();
-		System.out.println(num2);
-		calcValue = num2.divide(num1, roundingAmount);
-		
-		//System.out.println("Division Value is: " + calcValue.toPlainString());
-		
-		addToExpressionList("÷");
 
-		updateRounding(calcValue.toString());
+			if(!containsVariable){
+				if(!(lastValue().equals(BigDecimal.ZERO)))
+				{
+					checkIfEnoughDigitsAvaliable(1);
+					BigDecimal num1 = (BigDecimal) numbers.pop();
+					System.out.println(num1);
+					BigDecimal num2 = (BigDecimal) numbers.pop();
+					System.out.println(num2);
+					calcValue = num2.divide(num1, roundingAmount);
+					addToExpressionList("÷");
+					updateRounding(calcValue.toString());
+					numbers.push(calcValue);
+					calculatedValues.push(calcValue);
+				}
+			}
+			else
+			{
+				addToExpressionList("÷");
+			}
+		
 
-		numbers.push(calcValue);
-		calculatedValues.push(calcValue);
-		}
-		else
-		{
-			addToExpressionList("÷");
-		}
 	}
 	
 	public void pi()
@@ -330,7 +331,14 @@ public class CalcModel
 	
 
 	public BigDecimal lastValue(){
-		return (BigDecimal) numbers.peek();
+		if(numbers.size() > 0)
+		{
+			return (BigDecimal) numbers.peek();
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	/**
