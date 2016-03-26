@@ -31,7 +31,7 @@ public class FavouritesPanel extends JPanel
 
 	public void addToFavourites(String expression)
 	{
-		System.out.println("in the adding method...");
+		System.out.println("in the adding method with " + expression);
 		box.addItem(expression);
 		if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK"); counter++;} 
 	}

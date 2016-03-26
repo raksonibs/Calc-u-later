@@ -49,8 +49,6 @@ public class CalcController
 	private GraphModel graphModel;
 	private CalcView view;
 	private GraphPanel graph;
-	private static FavouritesPanel f = new FavouritesPanel();
-	public static ArrayList<String> a = new ArrayList<String>();
 
 	/**
 	 * Creates a controller for the given view and model.
@@ -67,9 +65,6 @@ public class CalcController
 		//test.init();
 		model = new CalcModel();
 		graph = new GraphPanel(width,height);
-
-		f = new FavouritesPanel();
-
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -194,11 +189,6 @@ public class CalcController
 		
 		model.printAllStacks();
 
-	}
-
-	public void saving(String s)
-	{
-		a.add(s);
 	}
 	
 	/**
