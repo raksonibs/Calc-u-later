@@ -1,3 +1,4 @@
+
 import java.awt.Container;
 
 import javax.swing.JPanel;
@@ -25,6 +26,7 @@ public class GraphView extends JPanel{
 			pane.setVisible(true);
 			
 	}
+
 	public void updateGraph(ChartPanel graph){
 		
 		//Update chart
@@ -32,3 +34,4 @@ public class GraphView extends JPanel{
 	}
 	
 }
+

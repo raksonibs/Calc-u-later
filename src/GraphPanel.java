@@ -16,7 +16,8 @@ public class GraphPanel extends JPanel implements ActionListener
        this.width = width1;
        this.height = height1;
        Function = new JTextField();
-       JButton startR = new JButton("Graph"); startR.addActionListener(this);
+       JButton startR = new JButton("Graph"); 
+       startR.addActionListener(this);
        startR.setSize(new Dimension(10,10));
        JPanel Buttons = new JPanel(new GridLayout(1,2));      
        Buttons.setPreferredSize(new Dimension(500,20));

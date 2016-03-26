@@ -141,8 +141,8 @@ public class GraphModel extends ApplicationFrame {
 	public String clean(String input){
 		
 		//Replace with appropriate operators
-		input = input.replace("×", "*");
-		input = input.replace("÷", "/");
+		input = input.replace("ï¿½", "*");
+		input = input.replace("ï¿½", "/");
 
 		//Removes all commas
 		while(input.contains(",")){

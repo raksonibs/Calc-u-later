@@ -34,9 +34,10 @@ public void init()
     // MAIN.addTab("Graph",graphView);
 
     CalcView panel3 = new CalcView(control);
+    GraphView panel4 = new GraphView(graphControl);
     
     JPanel graphPanel = new JPanel();
-    graphPanel.add(graphControl.getChartPanel());
+    graphPanel.add(panel4);
     favC = new FavouritesController();
     
     MAIN.addTab("Calculator", panel3);
