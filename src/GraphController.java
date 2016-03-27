@@ -3,29 +3,28 @@ import org.jfree.chart.ChartPanel;
 public class GraphController
 {
 
-	private CalcModel model;
 	private GraphModel graphModel;
-	
+	private GraphView view;
 	public GraphController()
 	{
-		//test.init();
-		model = new CalcModel();
 		graphModel = new GraphModel("");
+		view = new GraphView(this);
+		view.setVisible(true);
 
 	}
-	
-	public GraphController(CalcModel modelIn, GraphModel graphModelIn){
-		
-		model = modelIn;
-		graphModel = graphModelIn;
-		
+	public GraphController(GraphModel modelIn)
+	{
+		graphModel = modelIn;
+		view = new GraphView(this);
+		view.setVisible(true);
+
 	}
+
 
 	public ChartPanel getChartPanel(){
 		
-		String expression = model.getEquation();
+		String expression = "sin(X)";
 		graphModel.pushExpression(expression);
-
 		return graphModel.getChartPanel();
 
 	}

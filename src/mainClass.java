@@ -10,7 +10,8 @@ private JTabbedPane MAIN = new JTabbedPane();
  public static int WIDTH = 800;
  public static int HEIGHT = 450;
  CalcModel model;
- CalcController control = new CalcController();
+ GraphModel graphModel;
+ CalcController calcControl = new CalcController();
  GraphController graphControl = new GraphController();
  FavouritesPanel panel2;
 
@@ -19,12 +20,12 @@ public void init()
 	System.out.println("mainClass");
 
     panel2 = new FavouritesPanel();
-    CalcView panel3 = new CalcView(control);
+    CalcView calculatorView = new CalcView(calcControl);
+    GraphView graphView = new GraphView(graphControl);
     
-    JPanel graphPanel = new JPanel();
-    graphPanel.add(graphControl.getChartPanel());
-    MAIN.addTab("Calculator", panel3);
-    MAIN.addTab("Graph",graphPanel);
+
+    MAIN.addTab("Calculator", calculatorView);
+    MAIN.addTab("Graph",graphView);
     MAIN.addTab("Favourites", panel2);
     
     MAIN.addChangeListener(new ChangeListener() {
@@ -32,7 +33,7 @@ public void init()
             System.out.println("Tab: " + MAIN.getSelectedIndex());
             if (MAIN.getSelectedIndex() == 2)
             {
-            	for (String s: control.a)
+            	for (String s: calcControl.a)
             	{
             			panel2.addToFavourites(s);
             	}

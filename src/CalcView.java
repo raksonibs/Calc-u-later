@@ -59,8 +59,7 @@ public class CalcView extends JPanel implements KeyListener
 	 public void keyReleased(KeyEvent e){}
      public void keyTyped(KeyEvent e){}
 
-      public void keyPressed(KeyEvent e){}
-      Graph temp;
+     public void keyPressed(KeyEvent e){}
 
 	
 	@SuppressWarnings("serial")
@@ -68,11 +67,9 @@ public class CalcView extends JPanel implements KeyListener
 	{
 		super();
 		System.out.println("Test");
-
 		addComponentsToPane(this, theController);
-	  temp = new Graph();
-		
-	  requestFocus();
+
+		requestFocus();
 
 		this.setVisible(true);
 
@@ -524,6 +521,16 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridy = 11;
 		pane.add(button, c);
 		
+		button = new ButtonAdapter("Graph"){
+			public void pressed(){
+				registerButton("Graph", theController);
+			}
+		};
+
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 11;
+		pane.add(button, c);
 
 		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -624,7 +631,8 @@ public class CalcView extends JPanel implements KeyListener
 		}	
 
 		else if (button.equals("Graph")) {
-			System.out.println("Create panel");
+			
+			/*System.out.println("Create panel");
 			//ChartPanel chPanel = new ChartPanel(chart); //creating the chart panel, which extends JPanel
 			//chPanel.setPreferredSize(new Dimension(785, 440)); //size according to my window
 			
@@ -636,7 +644,7 @@ public class CalcView extends JPanel implements KeyListener
 			newWindow.setPreferredSize(new Dimension(500,500));
 			newWindow.add(jPanel);
 			newWindow.setVisible(true);
-			newWindow.pack();
+			newWindow.pack();*/
 		}	
 
 		else if (button.equals("SAVE"))

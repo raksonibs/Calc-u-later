@@ -46,9 +46,7 @@ public class CalcController
 	public static final String CLEAR = "CLEAR";
 	
 	private CalcModel model;
-	private GraphModel graphModel;
 	private CalcView view;
-	private GraphPanel graph;
 	private static FavouritesPanel f = new FavouritesPanel();
 	public static ArrayList<String> a = new ArrayList<String>();
 
@@ -64,12 +62,9 @@ public class CalcController
 	 */
 	public CalcController()
 	{
-		//test.init();
+
 		model = new CalcModel();
-		graph = new GraphPanel(width,height);
-
 		f = new FavouritesPanel();
-
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -78,7 +73,7 @@ public class CalcController
 	public CalcController(CalcModel modelIn){
 		
 		model = modelIn;
-		graph = new GraphPanel(width,height);
+		//graph = new GraphPanel(width,height);
 		view = new CalcView(this);
 		view.setVisible(true);
 		model.clear();
@@ -131,7 +126,6 @@ public class CalcController
 
 	public void clear() {
 		model.clear();
-		graphModel.reset();
 		empty();
 		view.setHistory("Start a new calculation");
 		view.setExpressionValue("");
@@ -221,15 +215,6 @@ public class CalcController
 		showValue();
 	}
 	
-	public ChartPanel getChartPanel(){
-		
-		String expression = model.getEquation();
-		graphModel.pushExpression(expression);
-
-		return graphModel.getChartPanel();
-
-
-	}
 	
 
 
