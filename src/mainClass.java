@@ -20,17 +20,17 @@ public void init()
 	System.out.println("mainClass");
 	
 	 CalcModel model = new CalcModel();
-	 GraphModel graphModel = new GraphModel("");
+	 final GraphModel graphModel = new GraphModel("");
 	 
 	 final CalcController calcControl = new CalcController(model, graphModel);
 	 final GraphController graphControl = new GraphController(model, graphModel);
 	
     panel2 = new FavouritesPanel();
     CalcView calculatorView = new CalcView(calcControl);
-    GraphView graphView = new GraphView(graphControl);
+    final GraphView graphView = new GraphView(graphControl);
 
     MAIN.addTab("Calculator", calculatorView);
-    MAIN.addTab("Graph",graphView);
+    MAIN.addTab("Graph", graphView);
     MAIN.addTab("Favourites", panel2);
     
     MAIN.addChangeListener(new ChangeListener() {
@@ -45,8 +45,12 @@ public void init()
             			panel2.addToFavourites(s);
             	}
             }
-            else if (MAIN.getSelectedIndex() == 0 || MAIN.getSelectedIndex() == 1)
-            {panel2.clearList();panel2.addToFavourites("Select Favourite...");}
+            else if (MAIN.getSelectedIndex() == 0)
+            {
+            	panel2.clearList();panel2.addToFavourites("Select Favourite...");
+            } else if ( MAIN.getSelectedIndex() == 1) {
+            	graphView.updateGraph(graphModel.getChartPanel());
+            }
         }
     });
   

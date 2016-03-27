@@ -16,15 +16,14 @@ public class GraphView extends JPanel{
 		
 	}
 
-	public static void addComponentsToPane(Container pane, 
-			final GraphController graphController)
+	public static void addComponentsToPane(Container pane, final GraphController graphController)
 	{
 			pane.add(graphPanel);
 			pane.setVisible(true);
 			
 	}
 
-	public void updateGraph(ChartPanel graph){
+	public void updateGraph(ChartPanel graph) {
 		
 		graphPanel.removeAll();
 		graphPanel.add(graph);
