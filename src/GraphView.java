@@ -7,7 +7,8 @@ import org.jfree.chart.ChartPanel;
 
 public class GraphView extends JPanel{
 
-	static JPanel graphPanel = new JPanel();
+	private static JPanel graphPanel = new JPanel();
+	
 	
 	public GraphView(final GraphController graphController){
 		super();

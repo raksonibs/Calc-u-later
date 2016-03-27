@@ -532,6 +532,17 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 11;
 		pane.add(button, c);
+		
+		button = new ButtonAdapter("Test"){
+			public void pressed(){
+				registerButton("TEST", theController);
+			}
+		};
+
+		c.gridx = 2;
+		c.gridwidth = 1;
+		c.gridy = 11;
+		pane.add(button, c);
 
 		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
 		c.fill = GridBagConstraints.HORIZONTAL;

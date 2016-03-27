@@ -130,6 +130,7 @@ public class CalcController
 
 	public void clear() {
 		model.clear();
+		graphModel.reset();
 		empty();
 		view.setHistory("Start a new calculation");
 		view.setExpressionValue("");

@@ -378,24 +378,23 @@ public class CalcModel
 		//Way to handle situations such as the user entering 1,+;
 		//Will automatically enter an appropriate value in place
 		//so for example 1,+ becomes (1+0)
-		if(numbers.size() == 1)
-		{
-			numbers.push(BigDecimal.valueOf(number));
-			history.push(String.valueOf(number));
-			expressionList.push(String.valueOf(number));
-			inputValues.push(new BigDecimal(String.valueOf(number)));
+	if(!containsVariable){
+		if(numbers.size() <= 1)
+			{
+				numbers.push(BigDecimal.valueOf(number));
+				history.push(String.valueOf(number));
+				expressionList.push(String.valueOf(number));
+				inputValues.push(new BigDecimal(String.valueOf(number)));
+			}
 		}
-		if(numbers.size() == 0){
-			numbers.push(BigDecimal.valueOf(number));
-			numbers.push(BigDecimal.valueOf(number));
-			history.push(String.valueOf(number));
-			history.push(String.valueOf(number));
-			expressionList.push(String.valueOf(number));
-			expressionList.push(String.valueOf(number));
-			inputValues.push(new BigDecimal(String.valueOf(number)));
-			inputValues.push(new BigDecimal(String.valueOf(number)));
+	else if(numbers.size() < 1)
+	{
+				numbers.push(BigDecimal.valueOf(number));
+				history.push(String.valueOf(number));
+				expressionList.push(String.valueOf(number));
+				inputValues.push(new BigDecimal(String.valueOf(number)));
+	}
 
-		}
 	}
 	
 	/**

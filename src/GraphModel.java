@@ -24,7 +24,8 @@ public class GraphModel extends ApplicationFrame {
     double difference = 0;
     double prevDif = 0;
     
-    String expression = "";
+    String expression = "0";
+    String expressionDirty = "";
     
     public GraphModel(String title) {
       super(title);
@@ -85,11 +86,9 @@ public class GraphModel extends ApplicationFrame {
             
           }
 
-          
-          
           XYSeriesCollection data = new XYSeriesCollection(series);
           JFreeChart chart = ChartFactory.createXYLineChart(
-           expression,
+           expressionDirty,
            "X", //X-axis Name
            "Y", //Y-axis Name
            data,	//Dataset
@@ -128,6 +127,7 @@ public class GraphModel extends ApplicationFrame {
 	 */
 	public void pushExpression(String input){
     
+		expressionDirty = "y = " + input;
 		expression = clean(input);
 		System.out.println("Graph Model: expression is " + expression);
 		
@@ -192,7 +192,8 @@ public class GraphModel extends ApplicationFrame {
 	     difference = 0;
 	     prevDif = 0;
        
-	     expression = "";
+	     expression = "0";
+	     expressionDirty = "";
       
     }
 	
