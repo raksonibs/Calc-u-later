@@ -11,9 +11,9 @@ public class mainClass extends JApplet
  public static int HEIGHT = 450;
 
  CalcModel model;
- CalcController control = new CalcController();
+ CalcController control = new CalcController(MAIN);
  FavouritesController favC;
- GraphController graphControl = new GraphController();
+ GraphController graphControl = new GraphController(MAIN);
  FavouritesPanel panel2;
 
 public void init()
@@ -27,7 +27,7 @@ public void init()
 	 final CalcController calcControl = new CalcController(model, graphModel, MAIN);
 	 final GraphController graphControl = new GraphController(model, graphModel);
 	
-    panel2 = new FavouritesPanel(MAIN);
+    panel2 = new FavouritesPanel();
     CalcView calculatorView = new CalcView(calcControl, MAIN);
     final GraphView graphView = new GraphView(graphControl);
 
@@ -52,7 +52,7 @@ public void init()
             {
             	panel2.clearList();
                 panel2.addToFavourites("Select Favourite...");
-                panel2.switchToGraph = false;
+//                panel2.switchToGraph = false;
             } else if ( MAIN.getSelectedIndex() == 1) {
             	graphView.updateGraph(graphModel.getChartPanel());
             }            
