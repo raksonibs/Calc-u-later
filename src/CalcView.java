@@ -523,8 +523,8 @@ public class CalcView extends JPanel implements KeyListener
 		
 		button = new ButtonAdapter("Graph"){
 			public void pressed() {
-				MAIN.setSelectedIndex(1);
 				registerButton("Graph", theController);
+				MAIN.setSelectedIndex(1);
 			}
 		};
 
