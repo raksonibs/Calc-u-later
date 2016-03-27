@@ -26,13 +26,11 @@ public class GraphView extends JPanel{
 			
 	}
 
-
 	public void updateGraph(ChartPanel graph){
 		
 		//Update chart
 
 	}
 	
+
 }
-
-

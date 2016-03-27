@@ -26,23 +26,11 @@ public void init()
 	 final GraphController graphControl = new GraphController(model, graphModel);
 	
     panel2 = new FavouritesPanel();
+    CalcView calculatorView = new CalcView(calcControl);
+    GraphView graphView = new GraphView(graphControl);
 
-    // CalcView calculatorView = new CalcView(calcControl);
-    // GraphView graphView = new GraphView(graphControl);
-
-    // MAIN.addTab("Calculator", calculatorView);
-    // MAIN.addTab("Graph",graphView);
-
-    CalcView panel3 = new CalcView(calcControl);
-    GraphView panel4 = new GraphView(graphControl);
-    
-    JPanel graphPanel = new JPanel();
-    graphPanel.add(panel4);
-    favC = new FavouritesController();
-    
-    MAIN.addTab("Calculator", panel3);
-    MAIN.addTab("Graph",graphPanel);
-
+    MAIN.addTab("Calculator", calculatorView);
+    MAIN.addTab("Graph",graphView);
     MAIN.addTab("Favourites", panel2);
     
     MAIN.addChangeListener(new ChangeListener() {
