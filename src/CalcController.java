@@ -112,6 +112,7 @@ public class CalcController
 	}
 
 	public void cos() {
+		pushUserText();
 		model.cos();
 		showValue();
 	}
@@ -122,6 +123,7 @@ public class CalcController
 	}
 
 	public void sin() {
+		pushUserText();
 		model.sin();
 		showValue();
 	}

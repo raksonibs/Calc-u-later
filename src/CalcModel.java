@@ -385,6 +385,17 @@ public class CalcModel
 			expressionList.push(String.valueOf(number));
 			inputValues.push(new BigDecimal(String.valueOf(number)));
 		}
+		if(numbers.size() == 0){
+			numbers.push(BigDecimal.valueOf(number));
+			numbers.push(BigDecimal.valueOf(number));
+			history.push(String.valueOf(number));
+			history.push(String.valueOf(number));
+			expressionList.push(String.valueOf(number));
+			expressionList.push(String.valueOf(number));
+			inputValues.push(new BigDecimal(String.valueOf(number)));
+			inputValues.push(new BigDecimal(String.valueOf(number)));
+
+		}
 	}
 	
 	/**
