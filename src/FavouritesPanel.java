@@ -35,6 +35,7 @@ public class FavouritesPanel extends JPanel
 						&& !box.getSelectedItem().equals("Select Favourite...")
 							&& flag)
 				{
+					favC.a.remove(box.getSelectedItem());
 					box.removeItem(box.getSelectedItem());
 					flag = false;
 				}
