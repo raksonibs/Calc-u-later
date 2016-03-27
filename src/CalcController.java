@@ -81,17 +81,19 @@ public class CalcController
 	}
 //	  NTD: should be bigint array
 	public void sum() {
-		
+		pushUserText();
 		model.sum();
 		showValue();
 	}
 	
 	public void subtract() {
+		pushUserText();
 		model.subtract();
 		showValue();
 	}
 	
 	public void multiply() {
+		pushUserText();
 		model.multiply();
 		showValue();
 	}

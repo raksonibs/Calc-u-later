@@ -98,11 +98,9 @@ public class CalcModel
 	 */
 	public void sum()
 	{
-
+		checkIfEnoughDigitsAvaliable(0);
 		if(!containsVariable)
 		{
-		checkIfEnoughDigitsAvaliable(0);
-
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
@@ -129,8 +127,9 @@ public class CalcModel
 	 */
 	public void subtract()
 	{
-		if(!containsVariable){
 		checkIfEnoughDigitsAvaliable(0);
+		if(!containsVariable){
+
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
@@ -156,8 +155,9 @@ public class CalcModel
 	 */
 	public void multiply()
 	{
-		if(!containsVariable){
 		checkIfEnoughDigitsAvaliable(1);
+		if(!containsVariable){
+
 		BigDecimal num1 = (BigDecimal) numbers.pop();
 		System.out.println(num1);
 		BigDecimal num2 = (BigDecimal) numbers.pop();
@@ -186,11 +186,11 @@ public class CalcModel
 	public void divide()
 	{
 		
-
+		checkIfEnoughDigitsAvaliable(1);
 			if(!containsVariable){
 				if(!(lastValue().equals(BigDecimal.ZERO)))
 				{
-					checkIfEnoughDigitsAvaliable(1);
+
 					BigDecimal num1 = (BigDecimal) numbers.pop();
 					System.out.println(num1);
 					BigDecimal num2 = (BigDecimal) numbers.pop();
