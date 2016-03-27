@@ -51,6 +51,7 @@ public class CalcView extends JPanel implements KeyListener
 	private static JTextField calcText;
 	private static JTextField history;
 	private static JTextField expressionList;
+	private static FavouritesController favC =  new FavouritesController();
 
 	//private static JFreeChart chart;
 	private static JComboBox<String> box;
@@ -650,7 +651,7 @@ public class CalcView extends JPanel implements KeyListener
 		else if (button.equals("SAVE"))
 		{
 			System.out.println("SAVING...");
-			theController.saving(expressionList.getText());
+			favC.saving(expressionList.getText().toString());
 		}
 		
 		// fixed negate button
