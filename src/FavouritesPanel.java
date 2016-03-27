@@ -27,8 +27,8 @@ public class FavouritesPanel extends JPanel
 				{
 					selected = box.getSelectedItem().toString();
 					//Give "selected" to the graph here...
-					graph = new GraphModel(selected);
-					graph.expression = selected;
+//					graph = new GraphModel(selected);
+//					graph.expression = selected;
 	            	MAIN.setSelectedIndex(1);
 				}
 			}
@@ -57,7 +57,6 @@ public class FavouritesPanel extends JPanel
 		System.out.println("in the adding method with " + expression);
 		if (!expression.equals("Select Favourite...")) {			
 			box.addItem(expression);
-			if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK"); counter++;} 
 		}
 	}
 	
