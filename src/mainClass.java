@@ -41,15 +41,16 @@ public void init()
             System.out.println("Tab: " + MAIN.getSelectedIndex());
             if (MAIN.getSelectedIndex() == 2)
             {
-                panel2.addToFavourites("Select Favourite...");
-                panel2.box.setSelectedItem("Select Favourite...");
             	for (String s: favC.a){panel2.addToFavourites(s);}
             }
             else if (MAIN.getSelectedIndex() == 0)
             {
             	panel2.clearList();
+                panel2.addToFavourites("Select Favourite...");
             } else if ( MAIN.getSelectedIndex() == 1) {
             	graphView.updateGraph(graphModel.getChartPanel());
+            	panel2.clearList();
+                panel2.addToFavourites("Select Favourite...");
             }            
         }
     });

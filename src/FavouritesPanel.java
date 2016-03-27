@@ -7,6 +7,7 @@ public class FavouritesPanel extends JPanel
 {
 	private int width, height;
 	private int counter = 0;
+	private boolean flag = false;
 	private String selected;
 	private FavouritesController favC =  new FavouritesController();
 	private GraphModel graph;
@@ -22,14 +23,20 @@ public class FavouritesPanel extends JPanel
 			public void itemStateChanged(ItemEvent e)
 			{
 				if (e.getStateChange() == ItemEvent.SELECTED
-						&& !(box.getSelectedItem()
-								.equals("Select Favourite...")))
+						&& !box.getSelectedItem().equals("Select Favourite...")
+								&& !flag)
 				{
 					selected = box.getSelectedItem().toString();
 					System.out.println("SELECTED: " + selected);
 					//Give "selected" to the graph here...
-	            	MAIN.setSelectedIndex(1);
-					theController.updateGraph(selected);
+	            	MAIN.setSelectedIndex(1);theController.updateGraph(selected);
+				}
+				if (e.getStateChange() == ItemEvent.SELECTED
+						&& !box.getSelectedItem().equals("Select Favourite...")
+							&& flag)
+				{
+					box.removeItem(box.getSelectedItem());
+					flag = false;
 				}
 			}
 		});
@@ -38,25 +45,27 @@ public class FavouritesPanel extends JPanel
 		{
 			public void pressed()
 			{
-				if (!(box.getSelectedItem().equals("Select Favourite...")))
-				{
-					System.out.println("DELETING " + selected);
-					box.removeItem(selected);
-					box.setSelectedItem("Select Favourite...");
-					favC.a.remove(selected);
-				}
+				System.out.println("DELETING ACTIVATED");
+//				box.removeItem(selected);
+//				box.setSelectedItem("Select Favourite...");
+//				favC.a.remove(selected);
+				flag = true;
 			}
 		};
 		
 		add(b);
+		if (flag){b.setBackground(Color.CYAN);}
+		else{b.setBackground(Color.WHITE);}
 		add(box);
 	}
 
 	public void addToFavourites(String expression)
 	{
 		System.out.println("in the adding method with " + expression);
-		if (!expression.equals("Select Favourite...")) {			
-			box.addItem(expression);
+		box.addItem(expression);
+		for (int i = 0; i < favC.a.size(); i++)
+		{
+			System.out.println(box.getItemAt(i) + "is inside");
 		}
 	}
 	
