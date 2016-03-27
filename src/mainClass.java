@@ -19,7 +19,7 @@ public void init()
 {
 	System.out.println("mainClass");
 
-    panel2 = new FavouritesPanel();
+    panel2 = new FavouritesPanel(MAIN);
     CalcView panel3 = new CalcView(control);
     favC = new FavouritesController();
         
@@ -38,7 +38,6 @@ public void init()
             	{
             			panel2.addToFavourites(s);
             	}
-            	if (panel2.switchToGraph){MAIN.setSelectedIndex(1);}
             }
             else if (MAIN.getSelectedIndex() != 2)
             {

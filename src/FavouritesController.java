@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class FavouritesController
 {
-	private static FavouritesPanel f = new FavouritesPanel();
+	//private static FavouritesPanel f = new FavouritesPanel();
 	public static ArrayList<String> a;
 	
 	public FavouritesController()

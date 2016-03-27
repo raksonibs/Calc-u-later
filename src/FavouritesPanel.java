@@ -14,7 +14,7 @@ public class FavouritesPanel extends JPanel
 	Graph temp;
 	JComboBox<String> box;
 
-	public FavouritesPanel()
+	public FavouritesPanel(final JTabbedPane MAIN)
 	{
 		box = new JComboBox<String>();
 		box.addItem("Select Favourite...");
@@ -30,7 +30,7 @@ public class FavouritesPanel extends JPanel
 					//Give "selected" to the graph here...
 					graph = new GraphModel(selected);
 					graph.expression = selected;
-					switchToGraph = true;
+	            	MAIN.setSelectedIndex(1);
 				}
 			}
 		});
