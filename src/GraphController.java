@@ -7,6 +7,7 @@ public class GraphController
 	private GraphModel graphModel;
 	private CalcModel calcModel;
 	private GraphView view;
+	private static FavouritesController favC =  new FavouritesController();
 	
 	public GraphController(JTabbedPane MAIN)
 	{
@@ -17,6 +18,7 @@ public class GraphController
 		graphModel.reset();
 
 	}
+	
 	public GraphController(CalcModel calcModelIn,GraphModel modelIn)
 	{
 		graphModel = modelIn;
@@ -31,5 +33,12 @@ public class GraphController
 		view.updateGraph(graphModel.getChart());
 		
 	}
+
+	public void save() {
+		System.out.println("Saving "+ graphModel.getExpression());
+		favC.saving(graphModel.getExpression());
+		
+	}
+
 	
 }

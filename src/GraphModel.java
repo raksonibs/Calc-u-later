@@ -31,6 +31,10 @@ public class GraphModel extends ApplicationFrame {
       super(title);
     }
     
+    public String getExpression() {
+    	return expression;
+    }
+    
     public ChartPanel getChartPanel(){
       
       XYSeries series = new XYSeries(expression);

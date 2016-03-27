@@ -19,7 +19,6 @@ public class mainClass extends JApplet
 public void init()
 {
 	System.out.println("mainClass");
-
 	
 	 CalcModel model = new CalcModel(MAIN);
 	 final GraphModel graphModel = new GraphModel("");
@@ -44,7 +43,7 @@ public void init()
             {
             	for (String s: favC.a){panel2.addToFavourites(s);}
             }
-            else if (MAIN.getSelectedIndex() != 2)
+            else if (MAIN.getSelectedIndex() == 0)
             {
             	panel2.clearList();
                 panel2.addToFavourites("Select Favourite...");

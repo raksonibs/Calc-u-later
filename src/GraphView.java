@@ -1,5 +1,6 @@
 import java.awt.Container;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
@@ -8,6 +9,7 @@ import org.jfree.chart.ChartPanel;
 public class GraphView extends JPanel{
 
 	private static JPanel graphPanel = new JPanel();
+	
 	
 	
 	public GraphView(final GraphController graphController){
@@ -19,6 +21,13 @@ public class GraphView extends JPanel{
 
 	public static void addComponentsToPane(Container pane, final GraphController graphController)
 	{
+		JButton button = new ButtonAdapter("Save"){
+			public void pressed() {
+				graphController.save();
+			}
+		};
+		
+		pane.add(button);
 			pane.add(graphPanel);
 			pane.setVisible(true);
 			
