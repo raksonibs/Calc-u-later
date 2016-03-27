@@ -64,11 +64,11 @@ public class CalcView extends JPanel implements KeyListener
 
 	
 	@SuppressWarnings("serial")
-	public CalcView(final CalcController theController)
+	public CalcView(final CalcController theController, JTabbedPane MAIN)
 	{
 		super();
 		System.out.println("Test");
-		addComponentsToPane(this, theController);
+		addComponentsToPane(this, theController, MAIN);
 
 		requestFocus();
 
@@ -99,8 +99,7 @@ public class CalcView extends JPanel implements KeyListener
 
 
 	@SuppressWarnings("serial")
-	public static void addComponentsToPane(Container pane,
-			final CalcController theController)
+	public static void addComponentsToPane(Container pane, final CalcController theController, final JTabbedPane MAIN)
 	{
 		if (RIGHT_TO_LEFT)
 		{
@@ -523,7 +522,8 @@ public class CalcView extends JPanel implements KeyListener
 		pane.add(button, c);
 		
 		button = new ButtonAdapter("Graph"){
-			public void pressed(){
+			public void pressed() {
+				MAIN.setSelectedIndex(1);
 				registerButton("Graph", theController);
 			}
 		};

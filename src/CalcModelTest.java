@@ -6,15 +6,17 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import javax.swing.JTabbedPane;
+
 public class CalcModelTest {
 
-
+	private JTabbedPane MAIN = new JTabbedPane();
 	private CalcModel c;
 	private BigInteger b;
 	
 	@Before
 	public void setUp() throws Exception {
-		c = new CalcModel();
+		c = new CalcModel(MAIN);
 	}
 	
 	@Test

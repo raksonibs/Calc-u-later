@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import javax.swing.JTabbedPane;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -62,19 +64,18 @@ public class CalcController
 	 *            The model the controller uses
 	 * @pre. model != null
 	 */
-	public CalcController()
+	public CalcController(JTabbedPane MAIN)
 	{
-		view = new CalcView(this);
+		view = new CalcView(this, MAIN);
 		view.setVisible(true);
-		//model.clear();
 	}
 	
-	public CalcController(CalcModel modelIn, GraphModel graphModelIn){
+	public CalcController(CalcModel modelIn, GraphModel graphModelIn, JTabbedPane MAIN){
 		
 		model = modelIn;
 		graphModel = graphModelIn;
 		//graph = new GraphPanel(width,height);
-		view = new CalcView(this);
+		view = new CalcView(this, MAIN);
 		view.setVisible(true);
 		model.clear();
 		
