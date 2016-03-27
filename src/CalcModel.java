@@ -41,12 +41,12 @@ public class CalcModel
     CalcView view;
     CalcController controller;
 
-	public CalcModel()
+	public CalcModel(JTabbedPane MAIN)
 	{
 		//this.width = width;
 		//this.height = height;
 		//temp = new Graph();
-		view = new CalcView(controller);
+		view = new CalcView(controller, MAIN);
 	   
 		history = new Stack();
 		numbers = new Stack();

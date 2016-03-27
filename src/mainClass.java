@@ -19,14 +19,14 @@ public void init()
 {
 	System.out.println("mainClass");
 	
-	 CalcModel model = new CalcModel();
+	 CalcModel model = new CalcModel(MAIN);
 	 final GraphModel graphModel = new GraphModel("");
 	 
-	 final CalcController calcControl = new CalcController(model, graphModel);
+	 final CalcController calcControl = new CalcController(model, graphModel, MAIN);
 	 final GraphController graphControl = new GraphController(model, graphModel);
 	
     panel2 = new FavouritesPanel();
-    CalcView calculatorView = new CalcView(calcControl);
+    CalcView calculatorView = new CalcView(calcControl, MAIN);
     final GraphView graphView = new GraphView(graphControl);
 
     MAIN.addTab("Calculator", calculatorView);

@@ -1,3 +1,5 @@
+import javax.swing.JTabbedPane;
+
 import org.jfree.chart.ChartPanel;
 
 public class GraphController
@@ -6,10 +8,10 @@ public class GraphController
 	private CalcModel calcModel;
 	private GraphView view;
 	
-	public GraphController()
+	public GraphController(JTabbedPane MAIN)
 	{
 		graphModel = new GraphModel("");
-		calcModel = new CalcModel();
+		calcModel = new CalcModel(MAIN);
 		view = new GraphView(this);
 		view.setVisible(true);
 		graphModel.reset();
