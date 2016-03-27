@@ -44,7 +44,6 @@ public class CalcView extends JPanel implements KeyListener
 	final static boolean RIGHT_TO_LEFT = false;
 	static int buttonClicked = 0;
 
-	public static GraphPanel panel2 = new GraphPanel(400,400);
 	private static final long serialVersionUID = -8730447125113729547L;
 
 	private static JTextField userValueText;
