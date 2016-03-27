@@ -10,7 +10,6 @@ public class FavouritesPanel extends JPanel
 	private String selected;
 	private FavouritesController favC =  new FavouritesController();
 	private GraphModel graph;
-	public boolean switchToGraph = false;
 	Graph temp;
 	JComboBox<String> box;
 
@@ -56,15 +55,10 @@ public class FavouritesPanel extends JPanel
 	public void addToFavourites(String expression)
 	{
 		System.out.println("in the adding method with " + expression);
-<<<<<<< HEAD
 		if (!expression.equals("Select Favourite...")) {			
 			box.addItem(expression);
 			if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK"); counter++;} 
 		}
-=======
-		box.addItem(expression);
-		//if (box.getItemAt(1).equals(expression)){System.out.println("IT SHOULD WORK"); counter++;} 
->>>>>>> anjiBranch
 	}
 	
 	public void clearList(){box.removeAllItems();}

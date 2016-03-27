@@ -27,7 +27,7 @@ public void init()
 	 final CalcController calcControl = new CalcController(model, graphModel, MAIN);
 	 final GraphController graphControl = new GraphController(model, graphModel);
 	
-    panel2 = new FavouritesPanel();
+    panel2 = new FavouritesPanel(MAIN);
     CalcView calculatorView = new CalcView(calcControl, MAIN);
     final GraphView graphView = new GraphView(graphControl);
 
@@ -42,17 +42,12 @@ public void init()
             System.out.println("Tab: " + MAIN.getSelectedIndex());
             if (MAIN.getSelectedIndex() == 2)
             {
-            	for (String s: favC.a)
-
-            	{
-            			panel2.addToFavourites(s);
-            	}
+            	for (String s: favC.a){panel2.addToFavourites(s);}
             }
-            else if (MAIN.getSelectedIndex() == 0)
+            else if (MAIN.getSelectedIndex() != 2)
             {
             	panel2.clearList();
                 panel2.addToFavourites("Select Favourite...");
-//                panel2.switchToGraph = false;
             } else if ( MAIN.getSelectedIndex() == 1) {
             	graphView.updateGraph(graphModel.getChartPanel());
             }            

@@ -50,9 +50,6 @@ public class CalcController
 	private CalcModel model;
 	private GraphModel graphModel;
 	private CalcView view;
-	
-	private static FavouritesPanel f = new FavouritesPanel();
-	public static ArrayList<String> a = new ArrayList<String>();
 
 	/**
 	 * Creates a controller for the given view and model.
