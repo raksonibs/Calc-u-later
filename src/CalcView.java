@@ -650,7 +650,8 @@ public class CalcView extends JPanel implements KeyListener
 		else if (button.equals("SAVE"))
 		{
 			System.out.println("SAVING...");
-			favC.saving(expressionList.getText());
+			String s = expressionList.getText();
+			favC.saving(s);
 		}
 		
 		// fixed negate button

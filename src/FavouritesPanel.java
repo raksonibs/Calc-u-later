@@ -13,7 +13,7 @@ public class FavouritesPanel extends JPanel
 	Graph temp;
 	JComboBox<String> box;
 
-	public FavouritesPanel(final JTabbedPane MAIN)
+	public FavouritesPanel(final JTabbedPane MAIN, final CalcController theController)
 	{
 		box = new JComboBox<String>();
 		box.addItem("Select Favourite...");
@@ -26,10 +26,10 @@ public class FavouritesPanel extends JPanel
 								.equals("Select Favourite...")))
 				{
 					selected = box.getSelectedItem().toString();
+					System.out.println("SELECTED: " + selected);
 					//Give "selected" to the graph here...
-//					graph = new GraphModel(selected);
-//					graph.expression = selected;
 	            	MAIN.setSelectedIndex(1);
+					theController.updateGraph(selected);
 				}
 			}
 		});

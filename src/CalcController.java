@@ -216,7 +216,11 @@ public class CalcController
 	public void updateGraph(){
 		String expression = model.getExpressionValue();
 		graphModel.pushExpression(expression);
-		
+	}
+	
+	public void updateGraph(String feedExpression)
+	{
+		graphModel.pushExpression(feedExpression);
 	}
 	
 
