@@ -33,7 +33,7 @@ public void init()
     // MAIN.addTab("Calculator", calculatorView);
     // MAIN.addTab("Graph",graphView);
 
-    CalcView panel3 = new CalcView(control);
+    CalcView panel3 = new CalcView(calcControl);
     GraphView panel4 = new GraphView(graphControl);
     
     JPanel graphPanel = new JPanel();
