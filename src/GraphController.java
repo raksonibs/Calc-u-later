@@ -26,7 +26,7 @@ public class GraphController
 
 	public void updateGraph(){
 		
-		//Send to View
+		view.updateGraph(graphModel.getChart());
 		
 	}
 	

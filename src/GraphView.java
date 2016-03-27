@@ -19,8 +19,6 @@ public class GraphView extends JPanel{
 	public static void addComponentsToPane(Container pane, 
 			final GraphController graphController)
 	{
-	
-			//graphPanel.add(graphController.updateGraph());
 			pane.add(graphPanel);
 			pane.setVisible(true);
 			
@@ -28,7 +26,9 @@ public class GraphView extends JPanel{
 
 	public void updateGraph(ChartPanel graph){
 		
-		//Update chart
+		graphPanel.removeAll();
+		graphPanel.add(graph);
+		graphPanel.setVisible(true);
 
 	}
 	
