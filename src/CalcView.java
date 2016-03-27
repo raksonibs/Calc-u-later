@@ -632,20 +632,8 @@ public class CalcView extends JPanel implements KeyListener
 		}	
 
 		else if (button.equals("Graph")) {
-			
-			/*System.out.println("Create panel");
-			//ChartPanel chPanel = new ChartPanel(chart); //creating the chart panel, which extends JPanel
-			//chPanel.setPreferredSize(new Dimension(785, 440)); //size according to my window
-			
-			JPanel jPanel = new JPanel();
-
-			jPanel.add(theController.getChartPanel()); //add the chart viewer to the JPanel
-
-			JFrame newWindow = new JFrame();
-			newWindow.setPreferredSize(new Dimension(500,500));
-			newWindow.add(jPanel);
-			newWindow.setVisible(true);
-			newWindow.pack();*/
+		
+			theController.updateGraph();
 		}	
 
 		else if (button.equals("SAVE"))

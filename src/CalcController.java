@@ -46,13 +46,12 @@ public class CalcController
 	public static final String CLEAR = "CLEAR";
 	
 	private CalcModel model;
+	private GraphModel graphModel;
 	private CalcView view;
-<<<<<<< HEAD
+	
 	private static FavouritesPanel f = new FavouritesPanel();
 	public static ArrayList<String> a = new ArrayList<String>();
-=======
-	private GraphPanel graph;
->>>>>>> origin/master
+
 
 	/**
 	 * Creates a controller for the given view and model.
@@ -68,12 +67,13 @@ public class CalcController
 	{
 		view = new CalcView(this);
 		view.setVisible(true);
-		model.clear();
+		//model.clear();
 	}
 	
-	public CalcController(CalcModel modelIn){
+	public CalcController(CalcModel modelIn, GraphModel graphModelIn){
 		
 		model = modelIn;
+		graphModel = graphModelIn;
 		//graph = new GraphPanel(width,height);
 		view = new CalcView(this);
 		view.setVisible(true);
@@ -211,6 +211,11 @@ public class CalcController
 		showValue();
 	}
 	
+	public void updateGraph(){
+		String expression = model.getExpressionValue();
+		graphModel.pushExpression(expression);
+		
+	}
 	
 
 

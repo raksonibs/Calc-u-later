@@ -2,31 +2,32 @@ import org.jfree.chart.ChartPanel;
 
 public class GraphController
 {
-
 	private GraphModel graphModel;
+	private CalcModel calcModel;
 	private GraphView view;
+	
 	public GraphController()
 	{
 		graphModel = new GraphModel("");
+		calcModel = new CalcModel();
 		view = new GraphView(this);
 		view.setVisible(true);
+		graphModel.reset();
 
 	}
-	public GraphController(GraphModel modelIn)
+	public GraphController(CalcModel calcModelIn,GraphModel modelIn)
 	{
 		graphModel = modelIn;
+		calcModel = calcModelIn;
 		view = new GraphView(this);
 		view.setVisible(true);
 
 	}
 
-
-	public ChartPanel getChartPanel(){
+	public void updateGraph(){
 		
-		String expression = "sin(X)";
-		graphModel.pushExpression(expression);
-		return graphModel.getChartPanel();
-
+		//Send to View
+		
 	}
 	
 }

@@ -6,20 +6,25 @@ import java.awt.*;
 
 public class mainClass extends JApplet
 {
-private JTabbedPane MAIN = new JTabbedPane();
+ private JTabbedPane MAIN = new JTabbedPane();
  public static int WIDTH = 800;
  public static int HEIGHT = 450;
- CalcModel model;
- GraphModel graphModel;
- CalcController calcControl = new CalcController();
- GraphController graphControl = new GraphController();
+
+
+
  FavouritesController favC;
  FavouritesPanel panel2;
 
 public void init()
 {
 	System.out.println("mainClass");
-
+	
+	 CalcModel model = new CalcModel();
+	 GraphModel graphModel = new GraphModel("");
+	 
+	 final CalcController calcControl = new CalcController(model, graphModel);
+	 final GraphController graphControl = new GraphController(model, graphModel);
+	
     panel2 = new FavouritesPanel();
     CalcView calculatorView = new CalcView(calcControl);
     GraphView graphView = new GraphView(graphControl);
@@ -30,10 +35,10 @@ public void init()
     
     MAIN.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
+        	graphControl.updateGraph();
             System.out.println("Tab: " + MAIN.getSelectedIndex());
             if (MAIN.getSelectedIndex() == 2)
             {
-
             	for (String s: favC.a)
 
             	{

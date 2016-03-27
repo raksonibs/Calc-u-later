@@ -192,8 +192,14 @@ public class GraphModel extends ApplicationFrame {
 	     difference = 0;
 	     prevDif = 0;
        
-      expression = "";
+	     expression = "";
       
     }
+	
+	public ChartPanel getChart(){
+		//Returns the chartPanel
+		return getChartPanel();
+
+	}
     
 }
