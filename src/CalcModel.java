@@ -67,7 +67,7 @@ public class CalcModel
 		expressionList.push(number.round(roundingAmount).toPlainString());
 		numbers.push(number);
 		inputValues.push(number);
-		
+		variables.push(number);
 		
 	}
 
@@ -112,9 +112,12 @@ public class CalcModel
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
 		}
-		else
+		else if(containsVariable)
 		{
-			addToExpressionList("+");
+			if(variables.size() > 1){
+				variables.pop();
+				addToExpressionList("+");
+			}
 		}
 
 	}
@@ -141,9 +144,12 @@ public class CalcModel
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
 		}
-		else
+		else if(containsVariable)
 		{
-			addToExpressionList("-");
+			if(variables.size() > 1){
+				variables.pop();
+				addToExpressionList("-");
+			}
 		}
 	}
 	
@@ -170,9 +176,12 @@ public class CalcModel
 		numbers.push(calcValue);
 		calculatedValues.push(calcValue);
 		}
-		else
+		else if(containsVariable)
 		{
-			addToExpressionList("×");	
+			if(variables.size() > 1){
+				variables.pop();
+				addToExpressionList("×");
+			}
 		}
 	}
 	
@@ -202,9 +211,12 @@ public class CalcModel
 					calculatedValues.push(calcValue);
 				}
 			}
-			else
+			else if(containsVariable)
 			{
-				addToExpressionList("÷");
+				if(variables.size() > 1){
+					variables.pop();
+					addToExpressionList("÷");
+				}
 			}
 		
 
@@ -283,8 +295,8 @@ public class CalcModel
 	
 		containsVariable = true;
 		addToExpressionList("X");
-
-		
+		//variables = (Stack) inputValues.clone();
+		variables.push("X");
 	}
 	
 	public void undo() {
@@ -378,22 +390,14 @@ public class CalcModel
 		//Way to handle situations such as the user entering 1,+;
 		//Will automatically enter an appropriate value in place
 		//so for example 1,+ becomes (1+0)
-	if(!containsVariable){
-		if(numbers.size() <= 1)
+
+	if(numbers.size() <= 1 && !containsVariable)
 			{
-				numbers.push(BigDecimal.valueOf(number));
-				history.push(String.valueOf(number));
-				expressionList.push(String.valueOf(number));
-				inputValues.push(new BigDecimal(String.valueOf(number)));
+			numbers.push(BigDecimal.valueOf(number));
+			history.push(String.valueOf(number));
+			expressionList.push(String.valueOf(number));
+			inputValues.push(new BigDecimal(String.valueOf(number)));
 			}
-		}
-	else if(numbers.size() < 1)
-	{
-				numbers.push(BigDecimal.valueOf(number));
-				history.push(String.valueOf(number));
-				expressionList.push(String.valueOf(number));
-				inputValues.push(new BigDecimal(String.valueOf(number)));
-	}
 
 	}
 	
@@ -719,6 +723,8 @@ public class CalcModel
 		printStackToConsole(numbers);
 		System.out.println("Calculated Values Stack: ");
 		printStackToConsole(calculatedValues);
+		System.out.println("Variables");
+		printStackToConsole(variables);
 		System.out.println("-----------------");
 	}
 	

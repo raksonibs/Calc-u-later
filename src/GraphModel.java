@@ -131,7 +131,14 @@ public class GraphModel extends ApplicationFrame {
 	 */
 	public void pushExpression(String input){
     
-		expressionDirty = "y = " + input;
+		expressionDirty = input;
+		
+		while(expressionDirty.contains(",") && expressionDirty.length()>0){
+			System.out.println("Comma at : " + expressionDirty.indexOf(","));
+			expressionDirty = expressionDirty.substring(input.indexOf(",") + 1, input.length());
+		}
+		expressionDirty = "y = " + expressionDirty;
+		
 		expression = clean(input);
 		System.out.println("Graph Model: expression is " + expression);
 		
@@ -143,7 +150,6 @@ public class GraphModel extends ApplicationFrame {
 	 * @return String: cleaned input
 	 */
 	public String clean(String input){
-		
 		//Replace with appropriate operators
 		input = input.replace("x", "*");
 		input = input.replace("÷", "/");
@@ -153,12 +159,10 @@ public class GraphModel extends ApplicationFrame {
 			System.out.println("Comma at : " + input.indexOf(","));
 			input = input.substring(input.indexOf(",") + 1, input.length());
 		}
-		
 		if(!input.contains("X") && input.contains("!")){
 			
 			//input.replace(oldChar, newChar)
 		}
-		
 		//System.out.println("New expression is: " + input);
 		
 		return input;
