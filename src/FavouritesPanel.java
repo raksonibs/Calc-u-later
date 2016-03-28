@@ -55,6 +55,7 @@ public class FavouritesPanel extends JPanel
 				flag = true;
 			}
 		};
+		b.setToolTipText("HOW TO DELETE: Press DELETE then select the expression you wish to delete.");
 		
 		add(b);
 		if (flag){b.setBackground(Color.CYAN);}
