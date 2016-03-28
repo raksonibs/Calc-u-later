@@ -7,8 +7,8 @@ import java.awt.*;
 public class mainClass extends JApplet
 {
  private JTabbedPane MAIN = new JTabbedPane();
- public static int WIDTH = 800;
- public static int HEIGHT = 450;
+ public static int WIDTH = 410;
+ public static int HEIGHT = 485;
 
  CalcModel model;
  CalcController control = new CalcController(MAIN);
