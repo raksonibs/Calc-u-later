@@ -350,11 +350,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridy = 7;
 		pane.add(button, c);
 
-		button = new ButtonAdapter("x")
+		button = new ButtonAdapter("*")
 		{
 			public void pressed()
 			{
-				registerButton("x", theController);
+				registerButton("*", theController);
 			}
 		};
 
@@ -618,7 +618,7 @@ public class CalcView extends JPanel implements KeyListener
 			userValueText.setText("");
 
 		}
-		else if (button.equals("x"))
+		else if (button.equals("*"))
 		{
 			System.out.println("multiplty");
 			theController.multiply();

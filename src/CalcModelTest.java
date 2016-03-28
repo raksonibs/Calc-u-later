@@ -84,7 +84,7 @@ public class CalcModelTest {
 		c.multiply();
 		double num2 = 70.0;
 		assertEquals(true, c.lastValue().doubleValue() == num2);
-		assertEquals("×", c.getLastExpression());
+		assertEquals("*", c.getLastExpression());
 		
 	}
 	

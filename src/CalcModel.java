@@ -170,7 +170,7 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
 
-		 addToExpressionList("×");	//This is × for multiply, not x as in the letter!
+		 addToExpressionList("*");	//This is × for multiply, not x as in the letter!
 		updateRounding(calcValue.toString());
 
 		numbers.push(calcValue);
@@ -180,7 +180,7 @@ public class CalcModel
 		{
 			if(variables.size() > 1){
 				variables.pop();
-				addToExpressionList("×");
+				addToExpressionList("*");
 			}
 		}
 	}
@@ -411,7 +411,7 @@ public class CalcModel
 		//Check to see if a string is an operator
 
 		//Note that × is for multiply, not x as in the letter!
-		if(value.equals("+") || value.equals("-")  || value.equals("×")|| value.equals("÷")|| value.equals("=")){	
+		if(value.equals("+") || value.equals("-")  || value.equals("*")|| value.equals("÷")|| value.equals("=")){	
 
 			return true;
 		}
@@ -780,7 +780,7 @@ public class CalcModel
 		//Add test case in infix notation
 		//You can use the INFO Button to generate this list easily
 		//and just copy and paste from console to here.
-		String[] expressionArray = { "21", "35", "×", "101", "4", "×", "+"};
+		String[] expressionArray = { "21", "35", "*", "101", "4", "*", "+"};
 		String[] inputValuesArray = { "21", "35", "101", "4"};
 		String[] numbersArray = { "1139"};
 		String[] calculatedValuesArray = { "735", "404", "1139"};
