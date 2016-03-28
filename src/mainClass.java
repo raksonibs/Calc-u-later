@@ -48,6 +48,10 @@ public void init()
             	panel2.clearList();
                 panel2.addToFavourites("Select Favourite...");
             } else if ( MAIN.getSelectedIndex() == 1) {
+                if (panel2.fromFavourites)
+                {
+                	graphModel.pushExpression(panel2.selected);
+                }
             	graphView.updateGraph(graphModel.getChartPanel());
             	panel2.clearList();
                 panel2.addToFavourites("Select Favourite...");

@@ -8,7 +8,8 @@ public class FavouritesPanel extends JPanel
 	private int width, height;
 	private int counter = 0;
 	private boolean flag = false;
-	private String selected;
+	public boolean fromFavourites = false;
+	public String selected;
 	private FavouritesController favC =  new FavouritesController();
 	private GraphModel graph;
 	Graph temp;
@@ -29,7 +30,8 @@ public class FavouritesPanel extends JPanel
 					selected = box.getSelectedItem().toString();
 					System.out.println("SELECTED: " + selected);
 					//Give "selected" to the graph here...
-	            	MAIN.setSelectedIndex(1);theController.updateGraph(selected);
+					fromFavourites = true;
+	            	MAIN.setSelectedIndex(1);
 				}
 				if (e.getStateChange() == ItemEvent.SELECTED
 						&& !box.getSelectedItem().equals("Select Favourite...")
