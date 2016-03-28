@@ -550,12 +550,12 @@ public class CalcModel
 			{
 				String number1 = container.pop().toString();
 				
-				container.push("(" + value + "(" + number1 + "))");
+				container.push(value + "(" + number1 + ")");
 			}
 			else if (isFactorial(value))
 			{
 				String number1 = container.pop().toString();
-				container.push("("+number1 + value+")");
+				container.push(number1 + value);
 			}
 			else if(isVariable(value))
 			{
@@ -592,17 +592,29 @@ public class CalcModel
 		expression = expression.substring(1, expression.length());
 		}
 		
+		//if (expression.contains("!") || expression.contains("sin") || expression.contains("cos") || expression.contains("X") || expression.contains(".") || expression.contains("+/-"))
 		if(expression.contains(",")){
 			System.out.println("this is expression"+expression);
 			List<String> exps = Arrays.asList(expression.split(","));
 			String result = "";
 			for (int i = 0; i < exps.size() ; i++){
 				System.out.println("array"+exps.get(i));
+				if(exps.get(i).contains("!") || exps.get(i).contains("sin") || exps.get(i).contains("cos") || exps.get(i).contains("X"))
+				{
+					result += exps.get(i);
+					result += ",";
+				}
+				else
+				{
 				result += new Parser(exps.get(i)).parse();
 				result += ",";
+				}
 			}
 			return result;
 		}
+		else if(expression.contains("X") || expression.contains("sin") || expression.contains("cos"))
+			return expression;
+		
 		else
 		{
 		Parser exp = new Parser(expression);
@@ -610,6 +622,7 @@ public class CalcModel
 		return exp.parse();
 
 		}
+		//System.out.println("this is expression"+ expression);
 		//return expression;
 	}
 	
@@ -916,8 +929,8 @@ public class CalcModel
 	    private Result factor() throws IllegalArgumentException {
 	        Result result;
 	        if(currToken() == '(') {
-	            result = paren();
-	        } else if(Character.isDigit(currToken()) || currToken() == '?') {
+	            result = paren(); 
+	        } else if(Character.isDigit(currToken())) {
 	            result = variable();
 	        } else {
 	            throw new IllegalArgumentException("Expected variable or '(', found '" + currToken() + "' at position " + currPos);
