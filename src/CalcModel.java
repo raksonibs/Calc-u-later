@@ -170,7 +170,7 @@ public class CalcModel
 		System.out.println(num2);
 		calcValue = num2.multiply(num1);
 
-		addToExpressionList("×");	//This is × for multiply, not x as in the letter!
+		 addToExpressionList("×");	//This is × for multiply, not x as in the letter!
 		updateRounding(calcValue.toString());
 
 		numbers.push(calcValue);
@@ -205,7 +205,7 @@ public class CalcModel
 					BigDecimal num2 = (BigDecimal) numbers.pop();
 					System.out.println(num2);
 					calcValue = num2.divide(num1, roundingAmount);
-					addToExpressionList("÷");
+					 addToExpressionList("÷");
 					updateRounding(calcValue.toString());
 					numbers.push(calcValue);
 					calculatedValues.push(calcValue);

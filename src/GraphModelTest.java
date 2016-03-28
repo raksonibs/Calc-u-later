@@ -20,14 +20,21 @@ public class GraphModelTest {
 	
 	
 	@Test
+	//6.2.1
 	public void pushExpression(){
-		model.pushExpression("sin(X)");
-		assertEquals("sin(X)",model.getExpression());
+		model.pushExpression("sin(X) - cos(X)");
+		assertEquals("sin(X) - cos(X)",model.getExpression());
 		
-		model.pushExpression("1");
-		assertEquals("1", model.getExpression());
+		model.pushExpression("-123456780.9+1-1*2/2");
+		assertEquals("-123456780.9+1-1*2/2", model.getExpression());
+		
+		model.pushExpression("6!");
+		assertEquals("6!", model.getExpression());
+
 	}
+	
 	@Test
+	//6.2.2
 	public void getExpression(){
 		
 		String expression = model.getExpression();
@@ -44,6 +51,7 @@ public class GraphModelTest {
 	}
 	
 	@Test
+	//6.2.3
 	public void bounds(){
 		model.setLeftBound(3.1);
 		model.setRightBound(0.01);
@@ -54,6 +62,7 @@ public class GraphModelTest {
 	}
 	
 	@Test
+	//6.2.4
 	public void cleanExpression(){
 		
 		String expression = "1,sin(X)";
@@ -65,14 +74,19 @@ public class GraphModelTest {
 	}
 	
 	@Test
+	//6.2.5
 	public void factorial(){
 		
 		String result = model.fact(6);
 		assertEquals("720.0", result);
 		
+		result = model.fact(-3);
+		assertEquals("1.0", result);
+		
 	}
 	
 	@Test
+	//6.2.6
 	public void reset(){
 		
 		model.precision = 10;

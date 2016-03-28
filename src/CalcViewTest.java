@@ -24,6 +24,7 @@ public class CalcViewTest {
 	
 
 	@Test
+	//4.2.1
 	public void setGetUserValue(){
 		
 		view.setUserValue("123456789.0");
@@ -35,9 +36,13 @@ public class CalcViewTest {
 		view.setUserValue("+-/*!sin(X)cos(X)");
 		assertEquals("+-/*!sin(X)cos(X)", view.getUserValue());
 		
+		view.setUserValue("ABCDEFG");
+		assertEquals("ABCDEFG", view.getUserValue());
+		
 	}
 	
 	@Test
+	//4.2.2
 	public void containsUserValue(){
 		
 		assertEquals(false, view.containsUserValue());
