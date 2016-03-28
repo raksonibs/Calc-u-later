@@ -51,6 +51,7 @@ public void init()
                 if (panel2.fromFavourites)
                 {
                 	graphModel.pushExpression(panel2.selected);
+                	panel2.fromFavourites = false;
                 }
             	graphView.updateGraph(graphModel.getChartPanel());
             	panel2.clearList();
