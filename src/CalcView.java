@@ -363,11 +363,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridy = 8;
 		pane.add(button, c);
 
-		button = new ButtonAdapter("÷")
+		button = new ButtonAdapter("/")
 		{
 			public void pressed()
 			{
-				registerButton("÷", theController);
+				registerButton("/", theController);
 			}
 		};
 
@@ -545,7 +545,6 @@ public class CalcView extends JPanel implements KeyListener
 
 		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
 		c.fill = GridBagConstraints.HORIZONTAL;
-
 		c.gridx = 0;       //aligned with button 2
 		c.gridwidth = 4;   //2 columns wide
 		c.gridy = 10;       //third row
@@ -624,7 +623,7 @@ public class CalcView extends JPanel implements KeyListener
 			theController.multiply();
 			userValueText.setText("");
 		}
-		else if (button.equals("÷"))
+		else if (button.equals("/"))
 		{
 			System.out.println("divide");
 			theController.divide();

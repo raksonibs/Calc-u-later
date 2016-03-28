@@ -205,7 +205,7 @@ public class CalcModel
 					BigDecimal num2 = (BigDecimal) numbers.pop();
 					System.out.println(num2);
 					calcValue = num2.divide(num1, roundingAmount);
-					 addToExpressionList("÷");
+					 addToExpressionList("/");
 					updateRounding(calcValue.toString());
 					numbers.push(calcValue);
 					calculatedValues.push(calcValue);
@@ -215,7 +215,7 @@ public class CalcModel
 			{
 				if(variables.size() > 1){
 					variables.pop();
-					addToExpressionList("÷");
+					addToExpressionList("/");
 				}
 			}
 		
@@ -411,7 +411,7 @@ public class CalcModel
 		//Check to see if a string is an operator
 
 		//Note that × is for multiply, not x as in the letter!
-		if(value.equals("+") || value.equals("-")  || value.equals("*")|| value.equals("÷")|| value.equals("=")){	
+		if(value.equals("+") || value.equals("-")  || value.equals("*")|| value.equals("/")|| value.equals("=")){	
 
 			return true;
 		}

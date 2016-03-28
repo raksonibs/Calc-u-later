@@ -98,7 +98,7 @@ public class CalcModelTest {
 		double num2 = 1.0;
 
 		assertEquals(true, c.lastValue().doubleValue() == num2);
-		assertEquals("÷", c.getLastExpression());
+		assertEquals("/", c.getLastExpression());
 	}
 	
 	@Test
