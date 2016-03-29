@@ -248,6 +248,7 @@ public class CalcModel
 		
 	}
 	
+	public void pi(){}
 	public void cos() {
 		if(!containsVariable)
 		{
@@ -273,6 +274,7 @@ public class CalcModel
 		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
 		System.out.println(num1);
 		num1 = fact(num1);
+		fact(num1);
 		System.out.println(num1);
 
 		addToExpressionList("!");
@@ -324,15 +326,16 @@ public class CalcModel
 	
 	public static double fact(double b)
 	{
-		double r = 1.0;
-		System.out.println("working with: " + b);
-		while (b > 1.0)
-		{
-			r = r * b;
-			b -= 1;
-			System.out.println(r);
+	
+		//double r = 1.0;
+		if(b <= 1){
+			return 1.0;
 		}
-		return r;
+		else{
+			return b * fact(b-1);
+		}
+		//System.out.println("working with: " + b);
+		
 	}
 	
 
@@ -594,7 +597,7 @@ public class CalcModel
 			String result = "";
 			for (int i = 0; i < exps.size() ; i++){
 				System.out.println("array"+exps.get(i));
-				if(exps.get(i).contains("!") || exps.get(i).contains("sin") || exps.get(i).contains("cos") || exps.get(i).contains("X"))
+				if(exps.get(i).contains("!") || exps.get(i).contains("sin") || exps.get(i).contains("cos") || exps.get(i).contains("X") || exps.contains("."))
 				{
 					result += exps.get(i);
 					result += ",";
@@ -607,7 +610,7 @@ public class CalcModel
 			}
 			return result;
 		}
-		else if(expression.contains("X") || expression.contains("sin") || expression.contains("cos"))
+		else if(expression.contains("X") || expression.contains("sin") || expression.contains("cos") || expression.contains("!") || expression.contains("."))
 			return expression;
 		
 		else
@@ -925,7 +928,7 @@ public class CalcModel
 	        Result result;
 	        if(currToken() == '(') {
 	            result = paren(); 
-	        } else if(Character.isDigit(currToken())) {
+	        } else if(Character.isDefined(currToken())) {
 	            result = variable();
 	        } else {
 	            throw new IllegalArgumentException("Expected variable or '(', found '" + currToken() + "' at position " + currPos);
