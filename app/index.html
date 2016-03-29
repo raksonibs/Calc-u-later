@@ -20,7 +20,10 @@ title: Blog Posts
   <div class="presentation">
     <div id="intro" class="slide">
       <h1>Intro</h1>
-      <p> pics of us </p>
+      <image class="inline-img" src="/assets/mohammad.jpg" />
+      <image class="inline-img" src="/assets/oskar.JPG" />
+      <image class="inline-img" src="/assets/oskar.JPG" />
+      <image class="inline-img" src="/assets/oskar.JPG" />
     </div>
     <div id="demo" class="slide">
       <h1>Demo</h1>
@@ -35,6 +38,16 @@ title: Blog Posts
     <div id="design" class="slide">
       <h1>Design</h1>
       <ul>
+        <h2><em>Parts of our design document </em></h2>
+        <image src="/assets/design1.png" />
+        <image src="/assets/design2.png" />
+        <image src="/assets/design3.png" />
+        <image src="/assets/design4.png" />
+        <image src="/assets/design5.png" />
+        <image src="/assets/design6.png" />
+        <image src="/assets/design7.png" />
+        <image src="/assets/design8.png" />
+        <image src="/assets/design9.png" />
         <li>UML Diagrams</li>
         <li>MVC Overview</li>
         <li>Expression Builder</li>
@@ -80,7 +93,114 @@ title: Blog Posts
       <h1>Brad</h1>
       <ul>
         <li>Testing</li>
+        <pre class="prettyprint">
+  private JTabbedPane MAIN = new JTabbedPane();
+  private CalcModel c;
+  private BigInteger b;
+
+  @Before
+  public void setUp() throws Exception {
+    c = new CalcModel(MAIN);
+  }
+
+  @Test
+  public void testDivide() {
+    c.divide(); //Check division with no input
+    assertEquals("", c.getExpressionValue());
+    double FirstInput = 8.0;
+    c.pushNumber(BigDecimal.valueOf(FirstInput));
+    double SecondInput = 4.0;
+    c.pushNumber(BigDecimal.valueOf(SecondInput));
+    c.divide();
+    BigDecimal ExpectedValue = new BigDecimal(2.0);
+    assertEquals(ExpectedValue, c.getCalculatedValue());
+    //Check BigDecimal
+    assertEquals(2.0, c.getCalculatedValue().doubleValue(), 0.01);
+    //Check conversion to double
+    assertEquals("/", c.getLastExpression());
+    //Check that operator was placed correctly
+    c.divide(); //Test that operator is substituted
+    assertEquals("8/4/1", c.getExpressionValue());
+    //Now test variables
+    c.variable();
+    c.divide();
+    assertEquals("(((8/4)/1)/X)", c.getExpressionValue());
+    //Ensure it still functions after clearing
+    c.clear();
+    FirstInput = 3.0;
+    c.pushNumber(BigDecimal.valueOf(FirstInput));
+    SecondInput = 0.0; //Checking divide by zero
+    c.pushNumber(BigDecimal.valueOf(FirstInput));
+    c.divide();
+    assertEquals("3,0", c.getExpressionValue());
+    //Ensure division didn't take place
+  }
+        </pre>
         <li>Graph</li>
+        <pre class="prettyprint">
+  public ChartPanel getChartPanel(){
+
+    XYSeries series = new XYSeries(expression);
+    //Enters the values
+
+   for(double i = xLeft; i < xRight; i = i + precision){
+     String expressionString = expression;
+     if(expression.contains("!") && expression.contains("X")){
+    //Replace variable in factorial with appropriate numbers
+     expressionString = expression.replace("!", fact(i));
+   }
+
+   e = new ExpressionBuilder(expressionString)
+   .variables("X")
+   .build()
+   .setVariable("X", i);
+   double result = e.evaluate();
+   if(expression.contains("X")) {
+    //If we're dealing with a variable we have to account for asymptotes
+
+    /*
+    We check if the differences between two values starts to get too large If its getting
+    really big really quickly, its likely approaching an asymptote This can cause issues
+    with things like factorial, in which case the tolerance needs to be adjusted to
+    compensate.
+    */
+     current = result;
+     difference = Math.abs(current - previous);
+    //Check the absolute value of the difference between current result and previous
+    result
+    if(difference < prevDif * tolerance){
+      series.add(i, result);
+    }
+    else
+    {
+      series.add(i,null);
+    }
+    } else //Other if theres no variables, were just drawing a straight line
+    {
+      series.add(i,result);
+    }
+
+    prevDif = difference;
+    previous = current;
+
+    }
+
+   XYSeriesCollection data = new XYSeriesCollection(series);
+   JFreeChart chart = ChartFactory.createXYLineChart(
+   expression,
+   "X", //X-axis Name
+   "Y", //Y-axis Name
+   data, //Dataset
+   PlotOrientation.VERTICAL,
+   true, //Legend
+   true, //Tool tips
+   false
+   );
+   ChartPanel chartPanel = new ChartPanel(chart);
+   chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+   return chartPanel;
+  }
+        </pre>
       </ul>
     </div>
     <div id="oskar" class="slide">

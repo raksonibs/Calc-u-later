@@ -1101,5 +1101,16 @@ pre {
   .slide {
     margin-top: 800px;
     margin-bottom: 800px;
+
+    .inline-img {
+      max-width: 250px;
+      display: inline-block;
+    }
+
+  pre {
+    &.prettyprint {
+      text-align: left;
+    }
+  }
   }
 }
