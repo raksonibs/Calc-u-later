@@ -274,8 +274,8 @@ public class CalcModel
 		System.out.println(num1);
 		num1 = fact(num1);
 		fact(num1);
-		System.out.println(num1);
-
+		System.out.println("AH" + num1);
+		updateRounding(num1.toString());
 		addToExpressionList("!");
 	
 		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
