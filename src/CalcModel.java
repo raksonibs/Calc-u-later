@@ -225,11 +225,6 @@ public class CalcModel
 
 	}
 	
-	public void pi()
-	{
-
-	}
-	
 	public void sin() {
 		if(!containsVariable)
 		{

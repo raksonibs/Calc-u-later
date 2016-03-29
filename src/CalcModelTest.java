@@ -122,6 +122,15 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	public void rounding(){
+		
+		double num = 1;
+		c.pushNumber(BigDecimal.valueOf(num));
+		assertEquals("1", c.getExpressionValue());
+		
+	}
+	
+	@Test
 	public void sin(){
 		double num =3.14;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -129,6 +138,11 @@ public class CalcModelTest {
 		
 		double num2 = 0.0;
 		assertEquals(num2, c.lastValue().doubleValue(), 0.15);
+		
+		c.clear();
+		c.variable();
+		c.sin();
+		assertEquals("sin(X)", c.getExpressionValue());
 	}
 	
 	@Test
@@ -139,6 +153,11 @@ public class CalcModelTest {
 		
 		double num2 = -1.0;
 		assertEquals(num2, c.lastValue().doubleValue(), 0.15);
+		
+		c.clear();
+		c.variable();
+		c.cos();
+		assertEquals("cos(X)", c.getExpressionValue());
 	}
 	
 	@Test
@@ -181,15 +200,26 @@ public class CalcModelTest {
 	
 	@Test
 	public void expression(){
+
+		
 		double num = 7.0;
 		c.pushNumber(BigDecimal.valueOf(num));
 		double num1 = 10.0;
 		c.pushNumber(BigDecimal.valueOf(num1));
-		c.sum();
+		c.sin();
 		
+		c.factorial();
+		num = 7.0;
+		c.pushNumber(BigDecimal.valueOf(num));
+		num1 = 10.0;
+		c.pushNumber(BigDecimal.valueOf(num1));
+		c.sum();
+
 		String expression = "(7+10)";
 		
 		assertEquals(expression, c.getExpressionValue());
+
+		
 	}
 	
 	@Test
@@ -220,20 +250,31 @@ public class CalcModelTest {
 	@Test
 	public void getEquation(){
 		c.variable();
-		
-		assertEquals("", c.getEquation());
+		assertEquals("X", c.getEquation());
+		c.clear();
+		assertEquals("0", c.getEquation());
+		double num = 6.0;
+		c.pushNumber(BigDecimal.valueOf(num));
+		double num2 = 4.0;
+		c.pushNumber(BigDecimal.valueOf(num2));
+		c.sum();
+		assertEquals("10.0", c.getEquation());
 	}
 	
 	@Test
 	public void getCalcValue(){
+		assertEquals(0.0, c.getCalculatedValue().doubleValue(), 0.1);
 		double num = 6.0;
 		c.pushNumber(BigDecimal.valueOf(num));
-		double num2 = 6.0;
+		double num2 = 4.0;
 		c.pushNumber(BigDecimal.valueOf(num2));
 		c.sum();
-		double num3 = 12.0;
+		double num3 = 10.0;
 		assertEquals(num3, c.getCalculatedValue().doubleValue(), 0.1);
+		assertEquals(num3, c.getCalcValue().doubleValue(), 0.1);
 	}
+	
+	
 	
 	@Test
 	public void undo(){
