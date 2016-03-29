@@ -248,7 +248,6 @@ public class CalcModel
 		
 	}
 	
-	public void pi(){}
 	public void cos() {
 		if(!containsVariable)
 		{
