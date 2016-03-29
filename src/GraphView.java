@@ -1,4 +1,5 @@
 import java.awt.Container;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -27,9 +28,10 @@ public class GraphView extends JPanel{
 			}
 		};
 		
+		button.setPreferredSize(new Dimension(400,30));
+		pane.add(graphPanel);
 		pane.add(button);
-			pane.add(graphPanel);
-			pane.setVisible(true);
+		pane.setVisible(true);
 			
 	}
 
