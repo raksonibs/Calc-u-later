@@ -289,6 +289,9 @@ public class CalcModel
 		{
 			addToExpressionList("!");
 		}
+		System.out.println(getCalculatedValue().toPlainString());
+		
+		updateRounding(getCalculatedValue().toPlainString());
 	}
 	
 	public void variable(){
@@ -991,6 +994,13 @@ public class CalcModel
 	            return op;
 	        }
 	    }
+	}
+
+
+
+	public void pi() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

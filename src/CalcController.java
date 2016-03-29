@@ -116,6 +116,7 @@ public class CalcController
 	}
 
 	public void factorial() {
+		pushUserText();
 		model.factorial();
 		showValue();
 	}
