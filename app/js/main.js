@@ -1,3 +1,20 @@
+(function($) {
+    $.scrollToElement = function($element, speed) {
+
+        speed = speed || 750;
+
+        $("html, body").animate({
+            scrollTop: $element.offset().top,
+            scrollLeft: $element.offset().left
+        }, speed);
+        return $element;
+    };
+
+    $.fn.scrollTo = function(speed) {
+        speed = speed || "normal";
+        return $.scrollToElement(this, speed);
+    };
+})(jQuery);
 
 $(".loading-bar")
 .on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",
@@ -17,6 +34,16 @@ $('.parent-nav li').hover(function() {
 });
 
 $('.smaller-nav-options').fadeOut();
+
+
+$.each([['#start', '#intro'], ["#intro", "#demo"], ["#demo", '#design'], ['#design', '#testing'], ['#testing', '#web'], ['#web', '#asmah'], ['#asmah', '#mohammad'], ["#mohammad", '#anji'], ['#anji', '#brad'], ['#brad', '#oskar'], ['#oskar', '#goals']], function(index, val) {
+  $(val[0]).click(function() {
+   $('html, body').animate({
+        scrollTop: $(val[1]).offset().top - 250
+    }, 2000);
+    return false;
+})
+})
 
 $('.small-nav-links li').hover(function() {
   var liText = $(this).text().toLowerCase();

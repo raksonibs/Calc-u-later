@@ -1079,7 +1079,6 @@ pre {
 
 }
 
-
 #calc-img {
   margin-top: 45px !important;
   max-height: 110px !important;
@@ -1092,4 +1091,15 @@ pre {
 .fa.fa-bars {
   top: 21px;
   position: relative;
+}
+
+.marketing #start {
+  margin-top: 300px !important;
+}
+
+.presentation {
+  .slide {
+    margin-top: 800px;
+    margin-bottom: 800px;
+  }
 }

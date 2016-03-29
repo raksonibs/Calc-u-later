@@ -3,15 +3,99 @@ layout: default
 title: Blog Posts
 ---
 
-<div id="marketing" class="marketing">
-  {% for post in site.posts %}
-    <div class="post-cont">
-      <h1>{{post.title}}</h1>
-      <h3>{{ post.date | date_to_string }}</h3>
-      <div id="post">
-        {{post.content}}
+<div id="marketing" class="marketing">  
+  <div id="start">
+    <image id="calc-img" src="http://icons.iconarchive.com/icons/grafikartes/flat-retro-modern/512/calculator-icon.png" /> 
+    {% for post in site.posts %}
+      <div class="post-cont">
+        <h1>{{post.title}}</h1>
+        <h3>{{ post.date | date_to_string }}</h3>
+        <div id="post">
+          {{post.content}}
+        </div>
       </div>
+    {% endfor %}
+  </div>
+
+  <div class="presentation">
+    <div id="intro" class="slide">
+      <h1>Intro</h1>
+      <p> pics of us </p>
     </div>
-    <hr />
-  {% endfor %}
+    <div id="demo" class="slide">
+      <h1>Demo</h1>
+      <ul>
+        <li>Basic Calculations</li>
+        <li>Advanced Calculations</li>
+        <li>Error Handling</li>
+        <li>Graph</li>
+        <li>Favourites</li>
+      </ul>
+    </div>
+    <div id="design" class="slide">
+      <h1>Design</h1>
+      <ul>
+        <li>UML Diagrams</li>
+        <li>MVC Overview</li>
+        <li>Expression Builder</li>
+        <li>MAIN Layer</li>
+        <li>Graphing/Saving</li>
+      </ul>
+    </div>
+    <div id="testing" class="slide">
+      <h1>Testing</h1>
+      <ul>
+        <li>JUnit Tests</li>
+        <li>Coverage</li>
+      </ul>
+    </div>
+    <div id="web" class="slide">
+      <h1>Web</h1>
+      <ul>
+        <li>Bar</li>
+        <li>Come Visit!</li>
+      </ul>
+    </div>
+    <div id="asmah" class="slide">
+      <h1>Asmah</h1>
+      <ul>
+        <li>Requirements</li>
+      </ul>
+    </div>
+    <div id="mohammad" class="slide">
+      <h1>Mohammad</h1>
+      <ul>
+        <li>User</li>
+        <li>Expressions</li>
+      </ul>
+    </div>
+    <div id="anji" class="slide">
+      <h1>Anji</h1>
+      <ul>
+        <li>Favourites</li>
+        <li>Design</li>
+      </ul>
+    </div>
+    <div id="brad" class="slide">
+      <h1>Brad</h1>
+      <ul>
+        <li>Testing</li>
+        <li>Graph</li>
+      </ul>
+    </div>
+    <div id="oskar" class="slide">
+      <h1>Oskar</h1>
+      <ul>
+        <li>Tests</li>
+        <li>PM</li>
+      </ul>
+    </div>
+    <div id="goals" class="slide">
+      <h1>Stretch Goals</h1>
+      <ul>
+        <li>Better Look</li>
+        <li>JSP, Tomcat</li>
+      </ul>
+    </div>
+  </div>
 </div>
