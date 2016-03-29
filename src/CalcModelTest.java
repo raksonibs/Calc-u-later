@@ -106,19 +106,40 @@ public class CalcModelTest {
 	
 	@Test
 	public void testDivide() {
-		double num = 14.0;
-		c.pushNumber(BigDecimal.valueOf(num));
-		double num1 = 7.0;
-		c.pushNumber(BigDecimal.valueOf(num1));
-		c.divide();
-		double num2 = 1.0;
-
-		assertEquals(true, c.lastValue().doubleValue() == num2);
-		assertEquals("/", c.getLastExpression());
 		
+		//c.divide(); 	//Check division with no input
+		//assertEquals("", c.getExpressionValue());	
+		
+		double FirstInput = 8.0;
+		c.pushNumber(BigDecimal.valueOf(FirstInput));
+		double SecondInput = 4.0;
+		c.pushNumber(BigDecimal.valueOf(SecondInput));
 		c.divide();
-		c.variable();
+
+		BigDecimal ExpectedValue = new BigDecimal(2.0);
+
+		assertEquals(ExpectedValue, c.getCalculatedValue());			//Check BigDecimal
+		assertEquals(2.0, c.getCalculatedValue().doubleValue(), 0.01);	//Check conversion to double
+		assertEquals("/", c.getLastExpression());						//Check that operator was placed correctly
+			
+
+		c.divide();	//Test that operator is substituted
+		assertEquals("8/4/1", c.getExpressionValue());
+		
+		c.variable();		//Now test variables
 		c.divide();
+		assertEquals("(((8/4)/1)/X)", c.getExpressionValue());
+		
+		//Now test
+		c.clear();
+		//Ensure it still functions after clearing
+		FirstInput = 3.0;
+		c.pushNumber(BigDecimal.valueOf(FirstInput));
+		SecondInput = 0.0;	//Checking divide by zero
+		c.pushNumber(BigDecimal.valueOf(FirstInput));
+		c.divide();
+		//assertEquals("3,0", c.getExpressionValue());	//Ensure division didn't take place
+		
 	}
 	
 	@Test
