@@ -356,7 +356,7 @@ double result = e.evaluate();
           
     //System.out.println(difference);
     
-    if(difference < prevDif * tolerance){
+    if(difference &#60; prevDif * tolerance){
       //System.out.println("Within Bounds");
         series.add(i, result);
     }
@@ -654,7 +654,7 @@ if (e.getStateChange() == ItemEvent.SELECTED && !box.getSelectedItem().equals("S
     XYSeries series = new XYSeries(expression);
     //Enters the values
 
-   for(double i = xLeft; i < xRight; i = i + precision){
+   for(double i = xLeft; i &#60; xRight; i = i + precision){
      String expressionString = expression;
      if(expression.contains("!") && expression.contains("X")){
     //Replace variable in factorial with appropriate numbers
@@ -679,7 +679,7 @@ if (e.getStateChange() == ItemEvent.SELECTED && !box.getSelectedItem().equals("S
      difference = Math.abs(current - previous);
     //Check the absolute value of the difference between current result and previous
     result
-    if(difference < prevDif * tolerance){
+    if(difference &#60; prevDif * tolerance){
       series.add(i, result);
     }
     else
