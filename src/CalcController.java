@@ -97,11 +97,16 @@ public class CalcController
 	}
 
 	public void divide() {
-
-		pushUserText();
-		model.divide();
-
-		showValue();
+		if (view.getUserValue().charAt(0) != '0') {
+			System.out.println(view.getUserValue());
+			System.out.println(view.getUserValue().charAt(0) == '0');
+			pushUserText();
+			model.divide();
+			showValue();			
+		} else {
+			view.setCalcValue("Syntax Error");
+			view.clearUserValue();
+		}
 	}
 	
 	public void pi() {
