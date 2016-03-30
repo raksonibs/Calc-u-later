@@ -30,6 +30,8 @@ public class CalcModel
 	//Amount to round to
 	private MathContext roundingAmount = new MathContext(1);
 	private MathContext roundingAmountResult = new MathContext(1);
+	
+	private static int prevPrecedence = 10;
 
 	/**
 	 * Creates a model with no user values and a calculated
@@ -400,6 +402,57 @@ public class CalcModel
 
 	}
 	
+	public int checkPrecedence(String operator){
+		
+		if(operator.equals("/")){
+			//prevPrecedence = 5;
+			return 5;
+		}
+		else if(operator.equals("*"))
+		{
+			//prevPrecedence = 4;
+			return 4;	
+		}
+		else if(operator.equals("+"))
+		{
+			//prevPrecedence = 3;
+			return 3;	
+		}
+		else if(operator.equals("-"))
+		{
+			//prevPrecedence = 2;
+			return 2;	
+		}
+		else if(operator.equals(" "))
+		{
+			//prevPrecedence = 1;
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+		
+	}
+	
+	public void setPrecedence(String operator){
+		if(operator.equals("/")){
+			prevPrecedence = 5;
+		}
+		else if(operator.equals("*"))
+		{
+			prevPrecedence = 4;
+		}
+		else if(operator.equals("+"))
+		{
+			prevPrecedence = 3;
+		}
+		else if(operator.equals("-"))
+		{
+			prevPrecedence = 2;
+		}
+	}
+	
 	/**
 	 * Check if a String is one of the following: +,-,x,÷,=.
 	 * @param The String to check
@@ -535,10 +588,32 @@ public class CalcModel
 			//Check is +,-,/,x
 			if(isOperator(value)){
 				
-				String number2 = container.pop().toString();
-				String number1 = container.pop().toString();
+
 				
-				container.push("(" + number1 + value + number2 + ")");
+				System.out.println("Previous precedence " + prevPrecedence);
+				System.out.println("Current precedence: " + checkPrecedence(value));
+				
+				if(checkPrecedence(value) > prevPrecedence){
+
+				}
+				
+				if(checkPrecedence(value) > prevPrecedence){
+					System.out.println("Higher precedence");
+					
+					String number2 = container.pop().toString();
+					String number1 = container.pop().toString();
+					
+					container.push("(" + number1 + ")" + value + number2);
+				}
+				else
+				{
+					String number2 = container.pop().toString();
+					String number1 = container.pop().toString();
+					container.push(number1 + value + number2);
+				}
+
+				setPrecedence(value);
+
 				
 			}
 			//Check if sin or cos

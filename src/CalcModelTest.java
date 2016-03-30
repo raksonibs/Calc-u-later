@@ -17,11 +17,13 @@ public class CalcModelTest {
 	private BigInteger b;
 	
 	@Before
+	
 	public void setUp() throws Exception {
 		c = new CalcModel(MAIN);
 	}
 	
 	@Test
+	//5.2.1
 	public void testConstructor() {
 		assertEquals(true, c.getHistory().isEmpty());
 		assertEquals(true, c.getNumbers().isEmpty());
@@ -29,6 +31,7 @@ public class CalcModelTest {
 	}
 
 	@Test
+	//5.2.2
 	public void testClear() {
 		
 		double num = 7;
@@ -40,6 +43,7 @@ public class CalcModelTest {
 	}
 
 	@Test
+	//5.2.3
 	public void testPush() {
 		double num = 7;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -51,6 +55,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//5.2.4
 	public void testSubtract() {
 		
 		double num = 7.0;
@@ -69,6 +74,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//5.2.5
 	public void testSum() {
 		
 		double num = 7.0;
@@ -87,6 +93,7 @@ public class CalcModelTest {
 	
 	@SuppressWarnings("deprecation")
 	@Test
+	//5.2.6
 	public void testMultiply() {
 		double num = 7.0;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -103,11 +110,13 @@ public class CalcModelTest {
 	
 	
 	@Test(expected=EmptyStackException.class)
+	//5.2.7
 	public void testEmptyDivide(){
 		c.divide(); 	//Check division with no input
 	}
 	
 	@Test(expected=ArithmeticException.class)
+	//5.2.8
 	public void testDivideByZero(){
 		//Now test
 		c.clear();
@@ -121,6 +130,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//5.2.9
 	public void testDivide() {
 
 		assertEquals("", c.getExpressionValue());	
