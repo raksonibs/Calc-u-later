@@ -31,6 +31,9 @@ public class GraphModelTest {
 		model.pushExpression("6!");
 		assertEquals("6!", model.getExpression());
 
+		model.pushExpression("1,2");
+		model.pushExpression(",");
+
 	}
 	
 	@Test
@@ -128,6 +131,25 @@ public class GraphModelTest {
 		assertEquals(expressionDirty, model.expressionDirty);
 	}
 	
+	@Test
+	public void getChartPanel(){
+		model.pushExpression("(sin(X))!");
+		model.getChartPanel();
+		model.reset();
+		model.pushExpression("X!");
+		model.getChartPanel();
+		model.pushExpression("X");
+		model.getChartPanel();
+		model.pushExpression("1");
+		model.getChartPanel();
 	
+	}
+	
+	@Test
+	public void getChart(){
+		model.pushExpression("sin(X)");
+		model.getChartPanel();
+		model.getChart();
+	}
 	
 }
