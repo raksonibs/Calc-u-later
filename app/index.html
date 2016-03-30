@@ -34,6 +34,10 @@ title: Blog Posts
       />
       </div>
     </div>
+    <div id="idea" class="slide">
+      <svg width="500" height="75"></svg>
+      <image id="babbage" src="/assets/babbage.jpg"/>
+    </div>
     <div id="demo" class="slide">
       <h1>Demo</h1>
       <ul>
@@ -97,6 +101,153 @@ title: Blog Posts
         </div>
         <br />
         <h3>Expression Builder/Parser</h3>
+        <pre class="prettyprint">
+public Boolean isOperator(String value){
+
+//Check to see if a string is an operator
+
+//Note that × is for multiply, not x as in the letter!
+if(value.equals("+") || value.equals("-")  || value.equals("*")|| value.equals("/")|| value.equals("=")){ 
+
+  return true;
+}
+else
+{
+  return false;
+}
+
+}
+//...
+
+/**
+ * Convert postFix stack to inFix
+ * @return Converted String
+ */
+public String getExpressionValue(){
+
+  String expression = "";
+  
+  //Create a clone of the expression list so we can pop things without disturbing the list
+  /* 
+   * This is how this works....
+   * 
+   * We get the expressionList stack which could look like this:
+   * (Read the stacks right>left = top>bottom)
+   * 1,2,3,+,+
+   * We reverse it
+   * +,+,3,2,1 
+   * 
+   * We keep popping from this stack and putting the numbers into the container stack
+   * until we reach an operator like +,-,x,/
+   * Then we take the top two numbers from the container and put the operator 
+   * in between the two numbers and put it back into the container stack.
+   * We do this until we reach the end of the stack, then we reverse the
+   * container stack and print it out to a String.
+   */
+  Stack cloneExpressionList = new Stack();
+  Stack reverse = new Stack();
+  Stack container = new Stack();
+
+  cloneExpressionList = (Stack) expressionList.clone();
+  
+  while(cloneExpressionList.size() > 0){
+    reverse.push(cloneExpressionList.pop());
+  }
+  
+  while(reverse.size()>0){
+    
+    String value = reverse.pop().toString();
+    
+    //Check is +,-,/,x
+    if(isOperator(value)){
+      
+      String number2 = container.pop().toString();
+      String number1 = container.pop().toString();
+      
+      container.push("(" + number1 + value + number2 + ")");
+      
+    }
+    //Check if sin or cos
+    else if(isTrignometric(value))
+    {
+      String number1 = container.pop().toString();
+      
+      container.push(value + "(" + number1 + ")");
+    }
+    else if (isFactorial(value))
+    {
+      String number1 = container.pop().toString();
+      container.push(number1 + value);
+    }
+    else if(isVariable(value))
+    {
+      //String number1 = container.pop().toString();
+      
+      container.push( value );
+    }
+    else
+    {
+      container.push(value);
+    }
+
+  }
+  
+  //System.out.println("Container stack: ");
+  //printStackToConsole(container);
+  
+  //Reverse the container stack
+  while(container.size() > 0){
+    reverse.push(container.pop());
+  }
+
+  //System.out.println("Container stack: ");
+  //printStackToConsole(reverse);
+  
+  //Add everything in the container to a String separated by commas
+  while(reverse.size()>0){
+    expression = expression + "," + reverse.pop();
+  }
+  
+  //Shave off the excess comma at the begining
+  if(expression.length() > 0)
+  {
+  expression = expression.substring(1, expression.length());
+  }
+  
+  //if (expression.contains("!") || expression.contains("sin") || expression.contains("cos") || expression.contains("X") || expression.contains(".") || expression.contains("+/-"))
+  if(expression.contains(",")){
+    System.out.println("this is expression"+expression);
+    List<String> exps = Arrays.asList(expression.split(","));
+    String result = "";
+    for (int i = 0; i < exps.size() ; i++){
+      System.out.println("array"+exps.get(i));
+      if(exps.get(i).contains("!") || exps.get(i).contains("sin") || exps.get(i).contains("cos") || exps.get(i).contains("X") || exps.contains("."))
+      {
+        result += exps.get(i);
+        result += ",";
+      }
+      else
+      {
+      result += new Parser(exps.get(i)).parse();
+      result += ",";
+      }
+    }
+    return result;
+  }
+  else if(expression.contains("X") || expression.contains("sin") || expression.contains("cos") || expression.contains("!") || expression.contains("."))
+    return expression;
+  
+  else
+  {
+  Parser exp = new Parser(expression);
+  System.out.println("this is expression"+ expression);
+  return exp.parse();
+
+  }
+  //System.out.println("this is expression"+ expression);
+  //return expression;
+}
+        </pre>
         <h3>MAIN Layer</h3>
         <pre class="prettyprint">
 import javax.swing.*;
@@ -257,11 +408,14 @@ return chartPanel;
       </ul>
     </div>
     <div id="web" class="slide">
-      <h1>Web</h1>
-      <ul>
-        <li>Bar</li>
-        <li>Come Visit!</li>
-      </ul>
+      <canvas></canvas>
+      <div class="web-holder">
+        <h1>Web</h1>
+        <ul>
+          <li>Bar</li>
+          <li>Come Visit!</li>
+        </ul>
+      </div>
     </div>
     <div id="asmah" class="slide">
       <h1>Asmah</h1>
@@ -390,6 +544,11 @@ private class Result {
  }
 }
 }
+
+// Numbers being stored
+Stack cloneExpressionList = new Stack();
+Stack reverse = new Stack();
+Stack container = new Stack(); 
         </pre>
       </ul>
     </div>

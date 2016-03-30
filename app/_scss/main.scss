@@ -1102,6 +1102,20 @@ pre {
     margin-top: 800px;
     margin-bottom: 800px;
 
+    #babbage {
+      display: none;
+    }
+
+    canvas {
+      position: relative;
+      left: -110px;
+    }
+
+    .web-holder {
+      position: relative;
+      top: -600px;
+    }
+
     .inline-img {
       max-width: 250px;
       display: inline-block;
@@ -1122,8 +1136,8 @@ pre {
     &#testing {
       .image-holder {
         width: 125%;
-        positon: relative;
-        left: -25%
+        position: relative;
+        left: -10%
       }
     }
 
