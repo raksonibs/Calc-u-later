@@ -18,7 +18,6 @@ public class GraphModelTest {
 		model = new GraphModel("");
 	}
 	
-	
 	@Test
 	//6.2.1
 	public void pushExpression(){
@@ -32,7 +31,10 @@ public class GraphModelTest {
 		assertEquals("6!", model.getExpression());
 
 		model.pushExpression("1,2");
+		assertEquals("2", model.getExpression()); 
+		
 		model.pushExpression(",");
+		assertEquals("", model.getExpression());
 
 	}
 	
