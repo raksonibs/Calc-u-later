@@ -43,12 +43,9 @@ public class CalcModelTest {
 		double num = 7;
 		c.pushNumber(BigDecimal.valueOf(num));
 		double num2 = 7.0;
-		assertEquals(true, c.lastValue().doubleValue() == num2);
-		assertEquals(false, c.lastValue().doubleValue() == 1.23);
-
+		assertEquals("7", c.getExpressionValue());
 		c.variable();
-		assertEquals(true, c.lastValue().doubleValue() == num2);
-		assertEquals(false, c.lastValue().doubleValue() == 1.23);
+		assertEquals("7,X", c.getExpressionValue());
 		
 	}
 	
@@ -60,8 +57,8 @@ public class CalcModelTest {
 		double num1 = 10.0;
 		c.pushNumber(BigDecimal.valueOf(num1));
 		c.subtract(); 
-		double num2 = -3.0;
-		assertEquals(true, c.lastValue().doubleValue() == num2);
+		BigDecimal num2 = new BigDecimal(-3.0);
+		assertEquals(num2, c.lastValue());
 		assertEquals("-", c.getLastExpression());
 		
 		c.subtract();
@@ -95,8 +92,7 @@ public class CalcModelTest {
 		double num1 = 10.0;
 		c.pushNumber(BigDecimal.valueOf(num1));
 		c.multiply();
-		double num2 = 70.0;
-		assertEquals(true, c.lastValue().doubleValue() == num2);
+		assertEquals("70", c.lastValue().toPlainString());
 		assertEquals("*", c.getLastExpression());
 		
 		c.multiply();
@@ -124,7 +120,7 @@ public class CalcModelTest {
 			
 
 		c.divide();	//Test that operator is substituted
-		assertEquals("8/4/1", c.getExpressionValue());
+		assertEquals("((8/4)/1)", c.getExpressionValue());
 		
 		c.variable();		//Now test variables
 		c.divide();
@@ -163,7 +159,7 @@ public class CalcModelTest {
 		c.clear();
 		c.variable();
 		c.sin();
-		assertEquals("sin(X)", c.getExpressionValue());
+		assertEquals("(sin(X))", c.getExpressionValue());
 	}
 	
 	@Test
@@ -178,7 +174,7 @@ public class CalcModelTest {
 		c.clear();
 		c.variable();
 		c.cos();
-		assertEquals("cos(X)", c.getExpressionValue());
+		assertEquals("(cos(X))", c.getExpressionValue());
 	}
 	
 	@Test
@@ -265,7 +261,7 @@ public class CalcModelTest {
 		c.clear();
 		c.variable();
 		c.factorial();
-		assertEquals("X!", c.getExpressionValue());
+		assertEquals("(X!)", c.getExpressionValue());
 	}
 	
 	@Test
@@ -320,7 +316,7 @@ public class CalcModelTest {
 		double num1 = 10.0;
 		c.pushNumber(BigDecimal.valueOf(num1));
 		c.sum();
-		
+		c.pi();
 		c.printAllStacks();
 		c.printAsTestCase();
 		String[] expressionArray = { "21", "35", "*", "101", "4", "*", "+"};
@@ -331,6 +327,8 @@ public class CalcModelTest {
 		c.generateTestCase(expressionArray, inputValuesArray, numbersArray, calculatedValuesArray);
 		c.getTestCase();
 	}
+	
+	
 
 }
 
