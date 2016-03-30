@@ -1032,6 +1032,10 @@ body {
   margin-bottom: 0;
 }
 
+h1,h2,h3,h4,h5,h6,p,div {
+  font-family: 'Text Me One',sans-serif!important;
+}
+
 .post-date {
   font-family: 'Lucida Console', 'Andale Mono', monospace;
   color: #aaa;
@@ -1181,7 +1185,7 @@ pre {
 
     &#intro {
       width: 150%;
-      left: -30%;
+      left: -20%;
       position: relative; 
 
       .images, .left-bracket, .right-bracket {
