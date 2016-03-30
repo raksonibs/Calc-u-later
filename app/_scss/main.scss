@@ -1124,6 +1124,12 @@ pre {
     pre {
       &.prettyprint {
         text-align: left;
+
+        span {
+          &:hover {
+            background: yellow;
+          }
+        }
       }
     }
 

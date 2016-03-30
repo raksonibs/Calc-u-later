@@ -35,6 +35,10 @@ $('.parent-nav li').hover(function() {
 
 $('.smaller-nav-options').fadeOut();
 
+// $('body').on("span", "hover", function() {
+//   console.log('hover')
+//   $(this).css('background', 'red')
+// })
 
 $.each([['#start', '#intro'], ["#intro", "#idea"], ["#idea", "#demo"], ["#demo", '#design'], ['#design', '#testing'], ['#testing', '#web'], ['#web', '#asmah'], ['#asmah', '#mohammad'], ["#mohammad", '#anji'], ['#anji', '#brad'], ['#brad', '#oskar'], ['#oskar', '#goals']], function(index, val) {
   
