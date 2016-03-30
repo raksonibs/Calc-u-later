@@ -12,8 +12,6 @@ import java.util.Vector;
 
 import javax.swing.*;
 
-//import CalcModel.Parser.Result;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -270,16 +268,14 @@ public class CalcModel
 	
 	public void factorial() {
 		if(!containsVariable){
-		Double num1 = ((BigDecimal) numbers.pop()).doubleValue();
+		Double num1 = ((BigDecimal)numbers.pop()).doubleValue();
 		System.out.println(num1);
 		num1 = fact(num1);
-		fact(num1);
 		System.out.println("AH" + num1);
 		updateRounding(num1.toString());
 		addToExpressionList("!");
 	
-		BigDecimal b = BigDecimal.valueOf(num1).round(roundingAmount);
-
+		BigDecimal b =  new BigDecimal(num1);
 		
 		numbers.push(b);
 		calculatedValues.push(b);
@@ -306,7 +302,6 @@ public class CalcModel
 		//System.out.println("-------BEFORE---------");
 		//printAllStacks();
 
-
 		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())|| isFactorial(expressionList.peek()) || isVariable(expressionList.peek())){
 
 			expressionList.pop();
@@ -325,19 +320,20 @@ public class CalcModel
 		//printAllStacks();
 
 	}
+
+
 	
 	public static double fact(double b)
 	{
-	
-		//double r = 1.0;
-		if(b <= 1){
-			return 1.0;
+		double r = 1.0;
+		System.out.println("working with: " + b);
+		while (b > 1.0)
+		{
+			r = r * b;
+			b -= 1;
+			System.out.println(r);
 		}
-		else{
-			return b * fact(b-1);
-		}
-		//System.out.println("working with: " + b);
-		
+		return r;
 	}
 	
 
@@ -550,12 +546,13 @@ public class CalcModel
 			{
 				String number1 = container.pop().toString();
 				
-				container.push(value + "(" + number1 + ")");
+				container.push("(" + value + "(" + number1 + "))");
 			}
-			else if (isFactorial(value))
+			else if(isFactorial(value))
 			{
 				String number1 = container.pop().toString();
-				container.push(number1 + value);
+				
+				container.push("(" + number1 + value + ")");
 			}
 			else if(isVariable(value))
 			{
@@ -591,39 +588,7 @@ public class CalcModel
 		{
 		expression = expression.substring(1, expression.length());
 		}
-		
-		//if (expression.contains("!") || expression.contains("sin") || expression.contains("cos") || expression.contains("X") || expression.contains(".") || expression.contains("+/-"))
-		if(expression.contains(",")){
-			System.out.println("this is expression"+expression);
-			List<String> exps = Arrays.asList(expression.split(","));
-			String result = "";
-			for (int i = 0; i < exps.size() ; i++){
-				System.out.println("array"+exps.get(i));
-				if(exps.get(i).contains("!") || exps.get(i).contains("sin") || exps.get(i).contains("cos") || exps.get(i).contains("X") || exps.contains("."))
-				{
-					result += exps.get(i);
-					result += ",";
-				}
-				else
-				{
-				result += new Parser(exps.get(i)).parse();
-				result += ",";
-				}
-			}
-			return result;
-		}
-		else if(expression.contains("X") || expression.contains("sin") || expression.contains("cos") || expression.contains("!") || expression.contains("."))
-			return expression;
-		
-		else
-		{
-		Parser exp = new Parser(expression);
-		System.out.println("this is expression"+ expression);
-		return exp.parse();
-
-		}
-		//System.out.println("this is expression"+ expression);
-		//return expression;
+		return expression;
 	}
 	
 	public String getLastExpression() {
@@ -967,6 +932,7 @@ public class CalcModel
 	            throw new IllegalArgumentException("Unexpected end of input");
 	        }
 	        do {
+	        	
 	            ++currPos;
 	        }
 	        while(currToken() != EOF && currToken() == ' ');
