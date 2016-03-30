@@ -126,7 +126,7 @@ public class CalcModelTest {
 		double SecondInput = 0.0;	//Checking divide by zero
 		c.pushNumber(BigDecimal.valueOf(SecondInput));
 		c.divide();
-		assertEquals("3,0", c.getExpressionValue());	//Ensure division didn't take place
+		assertEquals("3,0", c.getExpressionValue());	//Ensure division didn't take place 
 	}
 	
 	@Test

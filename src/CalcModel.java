@@ -592,13 +592,9 @@ public class CalcModel
 				
 				
 				
-				System.out.println("Previous precedence " + prevPrecedence);
-				System.out.println("Current precedence: " + checkPrecedence(value));
-				
-				if(checkPrecedence(value) > prevPrecedence){
+				//System.out.println("Previous precedence " + prevPrecedence);
+				//System.out.println("Current precedence: " + checkPrecedence(value));
 
-				}
-				
 				if(checkPrecedence(value) > prevPrecedence){
 
 					
@@ -629,15 +625,16 @@ public class CalcModel
 			//Check if sin or cos
 			else if(isTrignometric(value))
 			{
-				String number1 = container.pop().toString();
-				
-				container.push("(" + value + "(" + number1 + "))");
+					String number1 = container.pop().toString();
+					
+					container.push(value + "(" + number1 + ")");
+
 			}
 			else if(isFactorial(value))
 			{
 				String number1 = container.pop().toString();
 				
-				container.push("(" + number1 + value + ")");
+				container.push(number1 + value);
 			}
 			else if(isVariable(value))
 			{
