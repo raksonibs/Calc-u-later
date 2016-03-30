@@ -1119,6 +1119,14 @@ pre {
       left: -25%;
     }
 
+    &#testing {
+      .image-holder {
+        width: 125%;
+        positon: relative;
+        left: -25%
+      }
+    }
+
     ul {
       margin-top: 100px;
       li {
@@ -1126,7 +1134,7 @@ pre {
         display: inline-block;
 
         i {
-          font-size: 3em;
+          font-size: 5em;
           margin-bottom: 20px;
 
           &.fa-calculator {
@@ -1156,7 +1164,7 @@ pre {
 
     &#intro {
       width: 150%;
-      left: -40%;
+      left: -30%;
       position: relative; 
 
       .images, .left-bracket, .right-bracket {
