@@ -51,6 +51,12 @@ $.each([['#start', '#intro'], ["#intro", "#idea"], ["#idea", "#demo"], ["#demo",
       setTimeout(function() {        
         $('#babbage').fadeIn(2000);
       }, 7000);
+    } else if (val[0] === "#oskar") {
+      console.log("changing body")
+      setTimeout(function() {        
+        $('html').css('background', '#00b4ff');
+        $('#background-wrap').css('display', 'block');
+      }, 2500)
     }
     return false;
 })

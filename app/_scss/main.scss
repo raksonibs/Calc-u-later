@@ -1146,7 +1146,10 @@ pre {
       li {
         width: 19%;
         display: inline-block;
-
+        &.tomcat {
+          position: relative;
+          top: 20px;
+        }
         i {
           font-size: 5em;
           margin-bottom: 20px;
@@ -1160,7 +1163,7 @@ pre {
           }
 
           &.fa-bug, 
-          &.fa-bicycle {
+          &.fa-space-shuttle {
             color: #2F4F4F;
           }
 
