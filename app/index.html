@@ -217,9 +217,9 @@ public String getExpressionValue(){
   //if (expression.contains("!") || expression.contains("sin") || expression.contains("cos") || expression.contains("X") || expression.contains(".") || expression.contains("+/-"))
   if(expression.contains(",")){
     System.out.println("this is expression"+expression);
-    List<String> exps = Arrays.asList(expression.split(","));
+    List&#60;String&#62; exps = Arrays.asList(expression.split(","));
     String result = "";
-    for (int i = 0; i < exps.size() ; i++){
+    for (int i = 0; i &#60; exps.size() ; i++){
       System.out.println("array"+exps.get(i));
       if(exps.get(i).contains("!") || exps.get(i).contains("sin") || exps.get(i).contains("cos") || exps.get(i).contains("X") || exps.contains("."))
       {
