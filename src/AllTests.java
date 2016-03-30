@@ -10,8 +10,8 @@ import org.junit.runners.Suite;
 	
 	CalcModelTest.class,
 	GraphModelTest.class,
-	CalcControllerTest.class
-	
+	CalcControllerTest.class,
+	CalcViewTest.class
 })
 
 public class AllTests { } 

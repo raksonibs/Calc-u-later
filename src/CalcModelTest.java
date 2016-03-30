@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 import javax.swing.JTabbedPane;
@@ -100,11 +101,29 @@ public class CalcModelTest {
 		c.multiply();
 	}
 	
+	
+	@Test(expected=EmptyStackException.class)
+	public void testEmptyDivide(){
+		c.divide(); 	//Check division with no input
+	}
+	
+	@Test(expected=ArithmeticException.class)
+	public void testDivideByZero(){
+		//Now test
+		c.clear();
+		//Ensure it still functions after clearing
+		double FirstInput = 3.0;
+		c.pushNumber(BigDecimal.valueOf(FirstInput));
+		double SecondInput = 0.0;	//Checking divide by zero
+		c.pushNumber(BigDecimal.valueOf(SecondInput));
+		c.divide();
+		assertEquals("3,0", c.getExpressionValue());	//Ensure division didn't take place
+	}
+	
 	@Test
 	public void testDivide() {
-		
-		//c.divide(); 	//Check division with no input
-		//assertEquals("", c.getExpressionValue());	
+
+		assertEquals("", c.getExpressionValue());	
 		
 		double FirstInput = 8.0;
 		c.pushNumber(BigDecimal.valueOf(FirstInput));
@@ -125,17 +144,7 @@ public class CalcModelTest {
 		c.variable();		//Now test variables
 		c.divide();
 		assertEquals("(((8/4)/1)/X)", c.getExpressionValue());
-		
-		//Now test
-		c.clear();
-		//Ensure it still functions after clearing
-		FirstInput = 3.0;
-		c.pushNumber(BigDecimal.valueOf(FirstInput));
-		SecondInput = 0.0;	//Checking divide by zero
-		c.pushNumber(BigDecimal.valueOf(FirstInput));
-		c.divide();
-		//assertEquals("3,0", c.getExpressionValue());	//Ensure division didn't take place
-		
+	
 	}
 	
 	@Test
