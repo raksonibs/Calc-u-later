@@ -149,11 +149,11 @@ public class CalcModelTest {
 			
 
 		c.divide();	//Test that operator is substituted
-		assertEquals("((8/4)/1)", c.getExpressionValue());
+		assertEquals("8/4/1", c.getExpressionValue());
 		
 		c.variable();		//Now test variables
 		c.divide();
-		assertEquals("(((8/4)/1)/X)", c.getExpressionValue());
+		assertEquals("8/4/1/X", c.getExpressionValue());
 	
 	}
 	
@@ -348,7 +348,74 @@ public class CalcModelTest {
 	}
 	
 	
+	@Test
+	public void checkPrecedence(){
+		
+		c.setPrecedence("+");
+		c.setPrecedence("-");
+		c.setPrecedence("/");
+		c.setPrecedence("*");
+		
+		String operator = "+";
 
+		assertEquals(3, c.checkPrecedence(operator));
+
+		operator = "*";
+		assertEquals(true, c.checkPrecedence(operator) > c.checkPrecedence("+"));
+		assertEquals(false, c.checkPrecedence(operator) < c.checkPrecedence("+"));
+		assertEquals(false, c.checkPrecedence(operator) == c.checkPrecedence("+"));
+		
+		operator = "/";
+		assertEquals(true, c.checkPrecedence(operator) > c.checkPrecedence("+"));
+		assertEquals(false, c.checkPrecedence(operator) < c.checkPrecedence("+"));
+		assertEquals(false, c.checkPrecedence(operator) == c.checkPrecedence("+"));
+		
+		operator = "+";
+		assertEquals(false, c.checkPrecedence(operator) > c.checkPrecedence("+"));
+		assertEquals(false, c.checkPrecedence(operator) < c.checkPrecedence("+"));
+		assertEquals(true, c.checkPrecedence(operator) == c.checkPrecedence("+"));
+		
+		operator = "-";
+		assertEquals(false, c.checkPrecedence(operator) > c.checkPrecedence("+"));
+		assertEquals(true, c.checkPrecedence(operator) < c.checkPrecedence("+"));
+		assertEquals(false, c.checkPrecedence(operator) == c.checkPrecedence("+"));
+		
+		operator = "";
+		assertEquals(false, c.checkPrecedence(operator) > c.checkPrecedence("+"));
+		assertEquals(true, c.checkPrecedence(operator) < c.checkPrecedence("+"));
+		assertEquals(false, c.checkPrecedence(operator) == c.checkPrecedence("+"));
+		
+		operator = "HELLO";
+		assertEquals(false, c.checkPrecedence(operator) > c.checkPrecedence("+"));
+		assertEquals(true, c.checkPrecedence(operator) < c.checkPrecedence("+"));
+		assertEquals(false, c.checkPrecedence(operator) == c.checkPrecedence("+"));
+		
+		c.clear();
+		
+		double num = 7.0;
+		c.pushNumber(BigDecimal.valueOf(num));
+		double num1 = 10.0;
+		c.pushNumber(BigDecimal.valueOf(num1));
+		c.sum();
+		double num3 = -1.2;
+		c.pushNumber(BigDecimal.valueOf(num3));
+		c.multiply();
+		Double num2 = -20.40;
+		assertEquals(num2, c.lastValue().doubleValue(), 0.01);
+		assertEquals("*", c.getLastExpression());
+		assertEquals("(7.0+10.0)*-1.2",c.getExpressionValue());
+		
+		c.sum();
+		c.variable();
+		c.sum();
+		
+		
+	}
+	
+	@Test
+	public void setPrecedence(){
+
+	}
 }
 
 

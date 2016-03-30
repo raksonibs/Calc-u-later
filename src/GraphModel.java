@@ -135,7 +135,9 @@ public class GraphModel extends ApplicationFrame {
 		
 		while(expressionDirty.contains(",") && expressionDirty.length()>0){
 			System.out.println("Comma at : " + expressionDirty.indexOf(","));
-			expressionDirty = expressionDirty.substring(input.indexOf(",") + 1, input.length());
+
+			expressionDirty = expressionDirty.substring(input.indexOf(",") + 1, expressionDirty.length());
+			
 		}
 		expressionDirty = "y = " + expressionDirty;
 		
