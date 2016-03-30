@@ -1137,11 +1137,13 @@ pre {
             color: #9932CC;
           }
 
-          &.fa-bug {
+          &.fa-bug, 
+          &.fa-bicycle {
             color: #2F4F4F;
           }
 
-          &.fa-bar-chart {
+          &.fa-bar-chart,
+          &.fa-rocket {
             color: #FFD700;
           }
 

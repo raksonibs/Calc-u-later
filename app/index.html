@@ -98,7 +98,160 @@ title: Blog Posts
         <br />
         <h3>Expression Builder/Parser</h3>
         <h3>MAIN Layer</h3>
+        <pre class="prettyprint">
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import java.awt.*;
+
+public class mainClass extends JApplet
+{
+ private JTabbedPane MAIN = new JTabbedPane();
+ public static int WIDTH = 410;
+ public static int HEIGHT = 485;
+
+ CalcModel model;
+ CalcController control = new CalcController(MAIN);
+ FavouritesController favC;
+ GraphController graphControl = new GraphController(MAIN);
+ FavouritesPanel panel2;
+
+public void init()
+{
+  System.out.println("mainClass");
+  
+   CalcModel model = new CalcModel(MAIN);
+   final GraphModel graphModel = new GraphModel("");
+   
+   final CalcController calcControl = new CalcController(model, graphModel, MAIN);
+   final GraphController graphControl = new GraphController(model, graphModel);
+  
+    panel2 = new FavouritesPanel(MAIN, control);
+    CalcView calculatorView = new CalcView(calcControl, MAIN);
+    final GraphView graphView = new GraphView(graphControl);
+
+    MAIN.addTab("Calculator", calculatorView);
+    MAIN.addTab("Graph", graphView);
+
+    MAIN.addTab("Favourites", panel2);
+    
+    MAIN.addChangeListener(new ChangeListener() {
+        public void stateChanged(ChangeEvent e) {
+          graphControl.updateGraph();
+            System.out.println("Tab: " + MAIN.getSelectedIndex());
+            if (MAIN.getSelectedIndex() == 2)
+            {
+              for (String s: favC.a){panel2.addToFavourites(s);}
+            }
+            else if (MAIN.getSelectedIndex() == 0)
+            {
+              panel2.clearList();
+                panel2.addToFavourites("Select Favourite...");
+            } else if ( MAIN.getSelectedIndex() == 1) {
+                if (panel2.fromFavourites)
+                {
+                  graphModel.pushExpression(panel2.selected);
+                  panel2.fromFavourites = false;
+                }
+              graphView.updateGraph(graphModel.getChartPanel());
+              panel2.clearList();
+                panel2.addToFavourites("Select Favourite...");
+            }            
+        }
+    });
+  
+    getContentPane().add(MAIN);
+    setSize(WIDTH,HEIGHT);
+}
+}
+
+//
+public CalcController(JTabbedPane MAIN)
+  {
+    view = new CalcView(this, MAIN);
+    view.setVisible(true);
+  }
+
+  //
+  MAIN.setSelectedIndex(1);
+        </pre>
         <h3>Graphing/Saving</h3>
+        <pre class="prettypink">
+button = new ButtonAdapter("Graph"){
+  public void pressed() {
+    registerButton("Graph", theController);
+    MAIN.setSelectedIndex(1);
+  }
+};
+
+// GraphModel.java
+String expressionString = expression;
+       
+if(expression.contains("!") && expression.contains("X")){   //Replace variable in factorial with appropriate numbers
+  expressionString = expression.replace("!", fact(i));
+}
+
+e = new ExpressionBuilder(expressionString)
+.variables("X", "y")
+.build()
+.setVariable("X", i);
+double result = e.evaluate();
+
+  if(expression.contains("X"))  //If we're dealing with a variable we have to account for asymptotes
+  {
+    /*
+     * We check if the differences between two values starts to get too large
+     * If its getting really big really quickly, its likely approaching an asymptote
+     * This can cause issues with things like factorial, in which case the
+     * tolerance needs to be adjusted to compensate.
+     */
+   current = result;
+    difference = Math.abs(current - previous);  //Check the absolute value of the difference between current result and previous result
+
+          
+    //System.out.println(difference);
+    
+    if(difference < prevDif * tolerance){
+      //System.out.println("Within Bounds");
+        series.add(i, result);
+    }
+    else
+    {
+      //System.out.println("Out of specified bounds");  //If out of bounds, don't connect the points
+
+      series.add(i,null);
+    }
+  }
+  else  //Other if theres no variables, were just drawing a straight line
+  {
+    series.add(i,result);
+  }
+  
+  prevDif = difference;
+  previous = current;   
+  
+}
+
+XYSeriesCollection data = new XYSeriesCollection(series);
+JFreeChart chart = ChartFactory.createXYLineChart(
+ expressionDirty,
+ "X", //X-axis Name
+ "Y", //Y-axis Name
+ data,  //Dataset
+ PlotOrientation.VERTICAL,  //This will always be vertical for our purposes
+ true,  //Legend
+ true,  //Tool tips
+ false  //URLS, (don't need this)
+ );
+
+ChartPanel chartPanel = new ChartPanel(chart);
+chartPanel.setPreferredSize(new java.awt.Dimension(400, 400));    
+
+return chartPanel;
+
+}
+        </pre>
       </ul>
     </div>
     <div id="testing" class="slide">
@@ -131,14 +284,55 @@ title: Blog Posts
     <div id="anji" class="slide">
       <h1>Anji</h1>
       <ul>
-        <li>Favourites</li>
-        <li>Design</li>
+        <h3>Favourites</h3>
+        <pre class="prettyprint">
+box = new JComboBox<String>(); 
+box.addItem("Select Favourite..."); 
+box.addItemListener(new ItemListener() {
+  public void itemStateChanged(ItemEvent e) {
+    if (e.getStateChange() == ItemEvent.SELECTED &&!box.getSelectedItem().equals("Select Favourite...") && !flag)
+    {
+      selected = box.getSelectedItem().toString(); 
+      fromFavourites = true; 
+      MAIN.setSelectedIndex(1);
+    } 
+  }
+});
+
+//from settings in main
+if (panel2.fromFavourites) {
+  graphModel.pushExpression(panel2.selected);
+  panel2.fromFavourites = false; 
+}
+
+//any save
+public void saving(String s) {
+  if (!a.contains(s)) 
+    a.add(s);
+}
+
+//delete
+JButton b = new ButtonAdapter("DELETE") {
+  public void pressed() {
+    flag = true; 
+  }
+};
+b.setToolTipText("HOW TO DELETE: Press DELETE then select the expression you wish to delete.");
+
+//when flag is true
+if (e.getStateChange() == ItemEvent.SELECTED && !box.getSelectedItem().equals("Select Favourite...") && flag)
+{
+  favC.a.remove(box.getSelectedItem()); 
+  box.removeItem(box.getSelectedItem()); 
+  flag = false;
+}
+
+        </pre>
       </ul>
     </div>
     <div id="brad" class="slide">
       <h1>Brad</h1>
       <ul>
-        <li>Testing</li>
         <pre class="prettyprint">
   private JTabbedPane MAIN = new JTabbedPane();
   private CalcModel c;
