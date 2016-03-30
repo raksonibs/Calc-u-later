@@ -406,26 +406,26 @@ public class CalcModel
 	
 	public int checkPrecedence(String operator){
 		
-		if(operator.equals("/")){
+		if(operator.contains("/")){
 			//prevPrecedence = 5;
 			return 5;
 		}
-		else if(operator.equals("*"))
+		else if(operator.contains("*"))
 		{
 			//prevPrecedence = 4;
 			return 4;	
 		}
-		else if(operator.equals("+"))
+		else if(operator.contains("+"))
 		{
 			//prevPrecedence = 3;
 			return 3;	
 		}
-		else if(operator.equals("-"))
+		else if(operator.contains("-"))
 		{
 			//prevPrecedence = 2;
 			return 2;	
 		}
-		else if(operator.equals(" "))
+		else if(operator.contains(" "))
 		{
 			//prevPrecedence = 1;
 			return 1;
@@ -590,7 +590,7 @@ public class CalcModel
 			//Check is +,-,/,x
 			if(isOperator(value)){
 				
-
+				
 				
 				System.out.println("Previous precedence " + prevPrecedence);
 				System.out.println("Current precedence: " + checkPrecedence(value));
@@ -600,12 +600,20 @@ public class CalcModel
 				}
 				
 				if(checkPrecedence(value) > prevPrecedence){
-					System.out.println("Higher precedence");
+
 					
 					String number2 = container.pop().toString();
 					String number1 = container.pop().toString();
 					
-					container.push("(" + number1 + ")" + value + number2);
+					if(checkPrecedence(number2) < checkPrecedence(value)){
+						System.out.println("Higher precedence");
+						number2 = "(" + number2 + ")";
+					}
+					if(checkPrecedence(number1) < checkPrecedence(value)){
+						number1 = "(" + number1 + ")";
+					}
+					
+					container.push(number1 + value + number2 );
 				}
 				else
 				{
