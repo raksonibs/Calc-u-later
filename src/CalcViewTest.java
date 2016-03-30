@@ -10,9 +10,10 @@ import org.junit.Test;
 
 public class CalcViewTest {
 
-	public CalcView view;
+
 	public CalcController controller;
 	public  JTabbedPane tab;
+	public CalcView view = new CalcView(controller, tab);
 	
 	@Before
 	public void setup(){
@@ -55,6 +56,14 @@ public class CalcViewTest {
 		
 		view.setUserValue("");
 		assertEquals(false, view.containsUserValue());
+		
+	}
+	
+	@Test
+	public void registerButton(){
+	
+		view.setUserValue("10");
+		view.addToHistory(controller);
 		
 	}
 	

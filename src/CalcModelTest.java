@@ -75,8 +75,8 @@ public class CalcModelTest {
 		double num1 = 10.0;
 		c.pushNumber(BigDecimal.valueOf(num1));
 		c.sum();
-		double num2 = 17.0;
-		assertEquals(true, c.lastValue().doubleValue() == num2);
+		BigDecimal num2 = new BigDecimal(17);
+		assertEquals(num2, c.lastValue());
 		assertEquals("+", c.getLastExpression());
 		
 		c.sum();

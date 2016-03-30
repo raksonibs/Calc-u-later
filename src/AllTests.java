@@ -6,6 +6,12 @@ import org.junit.runners.Suite;
 
 // Within the {} in the following use a comma separated list of *.class
 
-@Suite.SuiteClasses({ })
+@Suite.SuiteClasses({ 
+	
+	CalcModelTest.class,
+	GraphModelTest.class,
+	CalcControllerTest.class
+	
+})
 
 public class AllTests { } 

@@ -573,7 +573,7 @@ public class CalcView extends JPanel implements KeyListener
 			else
 			{
 				String text = userValueText.getText();
-				int length = userValueText.getText().length();
+				int length = userValueText.getText().length(); 
 				text = text.substring(0, length - 1);
 				userValueText.setText(text);
 			}
@@ -807,6 +807,10 @@ public class CalcView extends JPanel implements KeyListener
 		userValueText.setText(value);
 	}
 
+	public String getExpressionValue(){
+		return expressionList.getText();
+	}
+	
 	/**
 	 * Set the history text field to a given String
 	 * 
