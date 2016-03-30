@@ -432,7 +432,7 @@ public class CalcModel
 		}
 		else
 		{
-			return 0;
+			return 10;
 		}
 		
 	}
