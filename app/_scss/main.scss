@@ -1107,10 +1107,73 @@ pre {
       display: inline-block;
     }
 
-  pre {
-    &.prettyprint {
-      text-align: left;
+    pre {
+      &.prettyprint {
+        text-align: left;
+      }
     }
-  }
+
+    .uml-holder {
+      width: 150%;
+      position: relative;
+      left: -25%;
+    }
+
+    ul {
+      margin-top: 100px;
+      li {
+        width: 19%;
+        display: inline-block;
+
+        i {
+          font-size: 3em;
+          margin-bottom: 20px;
+
+          &.fa-calculator {
+            color: #FA8072;
+          }
+
+          &.fa-mortar-board {
+            color: #9932CC;
+          }
+
+          &.fa-bug {
+            color: #2F4F4F;
+          }
+
+          &.fa-bar-chart {
+            color: #FFD700;
+          }
+
+          &.fa-star {
+            color: #4169E1;
+          }
+        }
+      }
+    }
+
+    &#intro {
+      width: 150%;
+      left: -40%;
+      position: relative; 
+
+      .images, .left-bracket, .right-bracket {
+        display: inline-block;
+      }
+
+      .images {
+        width: 50%;
+      }
+
+      .left-bracket, .right-bracket {
+        position: relative;
+        top: -300px;
+        font-size: 5em;
+        font-weight: bold;
+        width: 20%;
+      }
+      
+    }
+
   }
 }

@@ -39,7 +39,7 @@ $('.smaller-nav-options').fadeOut();
 $.each([['#start', '#intro'], ["#intro", "#demo"], ["#demo", '#design'], ['#design', '#testing'], ['#testing', '#web'], ['#web', '#asmah'], ['#asmah', '#mohammad'], ["#mohammad", '#anji'], ['#anji', '#brad'], ['#brad', '#oskar'], ['#oskar', '#goals']], function(index, val) {
   $(val[0]).click(function() {
    $('html, body').animate({
-        scrollTop: $(val[1]).offset().top - 250
+        scrollTop: $(val[1]).offset().top - 150
     }, 2000);
     return false;
 })
