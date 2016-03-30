@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calc-u-Later</title>
+  <meta name="author" content="{{ site.data.theme.name }}" />
+  <meta name="description" content="The blog of {{ site.data.theme.name }}" />
+  <link rel="canonical" href="{{ site.url }}{{ page.url | replace:'index.html','' }}" />
+
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="alternate" type="application/atom+xml" title="{{ site.data.theme.name }}" href="{{site.url}}/atom.xml" />
+  <!-- build:css({app,.tmp}) Calc-u-later/css/main.css -->
+  <link rel="stylesheet" href="/_bower_components/foundation/css/normalize.css">
+  <link rel="stylesheet" href="/_bower_components/foundation/css/foundation.css">
+  <!--  <link rel="stylesheet" href="/css/syntax.css"> --> 
+  <link rel="stylesheet" href="/css/focus.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/clouds.css">
+  <link rel="stylesheet" href="/css/skeleton.css">
+  <link rel="stylesheet" href="/css/screen.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here' rel='stylesheet'>
+  <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+  <link href="http://fonts.googleapis.com/css?family=Text+Me+One" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css?family=Cabin+Sketch:700" rel="stylesheet" type="text/css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
+  <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css'>
+  <link rel='stylesheet prefetch' href='http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css'>
+  <!-- endbuild -->
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+
+   <link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here' rel='stylesheet'>
+  <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+  <link href="http://fonts.googleapis.com/css?family=Text+Me+One" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css?family=Cabin+Sketch:700" rel="stylesheet" type="text/css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- build:css({app,.tmp}) Calc-u-later/css/googlefonts.css -->
+  <!-- endbuild -->
+
+  <!-- build:css({app,.tmp}) Calc-u-later/css/fontawesome.css -->
+  <!-- endbuild -->
+
+  <!-- build:js(app) Calc-u-later/js/head-scripts.js -->
+</head>
+<body>
+  <!--[if lt IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+  <div class="container">
+    <p class="loading-bar stretchRight"></p>
+     <div class="header fixed-header navbar-default navbar-fixed-top" role="navigation">
+
+    <ul class="nav nav-pills pull-right">
+      <li><a href="#" id="trigger"><i class="fa fa-2x fa-bars"></i></a></li>
+    </ul>
+    <h3 class="text-muted"><a href="/"><span>Calc-u-later</span></a></h3>
+  </div>
+  <div></div>
+  <div class="sidebar closed">
+    <header>
+      <h2>Documents</h2> <a href="#" id="close"><i class="fa fa-close"></i></a>
+    </header>
+    <ul>
+      <li><a href="/">Home</a></li> 
+      <li><a href="https://s3-us-west-2.amazonaws.com/bookpdftest/req.pdf" target="_blank">Requirements (Asmah)</a></li>
+      <li><a href="https://s3-us-west-2.amazonaws.com/bookpdftest/design.pdf" target="_blank">Designs (Asmah)</a></li>
+      <li><a href="https://s3-us-west-2.amazonaws.com/bookpdftest/tests.pdf" target="_blank">Tests (Brad)</a></li>
+      <li><a href="https://s3-us-west-2.amazonaws.com/bookpdftest/User+Manual.pdf" target="_blank">User Manual (Mohammad)</a></li>
+      <li><a href="https://github.com/raksonibs/Calc-u-later" target="_blank">Github Repo</a></li>
+      <li><a href="https://s3-us-west-2.amazonaws.com/bookpdftest/Export1.jar" target="_blank">Download the Calculator!</a></li>
+    </ul>
+  </div>
+
+    <div id="blurrMe" class="twelve columns hide-later">   
+      {{ content }}
+    </div>
+  </div>
+
+  {% include footer.html %}
+  
+{% include scripts.html %}
+
+</body>
+</html>
