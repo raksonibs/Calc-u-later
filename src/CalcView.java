@@ -634,13 +634,9 @@ public class CalcView extends JPanel implements KeyListener
 
 			if (userVal.length() > 1 && userVal.charAt(1) == '.')
 			{
-				System.out.println("Over here");
-				System.out.println(userVal);
-				System.out.println(his.length());
-				System.out.println(userVal.substring(2, userVal.length()));
+				
 				userVal = userVal.substring(2, userVal.length());
-				System.out.println("Over here 2.0");
-				System.out.println(userVal);
+				
 				userValueText.setText(userVal);
 			}
 			else
@@ -648,7 +644,12 @@ public class CalcView extends JPanel implements KeyListener
 
 				if (userVal.length() > 0)
 				{
-					userVal = userVal + ".";
+					if ((userVal.length() - userVal.replace(".", "").length()) > 0) {
+						// more than one decimal being inputted, don't allow
+					} else {
+						userVal = userVal + ".";
+					}
+					
 				}
 				else
 				{
