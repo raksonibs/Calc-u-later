@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 	CalcModelTest.class,
 	GraphModelTest.class,
 	CalcControllerTest.class,
-	CalcViewTest.class
+	CalcViewTest.class,
+	MVCTest.class
 })
 
 public class AllTests { } 
