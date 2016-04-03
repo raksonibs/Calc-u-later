@@ -71,6 +71,18 @@ public class CalcView extends JPanel implements KeyListener
 		this.setVisible(true);
 
 	}
+	
+	/** Returns an ImageIcon, or null if the path was invalid. */
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = CalcView.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
+
 
 	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane, final CalcController theController, final JTabbedPane MAIN)
