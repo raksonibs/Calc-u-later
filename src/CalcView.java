@@ -59,7 +59,7 @@ public class CalcView extends JPanel implements KeyListener
 	 public void keyReleased(KeyEvent e){}
      public void keyTyped(KeyEvent e){}
 
-     public void keyPressed(KeyEvent e){}
+     public void keyPressed(KeyEvent e){} 
 
 	
 	@SuppressWarnings("serial")
@@ -710,20 +710,6 @@ public class CalcView extends JPanel implements KeyListener
 
 		}
 
-		else if (button.equals("UNDO"))
-		{
-
-			// if(userValueText.)
-			System.out.println("undo test");
-			if (userValueText.getText().isEmpty())
-			{
-				System.out.println("text is not empty");
-
-				userValueText.setText("");
-			}
-
-		}
-
 	}
 
 	// This method to handle integers
@@ -880,48 +866,7 @@ public class CalcView extends JPanel implements KeyListener
 ////		CalcController theController = new CalcController();
 ////		theController.graphSelected((String) box.getSelectedItem());
 //		
-//	} CURRENTLY BYPASSING
 
-	/*
-	 * This method would save the current expression that the user has finished
-	 * inputting.
-	 */
-
-	public static String findRoundingValue(String num)
-	{
-		
-		String uV = num;
-		int placeholder = uV.indexOf(".");
-		
-		//Checking to see how many digits to keep on the left hand side of the result
-		//As well as how many digits on the right side to keep
-		//Some rounding does still occur due to doubles.
-		if(uV.contains("."))
-		{			
-			String rightDecimal = uV.substring(uV.indexOf("."), uV.length());
-			int roundingLengthAfterDecimal = rightDecimal.length();
-			if(rightDecimal.length() > roundingLengthAfterDecimal){
-				//STILL NEED TO IMPLEMENT ROUNDING
-				uV = uV.substring(0, placeholder) + uV.substring(placeholder, placeholder + 5);
-				//System.out.println("Digits to the right " + rightDecimal.length());
-			}
-
-			String leftOfDecimal = uV.substring(0, placeholder);
-			int roundingLengthBeforeDecimal = leftOfDecimal.length();
-			if(leftOfDecimal.length() > roundingLengthBeforeDecimal){
-				// roundingLengthBeforeDecimal = leftDecimal.length();
-				//System.out.println("Digits to the left " + leftDecimal.length());
-				if (uV.substring(1, uV.length()).length() > 6)
-				{	
-					uV = uV.substring(0, 1) + "." + uV.substring(1, 7) + "E" + uV.substring(1, uV.length() - 2).length();
-				}
-				System.out.println("it knows");
-			}		
-		}
-		
-		return uV;
-	}
-	
 	/*
 	 * Removes what is currently in the expression list from the selected menu.
 	 * This is assuming that adding an expression to the list will set the expressionList 

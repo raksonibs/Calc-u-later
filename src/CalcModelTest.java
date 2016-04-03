@@ -23,7 +23,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
-	//5.2.1
+	//4.3.1
 	public void testConstructor() {
 		assertEquals(true, c.getHistory().isEmpty());
 		assertEquals(true, c.getNumbers().isEmpty());
@@ -31,7 +31,7 @@ public class CalcModelTest {
 	}
 
 	@Test
-	//5.2.2
+	//4.3.2
 	public void testClear() {
 		
 		double num = 7;
@@ -43,19 +43,21 @@ public class CalcModelTest {
 	}
 
 	@Test
-	//5.2.3
+	//4.3.3
 	public void testPush() {
 		double num = 7;
 		c.pushNumber(BigDecimal.valueOf(num));
-		double num2 = 7.0;
-		assertEquals("7", c.getExpressionValue());
+		double num2 = -3;
+		c.pushNumber(BigDecimal.valueOf(num2));
+		assertEquals("7,-3", c.getExpressionValue());
 		c.variable();
-		assertEquals("7,X", c.getExpressionValue());
+		assertEquals("7,-3,X", c.getExpressionValue());
+
 		
 	}
 	
 	@Test
-	//5.2.4
+	//4.3.4
 	public void testSubtract() {
 		
 		double num = 7.0;
@@ -74,7 +76,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
-	//5.2.5
+	//4.3.5
 	public void testSum() {
 		
 		double num = 7.0;
@@ -93,7 +95,7 @@ public class CalcModelTest {
 	
 	@SuppressWarnings("deprecation")
 	@Test
-	//5.2.6
+	//4.3.6
 	public void testMultiply() {
 		double num = 7.0;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -110,13 +112,13 @@ public class CalcModelTest {
 	
 	
 	@Test(expected=EmptyStackException.class)
-	//5.2.7
+	//4.3.7
 	public void testEmptyDivide(){
 		c.divide(); 	//Check division with no input
 	}
 	
 	@Test(expected=ArithmeticException.class)
-	//5.2.8
+	//4.3.8
 	public void testDivideByZero(){
 		//Now test
 		c.clear();
@@ -130,7 +132,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
-	//5.2.9
+	//4.3.9
 	public void testDivide() {
 
 		assertEquals("", c.getExpressionValue());	
@@ -158,6 +160,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//4.3.10
 	public void rounding(){
 		
 		double num = 1;
@@ -166,7 +169,9 @@ public class CalcModelTest {
 		
 	}
 	
+	
 	@Test
+	//4.3.11
 	public void sin(){
 		double num =3.14;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -178,10 +183,11 @@ public class CalcModelTest {
 		c.clear();
 		c.variable();
 		c.sin();
-		assertEquals("(sin(X))", c.getExpressionValue());
+		assertEquals("sin(X)", c.getExpressionValue());
 	}
 	
 	@Test
+	//4.3.12
 	public void cos(){
 		double num =3.14;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -193,16 +199,18 @@ public class CalcModelTest {
 		c.clear();
 		c.variable();
 		c.cos();
-		assertEquals("(cos(X))", c.getExpressionValue());
+		assertEquals("cos(X)", c.getExpressionValue());
 	}
 	
 	@Test
+	//4.3.13
 	public void testIsOperator() {
 		assertEquals(true, c.isOperator("+"));
 		assertEquals(false, c.isOperator("cat"));
 	}
 	
 	@Test
+	//4.3.14
 	public void testIsTrig() {
 		assertEquals(true, c.isTrignometric("sin"));
 		assertEquals(false, c.isTrignometric("cat"));
@@ -212,18 +220,21 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//4.3.15
 	public void testIsFactorial() {
 		assertEquals(true, c.isFactorial("!"));
 		assertEquals(false, c.isFactorial("cat"));
 	}
 	
 	@Test
+	//4.3.1
 	public void testIsVariable() {
 		assertEquals(true, c.isVariable("X"));
 		assertEquals(false, c.isVariable("cat"));
 	}
 	
 	@Test
+	//4.3.16
 	public void testStackContains() {
 		double num = 7.0;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -235,9 +246,9 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//4.3.17
 	public void expression(){
 
-		
 		double num = 7.0;
 		c.pushNumber(BigDecimal.valueOf(num));
 		double num1 = 10.0;
@@ -259,6 +270,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//4.3.18
 	public void getNumberHistory(){
 		double num = 7.0;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -272,6 +284,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//4.3.19
 	public void factorial(){
 		double num = 6.0;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -284,6 +297,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//4.3.20
 	public void getEquation(){
 		c.variable();
 		assertEquals("X", c.getEquation());
@@ -298,6 +312,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//4.3.21
 	public void getCalcValue(){
 		assertEquals(0.0, c.getCalculatedValue().doubleValue(), 0.1);
 		double num = 6.0;
@@ -313,6 +328,7 @@ public class CalcModelTest {
 	
 	
 	@Test
+	//4.3.22
 	public void undo(){
 		double num = 7.0;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -329,6 +345,7 @@ public class CalcModelTest {
 	}
 	
 	@Test
+	//4.3.23
 	public void printMethods(){
 		double num = 7.0;
 		c.pushNumber(BigDecimal.valueOf(num));
@@ -349,6 +366,7 @@ public class CalcModelTest {
 	
 	
 	@Test
+	//4.3.24
 	public void checkPrecedence(){
 		
 		c.setPrecedence("+");
@@ -403,7 +421,7 @@ public class CalcModelTest {
 		Double num2 = -20.40;
 		assertEquals(num2, c.lastValue().doubleValue(), 0.01);
 		assertEquals("*", c.getLastExpression());
-		assertEquals("(7.0+10.0)*-1.2",c.getExpressionValue());
+		assertEquals("(7.0+10.0)*(-1.2)",c.getExpressionValue());
 		
 		c.sum();
 		c.variable();
@@ -412,10 +430,7 @@ public class CalcModelTest {
 		
 	}
 	
-	@Test
-	public void setPrecedence(){
 
-	}
 }
 
 

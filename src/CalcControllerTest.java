@@ -29,7 +29,7 @@ public class CalcControllerTest {
 	
 	@Test
 	public void rounding(){
-		control.addToRounding("123");
+		
 	}
 
 	

@@ -103,11 +103,6 @@ public class CalcController
 
 		showValue();
 	}
-	
-	public void pi() {
-		model.pi();
-		showValue();
-	}
 
 	public void cos() {
 		pushUserText();
@@ -144,16 +139,13 @@ public class CalcController
 		showValue();
 	}
 
-	public void setValue(int value) {
-		
-	}
 
 	private void showValue() 
 	{
 		//System.out.println("Current value is: " + calcValue.toPlainString());
 		//System.out.println("Expression is: " + expressionValue);
 		
-		view.setCalcValue(view.findRoundingValue(model.getCalculatedValue().toPlainString()));
+		view.setCalcValue((model.getCalculatedValue().toPlainString()));
 		view.setExpressionValue(model.getExpressionValue());
 		view.setHistory(model.getHistory());
 		

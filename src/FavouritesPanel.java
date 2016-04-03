@@ -12,7 +12,6 @@ public class FavouritesPanel extends JPanel
 	public String selected;
 	private FavouritesController favC =  new FavouritesController();
 	private GraphModel graph;
-	Graph temp;
 	JComboBox<String> box;
 
 	public FavouritesPanel(final JTabbedPane MAIN, final CalcController theController)

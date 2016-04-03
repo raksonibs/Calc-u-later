@@ -40,7 +40,6 @@ public class CalcModel
 	 */
 	
     private int width, height;
-    Graph temp;
     CalcView view;
     CalcController controller;
 
@@ -84,6 +83,7 @@ public class CalcModel
 		expressionList.clear();
 		calculatedValues.clear();
 		inputValues.clear();
+		variables.clear();
 		
 		containsVariable = false;
 		
@@ -425,7 +425,7 @@ public class CalcModel
 			//prevPrecedence = 2;
 			return 2;	
 		}
-		else if(operator.contains(" "))
+		else if(operator.contains(""))
 		{
 			//prevPrecedence = 1;
 			return 1;
@@ -634,7 +634,7 @@ public class CalcModel
 			{
 				String number1 = container.pop().toString();
 				
-				container.push(number1 + value);
+				container.push("(" + number1 + value + ")");
 			}
 			else if(isVariable(value))
 			{
@@ -760,8 +760,11 @@ public class CalcModel
 		
 		int precision = value.length();
 
-		if(value.contains(".")){
+		if(value.contains(".") && value.contains("-")){
 			
+			precision-=2;
+		}
+		else if(value.contains(".") || value.contains("-")){
 			precision-=1;
 		}
 		

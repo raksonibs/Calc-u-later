@@ -13,24 +13,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CalcViewTest {
-
-
-	public static CalcController controller;
-	public  JTabbedPane tab;
-	public CalcView view = new CalcView(controller, tab);
+	
+	private JTabbedPane tab = new JTabbedPane();
+	private CalcModel model = new CalcModel(tab);
+	private GraphModel graphModel = new GraphModel("");
+	private CalcController controller;
+	private CalcView view;
+	
 	
 	@Before
 	public void setup(){
-		
-		tab = new JTabbedPane();
-		controller = new CalcController(tab);
+		controller = new CalcController(model, graphModel, tab);
 		view = new CalcView(controller, tab);
 	}
 	
 
 	@Test
-	//4.2.1
-	public void setGetUserValue(){
+	//3.3.1
+	public void setAndGetUserValue(){
 		
 		view.setUserValue("123456789.0");
 		assertEquals("123456789.0", view.getUserValue());
@@ -47,7 +47,7 @@ public class CalcViewTest {
 	}
 	
 	@Test
-	//4.2.2
+	//3.3.2
 	public void containsUserValue(){
 		
 		assertEquals(false, view.containsUserValue());
@@ -62,45 +62,16 @@ public class CalcViewTest {
 		assertEquals(false, view.containsUserValue());
 		
 	}
+		
 	
 	@Test
-	public void registerButton(){
-	
-		//view.setUserValue("10");
-		//view.addToHistory(controller);
-		
-	}
-	
-	@Test
-	public void roundingValue(){
-		
-		String number = "123";
-		assertEquals("123",view.findRoundingValue(number));
-		
-		number = "1.23";
-		assertEquals("1.23",view.findRoundingValue(number));
-		
-		number = "-0.23456456";
-		assertEquals("-0.23456456",view.findRoundingValue(number));
-	}
-
-	
-	@Test
-	public void changeInputButton(){
-		
-		
-		double number = 10.0;
-		view.changeInputButton(number);
-		
-	}
-	
-	@Test
+	//3.3.3
 	public void clearUserInput(){
 		
 		assertEquals("", view.getUserValue());
 		assertEquals("", view.getExpressionValue());
 		
-		view.setUserValue("1");
+		view.setUserValue("X");
 		view.clearUserValue();
 		assertEquals("", view.getUserValue());
 		assertEquals("", view.getExpressionValue());
@@ -108,23 +79,14 @@ public class CalcViewTest {
 		view.setUserValue("-123.01");
 		view.clearUserValue();
 		assertEquals("", view.getUserValue());
-		assertEquals("", view.getUserValue());
 		assertEquals("", view.getExpressionValue());
 		
 	}
 	
-	@Test
-	public void keyPressa() throws AWTException{
-		
-		 Robot robot = new Robot();
-	     // Simulate a mouse click
-	     robot.mousePress(InputEvent.BUTTON1_MASK);
-	     robot.mouseRelease(InputEvent.BUTTON1_MASK);
-
-	}
 	
 	@Test
-	public void getExpression(){
+	//3.3.4
+	public void setAndGetExpression(){
 		
 		view.setExpressionValue("1+1");
 		assertEquals("1+1", view.getExpressionValue());
@@ -134,11 +96,125 @@ public class CalcViewTest {
 		
 	}
 	
+	
 	@Test
+	//3.3.5
+	public void reigsterButtonPressOperators(){
+		
+		setUpValues();
+		view.registerButton("+", controller);
+		assertEquals("", view.getUserValue());
+		
+		view.registerButton("Graph", controller);
+		controller.Graph();
+		assertEquals("", view.getUserValue());
+		
+		setUpValues();
+		
+		view.registerButton("-", controller);
+		assertEquals("", view.getUserValue());
+		setUpValues();
+		
+		view.registerButton("*", controller);
+		assertEquals("", view.getUserValue());
+		setUpValues();
+		
+		view.registerButton("/", controller);
+		assertEquals("", view.getUserValue());
+		setUpValues();
+		
+		setUpValues();
+		view.registerButton("!", controller);
+		assertEquals("", view.getUserValue());
+		
+		view.setUserValue("10");
+		view.registerButton("UNDO", controller);
+		view.registerButton("UNDO", controller);
+		
+		view.registerButton("UNDO", controller);
+		assertEquals("", view.getUserValue());
+		setUpValues();
+		
+		view.registerButton("sin", controller);
+		assertEquals("", view.getUserValue());
+		
+		view.registerButton("cos", controller);
+		assertEquals("", view.getUserValue());
+		
+		view.registerButton("X", controller);
+		assertEquals("", view.getUserValue());
+		
+		view.registerButton("π", controller);
+		assertEquals("", view.getUserValue());
+		
+		setUpValues();
+		view.registerButton("SAVE", controller);
+		assertEquals("", view.getUserValue());
+		
+		view.registerButton("Test", controller);
+		assertEquals("", view.getUserValue());
+		
+		view.registerButton("Clear", controller);
+		controller.clear();
+		assertEquals("", view.getUserValue());
+		
+		view.registerButton("TEST", controller);
+		assertEquals("", view.getUserValue());
+		
+		view.registerButton("INFO", controller);
+		assertEquals("", view.getUserValue());
+	}
+	
+	@Test
+	public void registerButtonPressNumbers(){
+		
+		view.setUserValue("");
+		view.registerButton(".", controller);
+		view.setUserValue("123");
+		view.registerButton(".", controller);
+		
+		view.setUserValue("0");
+		view.registerButton("+/-", controller);
+		view.registerButton("+/-", controller);
+		view.setUserValue("1");
+		view.registerButton("+/-", controller);
+		view.registerButton("+/-", controller);
+		
+		view.changeInputButton(1);
+		view.changeInputButton(2);
+		view.changeInputButton(3);
+		view.changeInputButton(4);
+		view.changeInputButton(5);
+		view.changeInputButton(6);
+		view.changeInputButton(7);
+		view.registerButton(".", controller);
+		view.changeInputButton(8);
+		view.changeInputButton(9);
+		view.changeInputButton(0);
+
+		
+		assertEquals("11234567.890", view.getUserValue());
+		
+		view.clearUserValue();
+		view.changeInputButton(3.14159);
+		
+		assertEquals("3.14159", view.getUserValue());
+		
+	}
+	
+	@Test
+	public void pushValue(){
+		view.setUserValue("10");
+		
+	}
+	
+	
+	@Test
+	//3.3.5
 	public void setCalculatedValue(){
 		
-		view.setCalcValue("25");
-		
+		view.setUserValue("25");
+		view.registerButton("+", controller);
 	}
 	
 	@Test
@@ -147,5 +223,26 @@ public class CalcViewTest {
 		view.setHistory("1,1,+");
 		
 	}
+
+	
+	public void setUpValues(){
+		
+		view.setUserValue(String.valueOf((Math.random()*100)));
+		view.addToHistory(controller);
+		view.setUserValue(String.valueOf((Math.random()*100)));
+		view.addToHistory(controller);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
