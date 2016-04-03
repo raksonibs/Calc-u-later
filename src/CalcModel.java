@@ -209,12 +209,14 @@ public class CalcModel
 					System.out.println(num1);
 					BigDecimal num2 = (BigDecimal) numbers.pop();
 					System.out.println(num2);
-					calcValue = num2.divide(num1, roundingAmount);
+					calcValue = num2.divide(num1, new MathContext(6));
 					 addToExpressionList("/");
 					updateRounding(calcValue.toString());
 					numbers.push(calcValue);
 					calculatedValues.push(calcValue);
 				}
+	
+
 			}
 			else if(containsVariable)
 			{
