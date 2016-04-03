@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -20,15 +21,11 @@ import java.awt.Dimension;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
-import javax.swing.JTabbedPane;
-import javax.swing.ImageIcon;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -78,6 +75,15 @@ public class CalcView extends JPanel implements KeyListener
 	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane, final CalcController theController, final JTabbedPane MAIN)
 	{
+	    ImageIcon grayIconSmall = createImageIcon("/ButtonIcons/SmallIconG.png");
+	    ImageIcon orangeIconSmall = createImageIcon("/ButtonIcons/SmallIconO.png");
+	    ImageIcon blueIconWide = createImageIcon("/ButtonIcons/WideIconB.png");
+	    ImageIcon greenIconWide = createImageIcon("/ButtonIcons/WideIconGreen.png");
+	    ImageIcon yellowIconSmall = createImageIcon("/ButtonIcons/SmallIconY.png");
+	    ImageIcon redIconSmall = createImageIcon("/ButtonIcons/SmallIconR.png");
+	    ImageIcon blueIconSmall = createImageIcon("/ButtonIcons/SmallIconB.png");
+	    //ImageIcon background = new ImageIcon(CalcView.class.getResource("background.png"));
+	    
 		if (RIGHT_TO_LEFT)
 		{
 			pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -91,7 +97,7 @@ public class CalcView extends JPanel implements KeyListener
 			// natural height, maximum width
 			c.fill = GridBagConstraints.HORIZONTAL;
 		}
-
+		
 		calcText = new JTextField(20);
 		calcText.setEditable(false);
 		userValueText = new JTextField(5);
@@ -165,6 +171,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 9;
 		pane.add(button, c);
+	    button.setIcon(yellowIconSmall);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
 		button = new ButtonAdapter("π")
 		{
@@ -174,6 +185,11 @@ public class CalcView extends JPanel implements KeyListener
 
 			}
 		};
+	    button.setIcon(blueIconWide);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 		
 		c.gridx = 4;
 		c.gridwidth = 1;
@@ -191,6 +207,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
+	    button.setIcon(orangeIconSmall);
+	    button.setPreferredSize(new Dimension(70,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
 		//****************
 
@@ -206,6 +227,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 5;
 		pane.add(button, c);
+	    button.setIcon(blueIconWide);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
 		button = new ButtonAdapter("cos")
 		{
@@ -218,6 +244,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button, c);
+	    button.setIcon(blueIconWide);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
 		button = new ButtonAdapter("INFO")
 		{
@@ -245,7 +276,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 9;
 		pane.add(button, c);	
-		
+	    button.setIcon(blueIconSmall);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 		
 
 		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};		
@@ -253,7 +288,13 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 9;
 		pane.add(button, c);	
+	    button.setIcon(redIconSmall);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
+		
 		JButton button0 = new ButtonAdapter("" + 0)
 		{
 			public void pressed()
@@ -266,9 +307,16 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 7;
 		pane.add(button0, c);
+	    button0.setIcon(grayIconSmall);
+	    button0.setPreferredSize(new Dimension(70,30));
+	    button0.setHorizontalTextPosition(button0.CENTER);
+		button0.setOpaque(true);
+		button0.setBorderPainted(false);
+		
 
 		JButton button1 = new ButtonAdapter("" + 1)
 		{
+			
 			public void pressed()
 			{
 				changeInputButton(1);
@@ -279,6 +327,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button1, c);
+	    button1.setIcon(grayIconSmall);
+	    button1.setPreferredSize(new Dimension(70,30));
+	    button1.setHorizontalTextPosition(button1.CENTER);
+		button1.setOpaque(true);
+		button1.setBorderPainted(false);
 
 		JButton button2 = new ButtonAdapter("" + 2)
 		{
@@ -292,7 +345,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button2, c);
-
+	    button2.setIcon(grayIconSmall);
+	    button2.setPreferredSize(new Dimension(70,30));
+	    button2.setHorizontalTextPosition(button2.CENTER);
+		button2.setOpaque(true);
+		button2.setBorderPainted(false);
 
 
 		JButton button3 = new ButtonAdapter("" + 3)
@@ -307,7 +364,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button3, c);
-
+	    button3.setIcon(grayIconSmall);
+	    button3.setPreferredSize(new Dimension(70,30));
+	    button3.setHorizontalTextPosition(button3.CENTER);
+		button3.setOpaque(true);
+		button3.setBorderPainted(false);
 		
 		JButton button4 = new ButtonAdapter("" + 4)
 		{
@@ -321,7 +382,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 5;
 		pane.add(button4, c);
-
+	    button4.setIcon(grayIconSmall);
+	    button4.setPreferredSize(new Dimension(70,30));
+	    button4.setHorizontalTextPosition(button4.CENTER);
+		button4.setOpaque(true);
+		button4.setBorderPainted(false);
+		
 		JButton button5 = new ButtonAdapter("" + 5)
 		{
 			public void pressed()
@@ -334,7 +400,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 5;
 		pane.add(button5, c);
-
+	    button5.setIcon(grayIconSmall);
+	    button5.setPreferredSize(new Dimension(70,30));
+	    button5.setHorizontalTextPosition(button5.CENTER);
+		button5.setOpaque(true);
+		button5.setBorderPainted(false);
 		
 		JButton button6 = new ButtonAdapter("" + 6)
 		{
@@ -348,7 +418,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 5;
 		pane.add(button6, c);
-
+	    button6.setIcon(grayIconSmall);
+	    button6.setPreferredSize(new Dimension(70,30));
+	    button6.setHorizontalTextPosition(button6.CENTER);
+		button6.setOpaque(true);
+		button6.setBorderPainted(false);
+		
 		JButton button7 = new ButtonAdapter("" + 7)
 		{
 			public void pressed()
@@ -361,7 +436,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 4;
 		pane.add(button7, c);
-
+	    button7.setIcon(grayIconSmall);
+	    button7.setPreferredSize(new Dimension(70,30));
+	    button7.setHorizontalTextPosition(button7.CENTER);
+		button7.setOpaque(true);
+		button7.setBorderPainted(false);
+		
 		JButton button8 = new ButtonAdapter("" + 8)
 		{
 			public void pressed()
@@ -374,7 +454,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 4;
 		pane.add(button8, c);
-
+	    button8.setIcon(grayIconSmall);
+	    button8.setPreferredSize(new Dimension(70,30));
+	    button8.setHorizontalTextPosition(button8.CENTER);
+		button8.setOpaque(true);
+		button8.setBorderPainted(false);
+		
 		JButton button9 = new ButtonAdapter("" + 9)
 		{
 			public void pressed()
@@ -387,7 +472,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 4;
 		pane.add(button9, c);
-
+	    button9.setIcon(grayIconSmall);
+	    button9.setPreferredSize(new Dimension(70,30));
+	    button9.setHorizontalTextPosition(button9.CENTER);
+		button9.setOpaque(true);
+		button9.setBorderPainted(false);
+		
 		button = new ButtonAdapter("+")
 		{
 			public void pressed()
@@ -399,6 +489,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 4;
 		pane.add(button, c);
+		pane.add(button, c);
+	    button.setIcon(orangeIconSmall);
+	    button.setPreferredSize(new Dimension(70,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
 		button = new ButtonAdapter("-")
 		{
@@ -411,6 +507,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 5;
 		pane.add(button, c);
+		pane.add(button, c);
+	    button.setIcon(orangeIconSmall);
+	    button.setPreferredSize(new Dimension(70,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
 		button = new ButtonAdapter("x")
 		{
@@ -422,8 +524,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridx = 3;
 		c.gridwidth = 1;
 		c.gridy = 6;
-		
 		pane.add(button, c);
+	    button.setIcon(orangeIconSmall);
+	    button.setPreferredSize(new Dimension(70,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
 		button = new ButtonAdapter("/")
 		{
@@ -436,6 +542,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 7;
 		pane.add(button, c);
+	    button.setIcon(orangeIconSmall);
+	    button.setPreferredSize(new Dimension(70,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 		
 		button = new ButtonAdapter("+/-")
 		{
@@ -449,6 +560,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 7;
 		pane.add(button, c);
+	    button.setIcon(orangeIconSmall);
+	    button.setPreferredSize(new Dimension(70,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 
 		button = new ButtonAdapter(".")
 		{
@@ -462,6 +578,12 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 7;
 		pane.add(button, c);
+		pane.add(button, c);
+	    button.setIcon(orangeIconSmall);
+	    button.setPreferredSize(new Dimension(70,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 		
 		button = new ButtonAdapter("X"){
 			public void pressed(){
@@ -473,6 +595,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 4;
 		pane.add(button, c);
+	    button.setIcon(blueIconWide);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 		
 		button = new ButtonAdapter("Graph"){
 			public void pressed() {
@@ -485,6 +612,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 1;
 		c.gridy = 9;
 		pane.add(button, c);
+	    button.setIcon(blueIconSmall);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 		
 		button = new ButtonAdapter("Test"){
 			public void pressed(){
@@ -503,6 +635,11 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridwidth = 3;   //2 columns wide
 		c.gridy = 8;       //third row
 		pane.add(button, c);
+	    button.setIcon(greenIconWide);
+	    button.setPreferredSize(new Dimension(130,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
 	}
 
 	/**
