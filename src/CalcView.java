@@ -97,13 +97,13 @@ public class CalcView extends JPanel implements KeyListener
 	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane, final CalcController theController, final JTabbedPane MAIN)
 	{
-	    ImageIcon grayIconSmall = new ImageIcon(CalcView.class.getResource("SmallIconG.png"));
-	    ImageIcon orangeIconSmall = new ImageIcon(CalcView.class.getResource("SmallIconO.png"));
-	    ImageIcon blueIconWide = new ImageIcon(CalcView.class.getResource("WideIconB.png"));
-	    ImageIcon greenIconWide = new ImageIcon(CalcView.class.getResource("WideIconGreen.png"));
-	    ImageIcon yellowIconSmall = new ImageIcon(CalcView.class.getResource("SmallIconY.png"));
-	    ImageIcon redIconSmall = new ImageIcon(CalcView.class.getResource("SmallIconR.png"));
-	    ImageIcon blueIconSmall = new ImageIcon(CalcView.class.getResource("SmallIconB.png"));
+	    ImageIcon grayIconSmall = createImageIcon("/ButtonIcons/SmallIconG.png");
+	    ImageIcon orangeIconSmall = createImageIcon("/ButtonIcons/SmallIconO.png");
+	    ImageIcon blueIconWide = createImageIcon("/ButtonIcons/WideIconB.png");
+	    ImageIcon greenIconWide = createImageIcon("/ButtonIcons/WideIconGreen.png");
+	    ImageIcon yellowIconSmall = createImageIcon("/ButtonIcons/SmallIconY.png");
+	    ImageIcon redIconSmall = createImageIcon("/ButtonIcons/SmallIconR.png");
+	    ImageIcon blueIconSmall = createImageIcon("/ButtonIcons/SmallIconB.png");
 	    //ImageIcon background = new ImageIcon(CalcView.class.getResource("background.png"));
 	    
 		if (RIGHT_TO_LEFT)
