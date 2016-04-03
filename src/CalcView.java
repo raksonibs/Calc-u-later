@@ -74,28 +74,6 @@ public class CalcView extends JPanel implements KeyListener
 		this.setVisible(true);
 
 	}
-	
-	protected JComponent makeTextPanel(String text) {
-        JPanel panel = new JPanel(false);
-        JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridBagLayout());
-        panel.add(filler);
-        return panel;
-    }
-     
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = CalcView.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-
-
 
 	@SuppressWarnings("serial")
 	public static void addComponentsToPane(Container pane, final CalcController theController, final JTabbedPane MAIN)
@@ -656,7 +634,13 @@ public class CalcView extends JPanel implements KeyListener
 
 			if (userVal.length() > 1 && userVal.charAt(1) == '.')
 			{
-				userVal = userVal.substring(1, his.length());
+				System.out.println("Over here");
+				System.out.println(userVal);
+				System.out.println(his.length());
+				System.out.println(userVal.substring(2, userVal.length()));
+				userVal = userVal.substring(2, userVal.length());
+				System.out.println("Over here 2.0");
+				System.out.println(userVal);
 				userValueText.setText(userVal);
 			}
 			else

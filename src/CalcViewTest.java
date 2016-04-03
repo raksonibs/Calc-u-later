@@ -224,7 +224,7 @@ public class CalcViewTest {
 		
 	}
 
-	
+	@Test
 	public void setUpValues(){
 		
 		view.setUserValue(String.valueOf((Math.random()*100)));
@@ -234,15 +234,17 @@ public class CalcViewTest {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Test
+	public void decimalTest() {
+		//view.registerButton("Clear", controller);
+		view.setUserValue("0.123");
+
+		view.registerButton(".", controller);
+		
+		
+		view.getUserValue();
+		assertEquals("123", view.getUserValue());
+	}
 	
 
 }
