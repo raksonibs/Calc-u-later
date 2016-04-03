@@ -48,18 +48,20 @@ public class FavouritesPanel extends JPanel
 			public void pressed()
 			{
 				System.out.println("DELETING ACTIVATED");
-//				box.removeItem(selected);
-//				box.setSelectedItem("Select Favourite...");
-//				favC.a.remove(selected);
 				flag = true;
 			}
 		};
+		
 		b.setToolTipText("HOW TO DELETE: Press DELETE then select the expression you wish to delete.");
 		
 		add(b);
 		if (flag){b.setBackground(Color.CYAN);}
 		else{b.setBackground(Color.WHITE);}
 		add(box);
+	}
+	
+	public JComboBox<String> getBox() {
+		return box;
 	}
 
 	public void addToFavourites(String expression)

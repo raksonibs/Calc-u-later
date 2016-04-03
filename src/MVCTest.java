@@ -3,14 +3,18 @@ import static org.junit.Assert.*;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 import java.util.Stack;
 
+import javax.swing.JComboBox;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.jfree.chart.ChartPanel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,6 +28,7 @@ public class MVCTest {
 	private GraphController graphControl;
 	private CalcView view;
 	private FavouritesPanel panel2;
+	private GraphView graphView;
 	
 	@Before
 	public void setup(){
@@ -36,7 +41,7 @@ public class MVCTest {
 		
 	    panel2 = new FavouritesPanel(MAIN, controller);
 	    CalcView calculatorView = new CalcView(controller, MAIN);
-	    final GraphView graphView = new GraphView(graphControl);
+	    GraphView graphView = new GraphView(graphControl);
 	    
 	    MAIN.addTab("Calculator", calculatorView);
 	    MAIN.addTab("Graph", graphView);
@@ -74,5 +79,29 @@ public class MVCTest {
 		MAIN.getRootPane();
 	
 		
+	}
+	
+	@Test 
+	public void FavouriteTests() {
+		panel2.addToFavourites("Sin(x)");
+		panel2.clearList();
+		panel2.getCounter();
+		JComboBox<String> box = panel2.getBox();
+		ItemEvent evt = new ItemEvent(box, 0, ItemEvent.SELECTED, 0);
+		
+		ItemListener[] listeners = box.getItemListeners();
+		  if (listeners != null && listeners.length > 0) {
+		        evt = new ItemEvent(box, 0, evt, 0);
+		        for (ItemListener listener : listeners) {
+		            listener.itemStateChanged(evt);
+		        }
+		    }
+	}
+	
+	@Test 
+	public void GraphTests() {
+		ChartPanel graph = graphModel.getChart();
+		graphControl.save();
+		graphControl.updateGraph();
 	}
 }
