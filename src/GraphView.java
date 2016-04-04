@@ -40,7 +40,7 @@ public class GraphView extends JPanel{
 		
 		button.setPreferredSize(new Dimension(400,30));
 		button.setIcon(blueIconEWide);
-	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setPreferredSize(new Dimension(400,30));
 	    button.setHorizontalTextPosition(button.CENTER);
 		button.setOpaque(true);
 		button.setBorderPainted(false);

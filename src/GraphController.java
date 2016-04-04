@@ -26,6 +26,7 @@ public class GraphController
 		view = new GraphView(this);
 		view.setVisible(true);
 
+		
 	}
 
 	public void updateGraph(){
