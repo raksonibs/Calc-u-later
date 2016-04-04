@@ -1,26 +1,26 @@
 (function($) {
-    $.scrollToElement = function($element, speed) {
+  $.scrollToElement = function($element, speed) {
 
-        speed = speed || 750;
+    speed = speed || 750;
 
-        $("html, body").animate({
-            scrollTop: $element.offset().top,
-            scrollLeft: $element.offset().left
-        }, speed);
-        return $element;
-    };
+    $("html, body").animate({
+      scrollTop: $element.offset().top,
+      scrollLeft: $element.offset().left
+    }, speed);
+    return $element;
+  };
 
-    $.fn.scrollTo = function(speed) {
-        speed = speed || "normal";
-        return $.scrollToElement(this, speed);
-    };
+  $.fn.scrollTo = function(speed) {
+    speed = speed || "normal";
+    return $.scrollToElement(this, speed);
+  };
 })(jQuery);
 
 $(".loading-bar")
 .on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",
  function(e){
     // do something here    
- });
+  });
 
 $('.parent-nav li').hover(function() {
   var liText = $(this).text().toLowerCase();
@@ -35,34 +35,35 @@ $('.parent-nav li').hover(function() {
 
 $('.smaller-nav-options').fadeOut();
 
-// $('body').on("span", "hover", function() {
-//   console.log('hover')
-//   $(this).css('background', 'red')
-// })
+$('#start').dblclick(function() {
+   $('html, body').animate({
+    scrollTop: $('#intro').offset().top - 150
+  }, 2000);
+})
 
-$.each([['#start', '#intro'], ["#intro", "#idea"], ["#idea", "#demo"], ["#demo", '#design'], ['#design', '#testing'], ['#testing', '#web'], ['#web', '#asmah'], ['#asmah', '#mohammad'], ["#mohammad", '#anji'], ['#anji', '#brad'], ['#brad', '#oskar'], ['#oskar', '#goals']], function(index, val) {
-  
+$.each([["#intro", "#idea"], ["#idea", "#demo"], ["#demo", '#design'], ['#design', '#testing'], ['#testing', '#web'], ['#web', '#asmah'], ['#asmah', '#mohammad'], ["#mohammad", '#anji'], ['#anji', '#brad'], ['#brad', '#oskar'], ['#oskar', '#goals']], function(index, val) {
+
   $(val[0]).click(function() {
    $('html, body').animate({
-        scrollTop: $(val[1]).offset().top - 150
-    }, 2000);
-    if (val[0] === '#intro') {
-      $('tspan').each(function(index){
-          $(this).stop(true, true).delay(500* index).animate({
-              'stroke-dashoffset':0
-          }, 800);
-      })
-      setTimeout(function() {        
-        $('#babbage').fadeIn(2000);
-      }, 7000);
-    } else if (val[0] === "#oskar") {
-      console.log("changing body")
-      setTimeout(function() {        
-        $('html').css('background', '#00b4ff');
-        $('#background-wrap').css('display', 'block');
-      }, 2500)
-    }
-    return false;
+    scrollTop: $(val[1]).offset().top - 150
+  }, 2000);
+   if (val[0] === '#intro') {
+    $('tspan').each(function(index){
+      $(this).stop(true, true).delay(500* index).animate({
+        'stroke-dashoffset':0
+      }, 800);
+    })
+    setTimeout(function() {        
+      $('#babbage').fadeIn(2000);
+    }, 7000);
+  } else if (val[0] === "#oskar") {
+    console.log("changing body")
+    setTimeout(function() {        
+      $('html').css('background', '#00b4ff');
+      $('#background-wrap').css('display', 'block');
+    }, 2500)
+  }
+  return false;
 })
 })
 
@@ -91,15 +92,15 @@ $('.post-overlay').hover(function(e) {
 
 function setHandler(direction) {
   if (direction === "up") {
-      $('.smaller-nav').removeClass('slideDown').addClass('slideUp');
-      $('.smaller-nav-options').fadeOut();
-      setTimeout(function() {
-        $('.smaller-nav').toggleClass('visible');
-      }, 750)
-    } else {
-      $('.smaller-nav-options').fadeOut();
-      $('.smaller-nav').removeClass('slideUp').addClass('slideDown').toggleClass('visible')
-    }
+    $('.smaller-nav').removeClass('slideDown').addClass('slideUp');
+    $('.smaller-nav-options').fadeOut();
+    setTimeout(function() {
+      $('.smaller-nav').toggleClass('visible');
+    }, 750)
+  } else {
+    $('.smaller-nav-options').fadeOut();
+    $('.smaller-nav').removeClass('slideUp').addClass('slideDown').toggleClass('visible')
+  }
 }
 
 $('#blurrMe').on('click',function() {
@@ -224,14 +225,14 @@ var text='Are We Different?'
 var len=text.length;
 var array=[];
 for(var x=0;x < len;x++){
-    var t=text[x]
-    array.push(t);
+  var t=text[x]
+  array.push(t);
 }
 var txt=s.text(50,50,array)
 $('tspan').css({
-    'font-size':50,
-    fill:'none',
-    stroke:'black',
-    'stroke-dasharray':230,
-    'stroke-dashoffset':230
+  'font-size':50,
+  fill:'none',
+  stroke:'black',
+  'stroke-dasharray':230,
+  'stroke-dashoffset':230
 })
