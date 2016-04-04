@@ -318,6 +318,14 @@ public class CalcModel
 			{
 			calculatedValues.pop();
 			}
+			if(variables.size()>0)
+			{
+			variables.pop();
+			}
+			else
+			{
+			containsVariable = false;
+			}
 		}
 		else
 		{
