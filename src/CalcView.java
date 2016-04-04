@@ -995,42 +995,4 @@ public class CalcView extends JPanel implements KeyListener
 		}
 	}
 
-	
-	// Methods related to favourite list
-	/*
-	 * This method would get the selected favouite and set the expression to the
-	 * selected one. This will in turn update the graph.
-	 */
-	
-
-	//CURRENTLY BYPASSING
-//	public static void setfavourite(int index) 
-//	{
-//		/*
-//		 * Here this method will talk to the Graph and put the saved expression
-//		 * on the graph. How it gets the information is done one of 2 ways: 
-//		 * 	1) Have the graph be able to understand the expression from a String. 
-//		 * 	2) Somehow store each expression in an Array and re-apply that old
-//		 * 	   expression to the entire calculator 
-//		 * #1 seems like a better way because it doesn't interfere with any of 
-//		 * the stacks/rest of calculator. 
-//		 * Going with #1:
-//		 */
-////		expressionList.setText((String) box.getSelectedItem());
-////		CalcController theController = new CalcController();
-////		theController.graphSelected((String) box.getSelectedItem());
-//		
-
-	/*
-	 * Removes what is currently in the expression list from the selected menu.
-	 * This is assuming that adding an expression to the list will set the expressionList 
-	 * field that specific expression.
-	 * I.e., the user will select from the list what they want to remove, then they will
-	 * press delete and it will be removed. 
-	 * */
-	public static void deleting()
-	{
-		box.removeItem(expressionList.getText());
-	}
-
 }

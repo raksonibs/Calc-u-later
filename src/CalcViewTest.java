@@ -245,6 +245,4 @@ public class CalcViewTest {
 		view.getUserValue();
 		assertEquals("123", view.getUserValue());
 	}
-	
-
 }
