@@ -43,6 +43,9 @@ public class FavouritesPanel extends JPanel
 			}
 		});
 		
+		JTextField deleteHelp1 = new JTextField("HOW TO DELETE: ");
+		JTextField deleteHelp2 = new JTextField("Press DELETE then select the expression you wish to delete.");
+		
 		JButton b = new ButtonAdapter("DELETE")
 		{
 			public void pressed()
@@ -53,11 +56,13 @@ public class FavouritesPanel extends JPanel
 		};
 		
 		b.setToolTipText("HOW TO DELETE: Press DELETE then select the expression you wish to delete.");
-		
-		add(b);
+		deleteHelp1.setEnabled(false);deleteHelp2.setEnabled(false);
+		add(deleteHelp1);
+		add(deleteHelp2);
 		if (flag){b.setBackground(Color.CYAN);}
 		else{b.setBackground(Color.WHITE);}
 		add(box);
+		add(b);
 	}
 	
 	public JComboBox<String> getBox() {
