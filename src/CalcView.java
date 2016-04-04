@@ -67,8 +67,9 @@ public class CalcView extends JPanel implements KeyListener
 		addComponentsToPane(this, theController, MAIN);
 
 		requestFocus();
-
+		
 		this.setVisible(true);
+		
 
 	}
 	

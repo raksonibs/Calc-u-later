@@ -311,31 +311,39 @@ public class CalcModel
 		//System.out.println("-------BEFORE---------");
 		//printAllStacks();
 
-		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())|| isFactorial(expressionList.peek()) || isVariable(expressionList.peek())){
+		if(isOperator(expressionList.peek()) || isTrignometric(expressionList.peek())|| isFactorial(expressionList.peek())){
 
 			expressionList.pop();
 			if(calculatedValues.size()>0)
 			{
 			calculatedValues.pop();
 			}
-			if(variables.size()>0)
+		}
+			else if(isVariable(expressionList.peek()))
 			{
-			variables.pop();
+			expressionList.pop();
+				if(variables.size()> 0)
+				{
+						variables.pop();
+				}
 			}
 			else
 			{
-			containsVariable = false;
+			expressionList.pop();
+			if(inputValues.size() > 0)
+			{
+			inputValues.pop();
 			}
 		}
-		else
-		{
-			expressionList.pop();
-			inputValues.pop();
-		}
 		numbers = (Stack) inputValues.clone();	
+		
+		if(variables.size() == 0)
+		{
+			containsVariable = false;
+		}
 		//System.out.println("-------AFTER---------");
 		//printAllStacks();
-
+		
 	}
 
 
@@ -372,7 +380,13 @@ public class CalcModel
 	 */
 	public BigDecimal getCalcValue()
 	{
+		if(numbers.size()>0){
 		return (BigDecimal) numbers.peek();
+		}
+		else
+		{
+			return new BigDecimal(-1);
+		}
 	}
 	
 	/**
