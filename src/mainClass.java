@@ -4,12 +4,16 @@ import javax.swing.event.ChangeListener;
 
 import java.awt.*;
 
-public class mainClass extends JApplet
+public class mainClass extends JFrame
 {
  private JTabbedPane MAIN = new JTabbedPane();
  public static int WIDTH = 410;
  public static int HEIGHT = 485;
 
+ public mainClass(){
+	 init();
+ }
+ 
  CalcModel model;
  CalcController control = new CalcController(MAIN);
  FavouritesController favC;
