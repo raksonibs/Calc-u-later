@@ -113,7 +113,7 @@ public class CalcView extends JPanel implements KeyListener
 			c.fill = GridBagConstraints.HORIZONTAL;
 		}
 		
-		calcText = new JTextField(20);
+		calcText = new JTextField();
 		calcText.setEditable(false);
 		userValueText = new JTextField(5);
 		history = new JTextField(20);
@@ -128,51 +128,51 @@ public class CalcView extends JPanel implements KeyListener
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 4;
+		c.gridy = 1;
+		c.gridwidth = 2;
 		pane.add(calcText, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 4;
+		c.gridx = 0;
 		c.gridy = 0;
-		c.gridwidth = 2;
-		pane.add(new JLabel("Calculated Value"), c);
+		c.gridwidth = 3;
+		pane.add(new JLabel("     Calculated Value     "), c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 3;
 		c.gridy = 1;
-		c.gridwidth = 4;
+		c.gridwidth = 2;
 		pane.add(history, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 4;
-		c.gridy = 1;
+		c.gridx = 3;
+		c.gridy = 0;
 		c.gridwidth = 2;
-		pane.add(new JLabel("History"), c);
+		pane.add(new JLabel("                History                "), c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 4;
+		c.gridy = 3;
+		c.gridwidth = 2;
 		pane.add(expressionList, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 4;
+		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 2;
-		pane.add(new JLabel("Expression"), c);
+		pane.add(new JLabel("         Expression         "), c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 3;
 		c.gridy = 3;
-		c.gridwidth = 4;
+		c.gridwidth = 2;
 		pane.add(userValueText, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 4;
-		c.gridy = 3;
+		c.gridx = 3;
+		c.gridy = 2;
 		c.gridwidth = 2;
-		pane.add(new JLabel("Input"), c);
+		pane.add(new JLabel("                  Input                 "), c);
 
 		button = new ButtonAdapter("UNDO")
 		{
