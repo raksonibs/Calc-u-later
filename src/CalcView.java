@@ -82,6 +82,8 @@ public class CalcView extends JPanel implements KeyListener
             return null;
         }
     }
+    
+
 
 
 	@SuppressWarnings("serial")
@@ -94,7 +96,7 @@ public class CalcView extends JPanel implements KeyListener
 	    ImageIcon yellowIconSmall = createImageIcon("/ButtonIcons/SmallIconY.png");
 	    ImageIcon redIconSmall = createImageIcon("/ButtonIcons/SmallIconR.png");
 	    ImageIcon blueIconSmall = createImageIcon("/ButtonIcons/SmallIconB.png");
-	    //ImageIcon background = new ImageIcon(CalcView.class.getResource("background.png"));
+	    //ImageIcon background = createImageIcon("/ButtonIcons/background.png");
 	    
 		if (RIGHT_TO_LEFT)
 		{
@@ -202,6 +204,7 @@ public class CalcView extends JPanel implements KeyListener
 	    button.setHorizontalTextPosition(button.CENTER);
 		button.setOpaque(true);
 		button.setBorderPainted(false);
+		//button.setForeground(Color.white);
 		
 		c.gridx = 4;
 		c.gridwidth = 1;
@@ -244,6 +247,7 @@ public class CalcView extends JPanel implements KeyListener
 	    button.setHorizontalTextPosition(button.CENTER);
 		button.setOpaque(true);
 		button.setBorderPainted(false);
+		//button.setForeground(Color.white);
 
 		button = new ButtonAdapter("cos")
 		{
@@ -261,6 +265,7 @@ public class CalcView extends JPanel implements KeyListener
 	    button.setHorizontalTextPosition(button.CENTER);
 		button.setOpaque(true);
 		button.setBorderPainted(false);
+		//button.setForeground(Color.white);
 
 		button = new ButtonAdapter("INFO")
 		{
@@ -273,7 +278,14 @@ public class CalcView extends JPanel implements KeyListener
 		c.gridx = 4;
 		c.gridwidth = 1;
 		c.gridy = 9;
-		pane.add(button, c);		
+		pane.add(button, c);	
+		pane.add(button, c);
+	    button.setIcon(blueIconWide);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
+		//button.setForeground(Color.white);
 
 		// Adding SAVE and DELETE buttons related to favourites list.
 		button = new ButtonAdapter("SAVE")
@@ -612,6 +624,7 @@ public class CalcView extends JPanel implements KeyListener
 	    button.setHorizontalTextPosition(button.CENTER);
 		button.setOpaque(true);
 		button.setBorderPainted(false);
+		//button.setForeground(Color.white);
 		
 		button = new ButtonAdapter("Graph"){
 			public void pressed() {
@@ -635,11 +648,17 @@ public class CalcView extends JPanel implements KeyListener
 				registerButton("TEST", theController);
 			}
 		};
-
 		c.gridx = 4;
 		c.gridwidth = 1;
 		c.gridy = 8;
 		pane.add(button, c);
+		pane.add(button, c);
+	    button.setIcon(blueIconWide);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
+		//button.setForeground(Color.white);
 
 		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory( theController );}};
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -976,6 +995,7 @@ public class CalcView extends JPanel implements KeyListener
 		}
 	}
 
+	
 	// Methods related to favourite list
 	/*
 	 * This method would get the selected favouite and set the expression to the

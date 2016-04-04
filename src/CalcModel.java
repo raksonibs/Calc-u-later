@@ -197,6 +197,9 @@ public class CalcModel
 	 *            The value to multiply the current calculated value by.
 	 * @pre. userValue is not equivalent to zero.
 	 */
+	
+
+	
 	public void divide()
 	{
 		
