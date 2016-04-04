@@ -96,7 +96,7 @@ public class CalcView extends JPanel implements KeyListener
 	    ImageIcon greenIconWide = createImageIcon("/ButtonIcons/WideIconGreen.png");
 	    ImageIcon yellowIconSmall = createImageIcon("/ButtonIcons/SmallIconY.png");
 	    ImageIcon redIconSmall = createImageIcon("/ButtonIcons/SmallIconR.png");
-	    ImageIcon blueIconSmall = createImageIcon("/ButtonIcons/SmallIconB.png");
+	    ImageIcon blueIconSmall = createImageIcon("/ButtonIcons/smallIconB.png");
 	    //ImageIcon background = createImageIcon("/ButtonIcons/background.png");
 	    
 		if (RIGHT_TO_LEFT)
