@@ -1,6 +1,7 @@
 import java.awt.Container;
 import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -11,7 +12,15 @@ public class GraphView extends JPanel{
 
 	private static JPanel graphPanel = new JPanel();
 	
-	
+    protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = CalcView.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
 	
 	public GraphView(final GraphController graphController){
 		super();
@@ -22,6 +31,7 @@ public class GraphView extends JPanel{
 
 	public static void addComponentsToPane(Container pane, final GraphController graphController)
 	{
+	    ImageIcon blueIconEWide = createImageIcon("/ButtonIcons/ExtraWideIconB.png");
 		JButton button = new ButtonAdapter("Save"){
 			public void pressed() {
 				graphController.save();
@@ -29,6 +39,12 @@ public class GraphView extends JPanel{
 		};
 		
 		button.setPreferredSize(new Dimension(400,30));
+		button.setIcon(blueIconEWide);
+	    button.setPreferredSize(new Dimension(button.WIDTH,30));
+	    button.setHorizontalTextPosition(button.CENTER);
+		button.setOpaque(true);
+		button.setBorderPainted(false);
+		
 		pane.add(graphPanel);
 		pane.add(button);
 		pane.setVisible(true);
